@@ -1,0 +1,80 @@
+/* Base Styles */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url("../upload/backreg.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 60px 15px;
+}
+
+/* Form Box Styling */
+.form-box {
+    background: #ffffff;
+    padding: 40px 30px;
+    border-radius: 10px;
+    max-width: 720px;
+    margin: auto;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Input group styles */
+.input-group .form-control {
+    border-right: none;
+}
+
+.input-group-text {
+    background-color: #e9ecef;
+    border-left: none;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+/* Buttons */
+.btn {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 6px;
+    margin-top: 10px;
+    width: 220px;
+    background-image: linear-gradient(109.6deg, rgba(62,161,219,1) 11.2%, rgba(93,52,236,1) 100.2%);
+    color: white;
+    border: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Layouts */
+@media screen and (max-width: 768px) {
+    .form-box {
+        padding: 30px 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .form-box {
+        padding: 25px 15px;
+
+    }
+
+    .btn {
+        font-size: 14px;
+        width: 180px;
+    }
+
+    .input-group-text i {
+        font-size: 16px;
+    }
+}

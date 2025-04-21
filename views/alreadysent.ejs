@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Connection Status</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #4c86c9;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+      text-align: center;
+    }
+
+    p {
+      font-size: 1.4rem;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #007bff;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    button a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    @media (max-width: 600px) {
+      p {
+        font-size: 1.1rem;
+      }
+
+      button {
+        width: 100%;
+        max-width: 300px;
+        padding: 12px;
+      }
+
+      button a {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Connection already sent.</h2>
+  <p>if they accept your request conformation mail will be sent</p>
+  <button><a href="/connect/:id">Go to Home</a></button>
+</body>
+</html>

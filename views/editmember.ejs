@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Document</title>
+ <style>
+    
+   form {
+     max-width: 600px;
+     margin: 10px auto;
+     padding: 30px 20px;
+     background-color: #f9f9f9;
+     border-radius: 12px;
+     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+     font-family: 'Segoe UI', sans-serif;
+   }
+   h1{
+     text-align: center;
+   }
+   form h1 {
+     text-align: center;
+     margin-bottom: 30px;
+     color: #0056b3;
+   }
+   
+   form label {
+     display: block;
+     margin-bottom: 6px;
+     font-weight: 600;
+     color: #333;
+   }
+   
+   form input[type="text"],
+   form input[type="file"],
+   form textarea {
+     width: 530px;
+     height: 50px;
+     margin-bottom: 1px;
+     border: 1px solid #ccc;
+     border-radius: 8px;
+     font-size: 1rem;
+     resize: none;
+     margin: 20px;
+   }
+   
+   form textarea {
+     height: 120px;
+     resize: none;
+   }
+   
+   form button {
+     display: block;
+     width: 100%;
+     padding: 14px;
+     font-size: 1.1rem;
+     background-color: #0056b3;
+     color: white;
+     border: none;
+     border-radius: 8px;
+     cursor: pointer;
+     transition: background-color 0.3s ease;
+   }
+   
+   form button:hover {
+     background-color: #003e8a;
+   }
+   
+   /* Responsive tweaks */
+   @media (max-width: 600px) {
+     form {
+       width: 300px;
+       padding: 20px 15px;
+     }
+   
+    
+   form input[type="text"],
+   form input[type="file"],
+   form textarea{
+       width: 90%;
+
+     }
+     form textarea {
+       font-size: 0.95rem;
+     }
+   
+     form button {
+       font-size: 1rem;
+     }
+   }
+   
+ </style>
+</head>
+<body>
+ <h1>Add New Alumni Member</h1>
+ <form action="/add-member/<%= member._id %>/edit" method="POST" enctype="multipart/form-data">
+   <label>Name:</label>
+   <input type="text" name="username"  value="<%= member.username  %>"><br><br>
+
+   <label>Role:</label>
+   <input type="text" name="role" value="<%= member.role  %>"><br><br>
+
+   <label>About:</label>
+   <textarea type="text" name="about" > <%= member.about  %></textarea><br><br>
+
+   <label>Profile Image:</label>
+   <input type="file" name="profileimg" value="<%= member.profileimg  %>"><br><br>
+
+   <button type="submit">Add Member</button>
+ </form>
+</body>
+</html>
