@@ -63,7 +63,7 @@ const crypto = require("crypto");
 //       .json({ success: false, message: "Failed to send OTP. Please try again." });
 //   }
 // };
-const SibApiV3Sdk = require("sib-api-v3-sdk");
+
 
 const sendOtpController = async (req, res) => {
   try {
