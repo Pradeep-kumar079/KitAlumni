@@ -26,7 +26,7 @@ mongoose
 const allowedOrigins = [
   "http://localhost:3000",
   "https://kitalumni-frontend.onrender.com",
-  "https://kitalumni-backend.onrender.com", // your Render domain
+   
 ];
 
 app.use(
