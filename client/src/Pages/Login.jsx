@@ -6,7 +6,7 @@ import img from "../Assets/travel-back.jpg";
 
 const Login = () => {
   const navigate = useNavigate();
-  const BACKEND_URL =  "http://localhost:5000";
+  const BACKEND_URL =  "https://kitalumni-backend.onrender.com";
 
 
   const [formData, setFormData] = useState({

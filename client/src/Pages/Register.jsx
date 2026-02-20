@@ -5,7 +5,7 @@ import API from "../api"
 import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
-  const BACKEND_URL = "http://localhost:5000";
+  const BACKEND_URL = "https://kitalumni-backend.onrender.com";
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [otpVerified, setOtpVerified] = useState(false);

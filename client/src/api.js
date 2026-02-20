@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const backendUrl = "http://localhost:5000";
+const backendUrl = "https://kitalumni-backend.onrender.com";
 
 const api = axios.create({
   baseURL: `${backendUrl}/api`,

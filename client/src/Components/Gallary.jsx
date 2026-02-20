@@ -8,7 +8,7 @@ const Gallary = () => {
   const navigate = useNavigate();
 
   // ✅ Use your deployed backend URL
- const base_url = "http://localhost:5000";
+ const base_url = "https://kitalumni-backend.onrender.com";
 
 
   const fetchGallery = async () => {

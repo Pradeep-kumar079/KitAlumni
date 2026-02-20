@@ -25,7 +25,8 @@ mongoose
 // ✅ CORS setup
 const allowedOrigins = [
   "http://localhost:3000",
-  "http://localhost:5000", // your Render domain
+  "https://kitalumni-frontend.onrender.com",
+  "https://kitalumni-backend.onrender.com", // your Render domain
 ];
 
 app.use(

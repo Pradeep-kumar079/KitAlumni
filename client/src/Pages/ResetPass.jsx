@@ -5,7 +5,7 @@ import axios from "axios";
 import "./ForgotPass.css";
 
 const ResetPass = () => {
-const BACKEND_URL = "http://localhost:5000";
+const BACKEND_URL = "https://kitalumni-backend.onrender.com";
 
   const { token } = useParams();
   const navigate = useNavigate();

@@ -2,7 +2,7 @@
 import axios from "axios";
 
 // ✅ Your correct Render backend URL
-const backendUrl = "http://localhost:5000";
+const backendUrl = "https://kitalumni-backend.onrender.com";
 
 const api = axios.create({
   baseURL: `${backendUrl}/api`, // All API routes prefixed with /api

@@ -8,7 +8,7 @@ const Students = () => {
   const [batches, setBatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const base_url = "http://localhost:5000";
+  const base_url = "https://kitalumni-backend.onrender.com";
 
   useEffect(() => {
     const fetchStudentBatches = async () => {

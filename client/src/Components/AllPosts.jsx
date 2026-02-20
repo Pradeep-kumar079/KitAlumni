@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./AllPosts.css";
 
-const BACKEND_URL = "http://localhost:5000";
+const BACKEND_URL = "https://kitalumni-backend.onrender.com";
 
 const AllPosts = () => {
   // ✅ Universal image rendering helper
