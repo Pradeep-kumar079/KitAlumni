@@ -15,52 +15,92 @@ const crypto = require("crypto");
 
  
 // ==================== SEND OTP ==================== //
+// const sendOtpController = async (req, res) => {
+//   try {
+//     const { email } = req.body;
+//     console.log("📩 Received OTP request for:", email); // 👈 ADD THIS LINE
+
+//     if (!email)
+//       return res.status(400).json({ success: false, message: "Email is required" });
+
+//     const user = await UserModel.findOne({ email });
+//     if (user)
+//       return res
+//         .status(400)
+//         .json({ success: false, message: "Email already exists" });
+
+//     const otp = Math.floor(100000 + Math.random() * 900000);
+//     await OtpModel.findOneAndUpdate(
+//       { email },
+//       { otp, createdAt: Date.now() },
+//       { upsert: true, new: true }
+//     );
+
+//     const transporter = nodemailer.createTransport({
+//       service: "gmail",
+//       auth: {
+//         user:  process.env.EMAIL_USER || "pradeepk9348@gmail.com",
+//         pass: process.env.EMAIL_PASS || "kycjndaberbichuz",
+//       },
+//     });
+//     console.log("Using email:", process.env.EMAIL_USER ? "loaded" : "not loaded");
+//     console.log("Using password:", process.env.EMAIL_PASS ? "loaded" : "not loaded");
+
+//     await transporter.sendMail({
+//       from: `"KIT Alumni" <${process.env.EMAIL_USER}>`,
+//       to: email,
+//       subject: "Your OTP for KIT Alumni Registration",
+//       text: `Your OTP is ${otp}. It will expire in 10 minutes.`,
+//     });
+
+//     console.log("✅ OTP sent successfully to:", email);
+//     res.json({ success: true, message: "OTP sent successfully" });
+//   } catch (error) {
+//     console.error("❌ OTP Error:", error);
+//       console.error("❌ OTP sending failed:", error.message || error);
+//     res
+//       .status(500)
+//       .json({ success: false, message: "Failed to send OTP. Please try again." });
+//   }
+// };
+const SibApiV3Sdk = require("sib-api-v3-sdk");
+
 const sendOtpController = async (req, res) => {
   try {
     const { email } = req.body;
-    console.log("📩 Received OTP request for:", email); // 👈 ADD THIS LINE
 
     if (!email)
       return res.status(400).json({ success: false, message: "Email is required" });
 
     const user = await UserModel.findOne({ email });
     if (user)
-      return res
-        .status(400)
-        .json({ success: false, message: "Email already exists" });
+      return res.status(400).json({ success: false, message: "Email already exists" });
 
     const otp = Math.floor(100000 + Math.random() * 900000);
+
     await OtpModel.findOneAndUpdate(
       { email },
       { otp, createdAt: Date.now() },
       { upsert: true, new: true }
     );
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user:  process.env.EMAIL_USER || "pradeepk9348@gmail.com",
-        pass: process.env.EMAIL_PASS || "kycjndaberbichuz",
-      },
-    });
-    console.log("Using email:", process.env.EMAIL_USER ? "loaded" : "not loaded");
-    console.log("Using password:", process.env.EMAIL_PASS ? "loaded" : "not loaded");
+    const client = SibApiV3Sdk.ApiClient.instance;
+    client.authentications["api-key"].apiKey = process.env.BREVO_API_KEY;
 
-    await transporter.sendMail({
-      from: `"KIT Alumni" <${process.env.EMAIL_USER}>`,
-      to: email,
-      subject: "Your OTP for KIT Alumni Registration",
-      text: `Your OTP is ${otp}. It will expire in 10 minutes.`,
+    const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
+    await apiInstance.sendTransacEmail({
+      sender: { email: "yourverifiedemail@gmail.com", name: "KIT Alumni" },
+      to: [{ email }],
+      subject: "Your OTP for KIT Alumni",
+      textContent: `Your OTP is ${otp}. It will expire in 10 minutes.`,
     });
 
-    console.log("✅ OTP sent successfully to:", email);
     res.json({ success: true, message: "OTP sent successfully" });
+
   } catch (error) {
-    console.error("❌ OTP Error:", error);
-      console.error("❌ OTP sending failed:", error.message || error);
-    res
-      .status(500)
-      .json({ success: false, message: "Failed to send OTP. Please try again." });
+    console.error(error);
+    res.status(500).json({ success: false, message: "Failed to send OTP" });
   }
 };
 
