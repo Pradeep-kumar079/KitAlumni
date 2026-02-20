@@ -99,9 +99,9 @@ const sendOtpController = async (req, res) => {
     res.json({ success: true, message: "OTP sent successfully" });
 
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Failed to send OTP" });
-  }
+  console.error("BREVO ERROR:", error.response?.body || error.message);
+  res.status(500).json({ success: false, message: error.message });
+}
 };
 
 
