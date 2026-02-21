@@ -275,22 +275,54 @@ const LoginController = async (req, res) => {
 
 
 // ==================== POSTS ==================== //
+// const PostController = async (req, res) => {
+//   try {
+//     if (!req.user) return res.status(401).json({ message: "Unauthorized" });
+//     const { title, description, tags } = req.body;
+//     const newPost = new PostModel({
+//       title,
+//       description,
+//       postimg: req.file ? req.file.filename : null,
+//       hashtags: tags ? tags.split(",").map(tag => tag.trim()) : [],
+//       user: req.user.id,
+//     });
+//     await newPost.save();
+//     res.status(201).json({ message: "Post created successfully", post: newPost });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: "Server error" });
+//   }
+// };
 const PostController = async (req, res) => {
   try {
-    if (!req.user) return res.status(401).json({ message: "Unauthorized" });
+    if (!req.user)
+      return res.status(401).json({ message: "Unauthorized" });
+
     const { title, description, tags } = req.body;
+
     const newPost = new PostModel({
       title,
       description,
       postimg: req.file ? req.file.filename : null,
-      hashtags: tags ? tags.split(",").map(tag => tag.trim()) : [],
+      hashtags: tags
+        ? tags.split(",").map((tag) => tag.trim())
+        : [],
       user: req.user.id,
     });
+
     await newPost.save();
-    res.status(201).json({ message: "Post created successfully", post: newPost });
+
+    res.status(201).json({
+      success: true,
+      message: "Post created successfully",
+      post: newPost,
+    });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
+    console.error("POST ERROR:", err);
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 };
 

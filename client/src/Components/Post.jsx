@@ -30,12 +30,15 @@ const Post = () => {
     if (formData.postimg) data.append("postimg", formData.postimg);
 
     try {
-      const response = await axios.post(`${BACKEND_URL}/api/user/posts`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        `${BACKEND_URL}/api/user/posts`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.status === 201) {
         alert("✅ Post created successfully!");
