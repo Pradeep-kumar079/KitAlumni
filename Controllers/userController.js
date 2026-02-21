@@ -90,7 +90,7 @@ const sendOtpController = async (req, res) => {
     const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
     await apiInstance.sendTransacEmail({
-      sender: { email: "yourverifiedemail@gmail.com", name: "KIT Alumni" },
+      sender: { email: "pradeepk9348@gmail.com", name: "KIT Alumni" },
       to: [{ email }],
       subject: "Your OTP for KIT Alumni",
       textContent: `Your OTP is ${otp}. It will expire in 10 minutes.`,
