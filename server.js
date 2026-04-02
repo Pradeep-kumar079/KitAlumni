@@ -184,6 +184,7 @@ mongoose
 const allowedOrigins = [
   "http://localhost:3000",
   "https://kitalumni-frontend.onrender.com",
+  
 ];
 
 app.use(
@@ -205,6 +206,13 @@ app.use(
 /* ================== ROUTES ================== */
 const UserRoutes = require("./Routes/UserRoutes");
 app.use("/api/user", UserRoutes);
+app.use("/api/account", AccountRoutes);
+app.use("/api/student", StudentRoutes);
+app.use("/api/alumni", AlumniRoutes);
+app.use("/api/chat", ChatRoutes);
+app.use("/api/admin", AdminRoutes);
+app.use("/api/search", SearchRoutes);
+app.use("/api/auth", ForgotRoutes);
 
 app.get("/api", (req, res) => {
   res.send("✅ KIT Alumni backend is running fine");
