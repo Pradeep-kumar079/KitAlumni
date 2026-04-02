@@ -4,7 +4,7 @@ const Request = require("../Models/RequestModel");
 const UserModel = require("../Models/UserModel");
 
 // ✅ Use localhost for local testing
-const BASE_URL = "https://render-esxj.onrender.com";
+const BASE_URL = "https://kitalumni-backend.onrender.com";
 
 /* ------------------------------------------------------------------
    ✅ Send Connection Request
