@@ -9,6 +9,9 @@ const {
 } = require("../Controllers/alumniController");
 const authMiddleware = require("../middleware/authMiddleware");
 
+// ✅ Get Alumni by Batch
+router.get("/all-alumni", authMiddleware, GetAlumniBatchController);
+
 // ✅ Send Request
 router.post("/send-request", authMiddleware, sendRequestController);
 
@@ -19,7 +22,6 @@ router.get("/reject-request/:token", rejectRequestController);
 // ✅ Disconnect
 router.post("/disconnect", authMiddleware, disconnectController);
 
-// ✅ Get Alumni by Batch
-router.get("/all-alumni", authMiddleware, GetAlumniBatchController);
+
 
 module.exports = router;
