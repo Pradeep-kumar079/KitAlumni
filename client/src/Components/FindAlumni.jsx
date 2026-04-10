@@ -11,7 +11,7 @@ const FindAlumni = () => {
   const [currentUserId, setCurrentUserId] = useState(null);
   const navigate = useNavigate();
 
-  const API_BASE =  "https://kitalumni-backend.onrender.com";
+  const API_BASE =  "http://localhost:5000";
   const defaultImg = "uploads/default.jpg";
 
   useEffect(() => {

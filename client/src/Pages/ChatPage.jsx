@@ -7,7 +7,7 @@ const ChatPage = () => {
   const [user, setUser] = useState(null);
 
   // ✅ Use Render backend (your actual URL)
-  const backend = "https://kitalumni-backend.onrender.com";
+  const backend = "http://localhost:5000";
 
   const fetchCurrentUser = async () => {
     try {
