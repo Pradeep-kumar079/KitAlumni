@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Admin.css";
@@ -41,55 +41,96 @@ const backend =  "https://kitalumni-backend.onrender.com";
 
 
  
-  const fetchData = async (tab) => {
-    try {
-      if (tab === "Log out") return handleLogout();
+  // const fetchData = async (tab) => {
+  //   try {
+  //     if (tab === "Log out") return handleLogout();
 
-      const res = await axios.get(`${backend}/api/admin/${tab}`);
+  //     const res = await axios.get(`${backend}/api/admin/${tab}`);
 
-      if (res.data.success) {
-        switch (tab) {
-          case "dashboard":
-            setDashboard(res.data.data || {});
-            break;
-          case "users":
-            setUsers(res.data.users || []);
-            break;
-          case "posts":
-            setPosts(res.data.posts || []);
-            break;
-          case "connections":
-            setConnections(res.data.connections || []);
-            break;
-          case "profiles":
-            setProfiles(res.data.profiles || []);
-            break;
-          case "gallery":
-            setGallery(res.data.gallery || []);
-            break;
-          case "sentmessages":
-            setSentMessages(res.data.sentMessages || []);
-            break;
-          default:
-            break;
-        }
+  //     if (res.data.success) {
+  //       switch (tab) {
+  //         case "dashboard":
+  //           setDashboard(res.data.data || {});
+  //           break;
+  //         case "users":
+  //           setUsers(res.data.users || []);
+  //           break;
+  //         case "posts":
+  //           setPosts(res.data.posts || []);
+  //           break;
+  //         case "connections":
+  //           setConnections(res.data.connections || []);
+  //           break;
+  //         case "profiles":
+  //           setProfiles(res.data.profiles || []);
+  //           break;
+  //         case "gallery":
+  //           setGallery(res.data.gallery || []);
+  //           break;
+  //         case "sentmessages":
+  //           setSentMessages(res.data.sentMessages || []);
+  //           break;
+  //         default:
+  //           break;
+  //       }
+  //     }
+  //   } catch (err) {
+  //     console.error(`❌ Error fetching ${tab}:`, err);
+  //   }
+  // };
+
+  // // ✅ Correct useEffect
+  // useEffect(() => {
+  //   fetchData(activeTab);
+  // }, [activeTab]);
+  const fetchData = useCallback(async (tab) => {
+  try {
+    if (tab === "Log out") return handleLogout();
+
+    const res = await axios.get(`${backend}/api/admin/${tab}`);
+
+    if (res.data.success) {
+      switch (tab) {
+        case "dashboard":
+          setDashboard(res.data.data || {});
+          break;
+        case "users":
+          setUsers(res.data.users || []);
+          break;
+        case "posts":
+          setPosts(res.data.posts || []);
+          break;
+        case "connections":
+          setConnections(res.data.connections || []);
+          break;
+        case "profiles":
+          setProfiles(res.data.profiles || []);
+          break;
+        case "gallery":
+          setGallery(res.data.gallery || []);
+          break;
+        case "sentmessages":
+          setSentMessages(res.data.sentMessages || []);
+          break;
+        default:
+          break;
       }
-    } catch (err) {
-      console.error(`❌ Error fetching ${tab}:`, err);
     }
-  };
+  } catch (err) {
+    console.error(`❌ Error fetching ${tab}:`, err);
+  }
+  }, []); // ✅ dependency
 
-  // ✅ Correct useEffect
   useEffect(() => {
-    fetchData(activeTab);
-  }, [activeTab]);
+  fetchData(activeTab);
+}, [activeTab, fetchData]); // ✅ include fetchData
 
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-    window.location.reload();
-  };
+  const handleLogout = useCallback(() => {
+  localStorage.removeItem("token");
+  navigate("/login");
+  window.location.reload();
+  }, [navigate]);
 
   const handleDeleteUser = async (id, e) => {
     e.stopPropagation();
