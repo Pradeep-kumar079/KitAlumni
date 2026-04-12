@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Admin.css";
@@ -41,9 +41,7 @@ const backend =  "https://kitalumni-backend.onrender.com";
 
 
  
-
-
-  const fetchData = useCallback(async (tab) => {
+  const fetchData = async (tab) => {
     try {
       if (tab === "Log out") return handleLogout();
 
@@ -79,11 +77,12 @@ const backend =  "https://kitalumni-backend.onrender.com";
     } catch (err) {
       console.error(`❌ Error fetching ${tab}:`, err);
     }
-  }, []); // ✅ dependency array
+  };
 
+  // ✅ Correct useEffect
   useEffect(() => {
     fetchData(activeTab);
-  }, [activeTab, fetchData]); // ✅ correct dependencies
+  }, [activeTab]);
 
 
   const handleLogout = () => {

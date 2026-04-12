@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState , useCallback} from "react";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
 import "./AllPosts.css";
@@ -24,7 +24,7 @@ const AllPosts = () => {
     return `${BACKEND_URL}/uploads/${path}`;
   };
 
-  // ================= FETCH POSTS =================
+   // ================= FETCH POSTS =================
   const fetchPosts = useCallback(async () => {
     try {
       const res = await api.get(`/user/allposts?page=${page}&limit=5`);
