@@ -119,7 +119,7 @@ const backend =  "https://kitalumni-backend.onrender.com";
   } catch (err) {
     console.error(`❌ Error fetching ${tab}:`, err);
   }
-  }, []); // ✅ dependency
+  }, [handleLogout]); // ✅ dependency
 
   useEffect(() => {
   fetchData(activeTab);
