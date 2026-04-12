@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./Students.css";
+import "./FindStudent.css";
 
 const FindStudent = () => {
   const { admissionyear } = useParams();
@@ -9,7 +9,7 @@ const FindStudent = () => {
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState(null);
   const navigate = useNavigate();
-  const BACKEND_URL =  "http://localhost:5000";
+  const BACKEND_URL =  "https://kitalumni-backend.onrender.com";
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -86,10 +86,10 @@ const FindStudent = () => {
 
   return (
     <div className="batch-container">
-      <h2>Students in {admissionyear}</h2>
+      <h2 id="mainheading">Students in {admissionyear}</h2>
       {Object.entries(grouped).map(([branch, list]) => (
         <div key={branch} className="branch-group">
-          <h3>{branch}</h3>
+          <h3 >Department of :{branch}</h3>
           <div className="table-wrapper">
             <table className="student-table">
               <thead>

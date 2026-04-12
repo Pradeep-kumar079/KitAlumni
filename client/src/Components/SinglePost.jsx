@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./SinglePost.css";
 
+const base_url = "https://kitalumni-backend.onrender.com";
+
 const SinglePost = () => {
   const { id } = useParams();
+
   const [post, setPost] = useState(null);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [user, setUser] = useState(null);
 
-  // 🌐 Backend base URL (Render deployment)
-const base_url =  "http://localhost:5000";
-
-
-  // ✅ Set authorization header if logged in
+  // ================= AUTH =================
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -23,8 +22,16 @@ const base_url =  "http://localhost:5000";
     }
   }, []);
 
-  // ✅ Fetch post + comments
-  const fetchPost = async () => {
+  // ================= IMAGE =================
+  const renderImage = useCallback((img) => {
+    if (!img) return "";
+    if (img.startsWith("https")) return img;
+    if (img.startsWith("/uploads")) return `${base_url}${img}`;
+    return `${base_url}/uploads/${img}`;
+  }, []);
+
+  // ================= FETCH =================
+  const fetchPost = useCallback(async () => {
     try {
       const res = await axios.get(`${base_url}/api/user/post/${id}`);
       if (res.data.success) {
@@ -32,94 +39,113 @@ const base_url =  "http://localhost:5000";
         setComments(res.data.post.comments || []);
       }
     } catch (err) {
-      console.error("❌ Fetch Post Error:", err);
+      console.error("Fetch Post Error:", err);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     fetchPost();
-  }, [id]);
+  }, [fetchPost]);
 
-  // ✅ Submit comment
-  const handleCommentSubmit = async (e) => {
-    e.preventDefault();
-    if (!user) {
-      alert("Please login to comment");
-      return;
-    }
+  // ================= COMMENT =================
+  const handleCommentSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
 
-    if (!comment.trim()) return;
-
-    try {
-      const res = await axios.post(`${base_url}/api/user/comment/${id}`, { comment });
-      if (res.data.success) {
-        setComments(res.data.updatedComments);
-        setComment("");
-      } else {
-        alert(res.data.message || "Failed to post comment");
+      if (!user) {
+        alert("Please login to comment");
+        return;
       }
-    } catch (err) {
-      console.error("❌ Comment Error:", err);
-      alert(err.response?.data?.message || "Error posting comment");
-    }
-  };
 
-  if (!post) return <div>Loading post...</div>;
+      if (!comment.trim()) return;
 
-  // ✅ Render uploaded image properly
-  const renderImage = (img) => {
-    if (!img) return "";
-    if (img.startsWith("https")) return img;
-    if (img.startsWith("/uploads")) return `${base_url}${img}`;
-    return `${base_url}/uploads/${img}`;
-  };
+      try {
+        const res = await axios.post(
+          `${base_url}/api/user/comment/${id}`,
+          { comment }
+        );
+
+        if (res.data.success) {
+          setComments(res.data.updatedComments);
+          setComment("");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    [comment, id, user]
+  );
+
+  // ================= MEMO COMMENTS =================
+  const renderedComments = useMemo(() => {
+    return comments.map((c, idx) => (
+      <div key={idx} className="sp-comment">
+        <div className="sp-comment-avatar">
+          {c.username?.charAt(0).toUpperCase()}
+        </div>
+        <div className="sp-comment-content">
+          <strong>{c.username || "User"}</strong>
+          <p>{c.text}</p>
+        </div>
+      </div>
+    ));
+  }, [comments]);
+
+  if (!post) return <div className="sp-loading">Loading post...</div>;
 
   return (
-    <div className="single-post-container">
-      <div className="single-post">
-        <h2>{post.title}</h2>
-        <p>{post.description}</p>
+    <div className="sp-wrapper">
+      <div className="sp-card">
+
+        {/* HEADER */}
+        <div className="sp-header">
+          <h2>{post.title}</h2>
+          <span className="sp-time">
+            {new Date(post.createdAt).toLocaleString()}
+          </span>
+        </div>
+
+        {/* CONTENT */}
+        <p className="sp-description">{post.description}</p>
 
         {post.postimg && (
           <img
             src={renderImage(post.postimg)}
-            alt="Post"
-            className="post-image"
+            alt=""
+            className="sp-image"
           />
         )}
 
-        <div className="actions">
-          <span>👍 Likes: {post.likes?.length || 0}</span>
+        {/* ACTION */}
+        <div className="sp-actions">
+          👍 {post.likes?.length || 0} Likes
         </div>
 
-        <div className="comments-section">
+        {/* COMMENTS */}
+        <div className="sp-comments">
           <h3>Comments</h3>
 
-          <form onSubmit={handleCommentSubmit} className="comment-form">
+          <form onSubmit={handleCommentSubmit} className="sp-form">
             <textarea
               placeholder="Write a comment..."
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              required
             />
-            <button type="submit">Post Comment</button>
+            <button type="submit">Post</button>
           </form>
 
-          <div className="comment-list">
+          <div className="sp-comment-list">
             {comments.length > 0 ? (
-              comments.map((c, idx) => (
-                <div key={idx} className="comment">
-                  <strong>{c.username || "Anonymous"}:</strong> {c.text}
-                </div>
-              ))
+              renderedComments
             ) : (
-              <p>No comments yet.</p>
+              <p className="sp-empty">No comments yet</p>
             )}
           </div>
         </div>
+
       </div>
     </div>
   );
 };
 
-export default SinglePost;
+export default React.memo(SinglePost);

@@ -67,7 +67,7 @@ const App = () => {
         <Route path="/gallery" element={<Gallary />} />
         <Route path="/gallery/:id" element={<SingleGallery />} />
          <Route path="/forgot-password" element={<ForgotPass />} />
-        <Route path="/reset-password/:token" element={<ResetPass />} />
+        <Route path="auth/reset-password/:token" element={<ResetPass />} />
 
       </Routes>
     </Router>

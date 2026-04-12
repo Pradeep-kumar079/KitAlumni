@@ -1,0 +1,44 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # 2. Setup Node
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # 3. Install backend deps
+      - name: Install Backend Dependencies
+        run: npm install
+
+      # 4. Build frontend
+      - name: Build Frontend
+        run: |
+          cd client
+          npm install
+          npm run build
+
+      # 5. Login to Docker Hub (MOVE UP)
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      # 6. Build Docker images
+      - name: Build Docker Images
+        run: docker compose build
+
+      # 7. Push Docker images
+      - name: Push Images
+        run: docker compose push

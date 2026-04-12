@@ -6,7 +6,7 @@ import { FaGraduationCap, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
 const Navbar = () => {
-  const BACKEND_URL = "http://localhost:5000";
+  const BACKEND_URL = "https://kitalumni-backend.onrender.com";
 
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
@@ -60,16 +60,17 @@ const Navbar = () => {
     <div className="navbar-wrapper">
       <div className="container">
         <div className="logo" onClick={() => navigate("/home")}>
-          <h2>Logo</h2>
+          <h2>Alumni</h2>
         </div>
 
         <div className="search">
-          <FaMagnifyingGlass className="search-icon" />
+          <FaMagnifyingGlass className="search-icon" style={{color:'white'}} />
           <input
             type="text"
             placeholder="Search users or posts..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            style={{Color:'white'}}
           />
           {results.length > 0 && (
             <div className="search-dropdown">
@@ -150,7 +151,7 @@ const Navbar = () => {
           <Link to="/account">
             <button>Account</button>
           </Link>
-          <button className="logout" onClick={Logout}>
+          <button className="logout" id="logout"  onClick={Logout}>
             <FaSignOutAlt /> Log out
           </button>
         </div>

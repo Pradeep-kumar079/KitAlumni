@@ -8,7 +8,7 @@ const Students = () => {
   const [batches, setBatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const base_url = "http://localhost:5000";
+  const base_url = "https://kitalumni-backend.onrender.com";
 
   useEffect(() => {
     const fetchStudentBatches = async () => {
@@ -47,7 +47,7 @@ const Students = () => {
   return (
     <div className="batch-container">
       <Navbar />
-      <h2>Find Students by Batch Year :</h2>
+      <h2 className="mainheading" id="mainheading">Find Students by Batch Year :</h2>
       {batches.length === 0 ? (
         <p>No batches found.</p>
       ) : (

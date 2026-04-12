@@ -6,8 +6,7 @@ import img from "../Assets/travel-back.jpg";
 
 const Login = () => {
   const navigate = useNavigate();
-  const BACKEND_URL =  process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
-
+  const BACKEND_URL = "https://kitalumni-backend.onrender.com";
 
   const [formData, setFormData] = useState({
     usn: "",
@@ -23,8 +22,7 @@ const Login = () => {
     }));
   };
 
-
-  // ✅ Handle login submit
+  // Handle login submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -34,21 +32,18 @@ const Login = () => {
     }
 
     try {
-      // ✅ Correct backend URL
       const res = await axios.post(
         `${BACKEND_URL}/api/user/login`,
         formData
       );
 
       if (res.data.success) {
-        // Save user data
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("userId", res.data.user._id);
         localStorage.setItem("role", res.data.user.role);
 
         alert("Login successful!");
 
-        // ✅ Redirect based on role
         const role = res.data.user.role?.toLowerCase();
         if (role === "admin") {
           navigate("/admin");
@@ -66,11 +61,14 @@ const Login = () => {
 
   return (
     <div className="login-wrapper">
-      <div className="login-container">3
+      <div className="login-container">
+
+        {/* IMAGE */}
         <div className="login-image">
           <img src={img} alt="Login Background" />
         </div>
 
+        {/* FORM */}
         <form className="login-form" onSubmit={handleSubmit}>
           <h1 className="login-title">Login</h1>
 
@@ -83,7 +81,6 @@ const Login = () => {
               onChange={handleChange}
               required
             />
-            <i className="bx bxs-user"></i>
           </div>
 
           <div className="input-box">
@@ -95,7 +92,6 @@ const Login = () => {
               onChange={handleChange}
               required
             />
-            <i className="bx bxs-lock-alt"></i>
           </div>
 
           <div className="forgot-link">

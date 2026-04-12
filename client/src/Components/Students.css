@@ -1,147 +1,198 @@
-/* Container */
+/* ================= GLOBAL ================= */
 .batch-container {
-  /* padding: 20px; */
   max-width: 100%;
   margin: 0 auto;
-  font-family: Arial, sans-serif;
-  text-align: center;
+  /* padding: 100px 20px 40px; */
+  font-family: "Inter", sans-serif;
 }
 
-/* Horizontal batch boxes */
+/* Title */
+.batch-container h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #ffffff !important;
+  margin-bottom: 20px;
+}
+.mainheading{
+  text-align: center;
+  margin-top: 20px;
+  color: #1e293b !important;
+}
+#mainheading{
+  color: #1e293b !important;
+}
+
+/* ================= BATCH SCROLL ================= */
 .allbatchs {
   display: flex;
+  gap: 14px;
   overflow-x: auto;
-  gap: 15px;
-  white-space: nowrap;
-  padding-bottom: 10px;
-  padding: 40px 20px;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  padding: 15px;
+
+  border-radius: 14px;
+  background: #ffffff;
+
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+
   scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  border: 1px solid  #1e3a8a;
-  box-shadow: rgba(84, 104, 216, 0.35) 0px 5px 15px;
-  border-radius: 6px;
 }
 
+/* Hide scrollbar (clean UI) */
+.allbatchs::-webkit-scrollbar {
+  display: none;
+}
+
+/* ================= BATCH BOX ================= */
 .batch-box {
-  display: inline-block;
- background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  min-width: 100px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   border-radius: 12px;
-  /* padding: 5px 5px; */
-  height: 50px;
-  min-width: 120px;
-  text-align: center;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-  border: 1px solid black;
+
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  color: white;
+
+  font-size: 15px;
+  font-weight: 600;
+
   cursor: pointer;
-  transition: transform 0.2s, background-color 0.2s;
+
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
+/* Hover */
 .batch-box:hover {
-  transform: translateY(-4px);
-  background-color: #dce9ff;
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
 }
 
-/* Branch group wrapper */
-.branch-group {
-  margin-bottom: 10px;
+/* Click effect */
+.batch-box:active {
+  transform: scale(0.96);
 }
 
-.branch-group img{
-  height: 50px;
-  width: 50px;
-}
-/* Branch header */
-.branch-group h3 {
-  margin-bottom: 12px;
-  font-size: 1.3rem;
-  color: #2c3e50;
-  border-left: 5px solid #3498db;
-  padding-left: 10px;
-  text-align: center;
+/* ================= NO DATA ================= */
+.no-batch {
   margin-top: 20px;
+  font-size: 14px;
+  color: #64748b;
 }
 
-/* Table wrapper for horizontal scroll */
+/* ================= BRANCH GROUP ================= */
+.branch-group {
+  margin-top: 30px;
+}
+
+/* Branch Title */
+.branch-group h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e293b;
+
+  margin-bottom: 12px;
+  padding-left: 10px;
+
+  border-left: 4px solid #3b82f6;
+}
+
+/* ================= TABLE ================= */
 .table-wrapper {
   overflow-x: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  background: #ffffff;
+
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
 }
 
-/* Student table */
+/* Table */
 .student-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 650px; /* ensures scroll on small screens */
+  min-width: 650px;
 }
 
-.student-table th,
-.student-table td {
-  padding: 12px 15px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-  word-break: break-word;
-}
-
+/* Header */
 .student-table th {
-  background-color: #3498db;
+  background: #1e3a8a;
   color: white;
+
+  font-size: 13px;
   font-weight: 600;
-  position: sticky; /* sticky header */
+
+  padding: 12px;
+  text-align: left;
+
+  position: sticky;
   top: 0;
-  z-index: 2;
 }
 
+/* Cells */
+.student-table td {
+  padding: 12px;
+  font-size: 14px;
+  color: #334155;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Row hover */
 .student-table tr:hover {
-  background-color: #f1f8ff;
+  background: #f8fafc;
 }
 
-/* Responsive adjustments */
+/* ================= RESPONSIVE ================= */
+
+/* Tablet */
 @media (max-width: 1024px) {
-  .batch-box {
-    min-width: 140px;
-    padding: 18px 22px;
+  .batch-container {
+    padding: 90px 15px 30px;
   }
 
-  .student-table th,
-  .student-table td {
-    padding: 10px 12px;
+  .batch-box {
+    min-width: 110px;
+    font-size: 14px;
   }
 }
 
+/* Mobile */
 @media (max-width: 768px) {
-  .batch-container {
-    padding: 15px;
-  }
-
-  .batch-box {
-    min-width: 120px;
-    padding: 15px 18px;
-  }
-
-  .student-table th,
-  .student-table td {
-    padding: 8px 10px;
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .batch-container {
-    padding: 10px;
+  .batch-container h2 {
+    font-size: 18px;
   }
 
   .batch-box {
     min-width: 100px;
-    padding: 12px 15px;
-    font-size: 0.85rem;
+    height: 48px;
+    font-size: 13px;
   }
 
   .student-table th,
   .student-table td {
-    padding: 6px 8px;
-    font-size: 0.8rem;
+    font-size: 12px;
+    padding: 10px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .batch-container {
+    padding: 80px 10px;
+  }
+
+  .batch-box {
+    min-width: 90px;
+    height: 45px;
+    font-size: 12px;
+  }
+
+  .student-table th,
+  .student-table td {
+    font-size: 11px;
+    padding: 8px;
   }
 }
