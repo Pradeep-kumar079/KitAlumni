@@ -1,156 +1,178 @@
-/* ===== CONTAINER ===== */
+/* ================= GLOBAL ================= */
 .batch-container {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  font-family: "Poppins", sans-serif;
-  color: #222;
-}
-.batch-container img{
-  height: 80px;
-  width: 80px;
+  padding: auto;
+  max-width: 100%;
+  margin: auto;
+  font-family: "Inter", sans-serif;
+  background: #f8fafc;
 }
 
+/* Title */
 .batch-container h2 {
   text-align: center;
   margin-bottom: 25px;
   font-size: 1.8rem;
-  color: #1e40af;
+  font-weight: 600;
+  color: #1e293b;
 }
-
+#mainheading{
+  text-align: center;
+  margin-top: 20px;
+  color: #1e293b !important;
+}
+/* ================= BRANCH GROUP ================= */
 .branch-group {
-  margin-bottom: 40px;
+  margin-bottom: 35px;
 }
 
 .branch-group h3 {
-  color: #2563eb;
   font-size: 1.3rem;
+  font-weight: 600;
+  color: #2563eb;
   margin-bottom: 12px;
-  border-left: 4px solid #2563eb;
   padding-left: 10px;
+  border-left: 4px solid #2563eb;
 }
 
-/* ===== TABLE WRAPPER ===== */
+/* ================= TABLE WRAPPER ================= */
 .table-wrapper {
   overflow-x: auto;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  background: #fff;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
-/* ===== TABLE ===== */
+/* ================= TABLE ================= */
 .student-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 800px;
+  min-width: 750px;
 }
 
-.student-table th,
-.student-table td {
-  padding: 14px 12px;
-  text-align: left;
-  border-bottom: 1px solid #e5e7eb;
-  white-space: nowrap;
-  height: 50px;
-}
-
+/* HEADER */
 .student-table th {
-  background-color: #f3f4f6;
+  background: #1e3a8a;
+  color: white;
   font-weight: 600;
-  color: #374151;
+  font-size: 13px;
+
+  padding: 12px;
+  text-align: left;
+
   position: sticky;
   top: 0;
   z-index: 2;
-  height: 100px;
-}
-/* Hover effect for rows */
-.student-table tr:hover {
-  background-color: #f9fafb;
 }
 
-/* Profile image */
+/* BODY */
+.student-table td {
+  padding: 12px;
+  font-size: 14px;
+  color: #334155;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* ROW HOVER */
+.student-table tr:hover {
+  background: #f8fafc;
+}
+
+/* ================= PROFILE IMAGE ================= */
 .profile-img {
-  width: 55px;
-  height: 55px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   object-fit: cover;
+
   border: 2px solid #e2e8f0;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.25s ease;
+  cursor: pointer;
 }
 
 .profile-img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 6px rgba(37, 99, 235, 0.4);
+  transform: scale(1.08);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
 }
 
-/* ===== BUTTONS ===== */
+/* ================= USERNAME ================= */
+.student-table td:nth-child(2) {
+  cursor: pointer;
+  color: #2563eb;
+  font-weight: 500;
+}
+
+/* ================= BUTTONS ================= */
 .student-table button {
   padding: 6px 12px;
+  border-radius: 8px;
   border: none;
-  border-radius: 6px;
-  background-color: #2563eb;
-  color: white;
-  font-size: 0.9rem;
+
+  font-size: 13px;
+  font-weight: 500;
+
   cursor: pointer;
-  transition: 0.25s ease;
+  transition: 0.25s;
+}
+
+/* Connect */
+.student-table button {
+  background: #2563eb;
+  color: white;
 }
 
 .student-table button:hover {
-  background-color: #1e40af;
+  background: #1e40af;
 }
 
-/* Disconnect button */
-.disconnect-btn {
-  background-color: #dc2626 !important;
-  margin-left: 8px;
+/* Disconnect */
+.student-table button:nth-child(1) {
+  background: #ef4444;
 }
 
-.disconnect-btn:hover {
-  background-color: #b91c1c !important;
+.student-table button:nth-child(1):hover {
+  background: #dc2626;
 }
 
-/* Status column colors */
+/* Message */
+.student-table button:nth-child(2) {
+  background: #3b82f6;
+}
+
+.student-table button:nth-child(2):hover {
+  background: #2563eb;
+}
+
+/* ================= STATUS ================= */
 .student-table td:last-child {
   font-weight: 600;
-  text-transform: capitalize;
 }
 
-.student-table td:last-child:has(span.connected) {
+.student-table td:last-child:contains("Connected") {
   color: #16a34a;
 }
 
-.student-table td:last-child:has(span.pending) {
-  color: #ea580c;
-}
-
-.student-table td:last-child:has(span.failed) {
-  color: #dc2626;
-}
-
-/* ===== SCROLLBAR STYLE ===== */
+/* ================= SCROLLBAR ================= */
 .table-wrapper::-webkit-scrollbar {
   height: 8px;
 }
+
 .table-wrapper::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 10px;
 }
-.table-wrapper::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
 
-/* ===== RESPONSIVE DESIGN ===== */
+/* ================= RESPONSIVE ================= */
 
-/* Tablet view */
+/* Tablet */
 @media (max-width: 992px) {
   .batch-container {
-    padding: 15px;
+    padding: 90px 15px;
   }
 
   .student-table th,
   .student-table td {
     padding: 10px;
-    font-size: 0.95rem;
+    font-size: 13px;
   }
 
   .profile-img {
@@ -159,43 +181,36 @@
   }
 }
 
-/* Mobile view (stacked card layout) */
+/* Mobile (scroll table) */
 @media (max-width: 768px) {
-  .batch-container{
-    font-size: 0.7rem;
-  }
-  .table-wrapper {
-    overflow-x: scroll;
+  .batch-container h2 {
+    font-size: 1.4rem;
   }
 
   .student-table {
     min-width: 650px;
   }
 
-  .batch-container h2 {
-    font-size: 1.4rem;
+  .student-table th,
+  .student-table td {
+    font-size: 12px;
+    padding: 8px;
   }
 }
 
-/* Very small screens (cards layout alternative) */
+/* Small Mobile */
 @media (max-width: 480px) {
   .batch-container {
-    padding: 10px;
-  }
-
-  .student-table th,
-  .student-table td {
-    font-size: 0.85rem;
-    padding: 8px;
+    padding: 0px 0px;
   }
 
   .profile-img {
-    width: 35px;
-    height: 35px;
+    width: 38px;
+    height: 38px;
   }
 
   .student-table button {
-    padding: 5px 10px;
-    font-size: 0.8rem;
+    padding: 5px 8px;
+    font-size: 11px;
   }
 }

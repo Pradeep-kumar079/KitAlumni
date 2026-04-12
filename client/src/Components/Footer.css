@@ -1,195 +1,184 @@
-/* 🌐 Global Footer Layout */
+/* ================= FOOTER ================= */
 .footer {
-  background: linear-gradient(135deg, #0078d4, #005fa3);
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6); /* match navbar */
   color: #fff;
-  padding: 50px 25px 25px;
-  text-align: center;
-  width: 100%;
-  margin-top: 50px;
-  box-sizing: border-box;
+
+  padding: 60px 20px 25px;
+  margin-top: 60px;
+
   position: relative;
-  z-index: 10;
+  overflow: hidden;
 }
 
-/* 🧱 Footer Container */
+/* Glass overlay effect */
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ================= CONTAINER ================= */
 .footer-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 40px;
+  position: relative;
+  z-index: 2;
+
   max-width: 1200px;
-  margin: 0 auto;
-  text-align: left;
+  margin: auto;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
 }
 
-/* 🏗️ Footer Section Base */
+/* ================= SECTIONS ================= */
 .footer-section {
   flex: 1;
-  min-width: 250px;
-  max-width: 300px;
+  min-width: 220px;
 }
 
-/* 🧭 Headings */
-.footer-section h2,
-.footer-section h3 {
-  font-weight: 600;
-  color: #ffffff;
-  margin-bottom: 16px;
-  letter-spacing: 0.5px;
-}
-
-.footer-section h2.footer-logo {
+/* Logo */
+.footer-logo {
   font-size: 1.8rem;
-  color: #ffffff;
   font-weight: 700;
-}
-
-/* 📝 Paragraph */
-.footer-section p {
-  color: #f0f0f0;
-  line-height: 1.7;
-  font-size: 0.95rem;
-}
-
-/* 🔗 Links */
-.footer-section ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.footer-section ul li {
   margin-bottom: 10px;
 }
 
-.footer-section ul li a {
-  color: #e0e0e0;
-  text-decoration: none;
+/* Text */
+.footer-section p {
   font-size: 0.95rem;
-  transition: color 0.3s ease, transform 0.2s ease;
-  display: inline-block;
+  color: #e5e7eb;
+  line-height: 1.6;
+}
+
+/* Headings */
+.footer-section h3 {
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* ================= LINKS ================= */
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+  color: #dbeafe;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.25s ease;
 }
 
 .footer-section ul li a:hover {
-  color: #ffffff;
-  transform: translateX(3px);
+  color: #fff;
+  transform: translateX(4px);
 }
 
-/* 📧 Contact Section */
+/* ================= CONTACT ================= */
 .footer-section.contact a {
-  color: #f1f1f1;
+  color: #dbeafe;
   text-decoration: none;
-  transition: color 0.3s ease;
 }
 
 .footer-section.contact a:hover {
-  color: #ffffff;
+  color: #fff;
 }
 
-/* 🌐 Social Icons */
+/* ================= SOCIAL ================= */
 .social-icons {
-  margin-top: 15px;
+  margin-top: 12px;
   display: flex;
-  gap: 15px;
+  gap: 12px;
 }
 
 .social-icons a {
-  color: #ffffff;
-  font-size: 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   width: 38px;
   height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.15);
+
+  color: #fff;
+  font-size: 18px;
+
   transition: all 0.3s ease;
 }
 
 .social-icons a:hover {
-  background-color: #ffffff;
-  color: #0078d4;
+  background: #fff;
+  color: #1e3a8a;
   transform: translateY(-3px);
 }
 
-/* ⚙️ Footer Bottom */
+/* ================= BOTTOM ================= */
 .footer-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  z-index: 2;
+
   margin-top: 40px;
   padding-top: 20px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+
+  text-align: center;
   font-size: 0.9rem;
-  color: #e9e9e9;
-  letter-spacing: 0.3px;
+  color: #e5e7eb;
 }
 
-/* 📱 Responsive Design */
+/* ================= RESPONSIVE ================= */
 
-/* Tablets (≤1024px) */
-@media (max-width: 1024px) {
+/* Tablet */
+@media (max-width: 992px) {
   .footer-container {
     gap: 30px;
   }
-
-  .footer-section {
-    flex: 1 1 45%;
-    max-width: 100%;
-  }
-
-  .footer-section h2.footer-logo {
-    font-size: 1.6rem;
-  }
 }
 
-/* Mobile (≤768px) */
+/* Mobile */
 @media (max-width: 768px) {
   .footer-container {
     flex-direction: column;
-    align-items: center;
     text-align: center;
-    gap: 35px;
+    align-items: center;
   }
 
   .footer-section {
-    text-align: center;
     max-width: 90%;
   }
 
   .social-icons {
     justify-content: center;
   }
-
-  .footer-section h2.footer-logo {
-    font-size: 1.5rem;
-  }
 }
 
-/* Small Phones (≤480px) */
+/* Small Mobile */
 @media (max-width: 480px) {
   .footer {
     padding: 40px 15px 20px;
   }
 
-  .footer-section {
-    min-width: 100%;
+  .footer-logo {
+    font-size: 1.5rem;
   }
 
   .footer-section h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .footer-section p,
   .footer-section ul li a {
-    font-size: 0.9rem;
-  }
-
-  .social-icons a {
-    font-size: 18px;
-    width: 34px;
-    height: 34px;
-  }
-
-  .footer-bottom {
     font-size: 0.85rem;
   }
 }

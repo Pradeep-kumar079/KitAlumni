@@ -1,4 +1,4 @@
-/* .accept-page {
+.accept-page {
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -43,4 +43,4 @@
 
 .back-btn:hover {
   background: #2980b9;
-} */
+}

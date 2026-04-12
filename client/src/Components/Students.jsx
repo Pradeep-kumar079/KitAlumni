@@ -47,7 +47,7 @@ const Students = () => {
   return (
     <div className="batch-container">
       <Navbar />
-      <h2>Find Students by Batch Year :</h2>
+      <h2 className="mainheading" id="mainheading">Find Students by Batch Year :</h2>
       {batches.length === 0 ? (
         <p>No batches found.</p>
       ) : (

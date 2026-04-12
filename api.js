@@ -1,12 +1,23 @@
-// src/api.js
 import axios from "axios";
 
-// ✅ Your correct Render backend URL
-const backendUrl = "https://kitalumni-backend.onrender.com";
-
 const api = axios.create({
-  baseURL: `${backendUrl}/api`, // All API routes prefixed with /api
-  withCredentials: true, // Allow cookies/auth headers
+  baseURL: "https://kitalumni-backend.onrender.com/api",
 });
+
+// 🔥 FORCE TOKEN ATTACH
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+
+    console.log("🚀 TOKEN ATTACHED:", token); // DEBUG
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 export default api;

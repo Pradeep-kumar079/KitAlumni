@@ -4,23 +4,44 @@ const UserModel = require("../Models/UserModel");
 const verifyToken = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
+
+    console.log("AUTH HEADER:", authHeader); // DEBUG
+
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return res.status(401).json({ success: false, message: "No token provided" });
+      return res.status(401).json({
+        success: false,
+        message: "No token provided",
+      });
     }
 
     const token = authHeader.split(" ")[1];
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const user = await UserModel.findById(decoded.id).select("-password");
+    console.log("DECODED:", decoded); // 🔥 IMPORTANT DEBUG
+
+    // ✅ FIX: support both id and _id
+    const userId = decoded.id || decoded._id;
+
+    const user = await UserModel.findById(userId).select("-password");
+
     if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
     }
 
-    req.user = user; // ✅ so req.user._id is available
+    req.user = user;
     next();
+
   } catch (error) {
     console.error("Token verification error:", error);
-    return res.status(401).json({ success: false, message: "Invalid token" });
+
+    return res.status(401).json({
+      success: false,
+      message: "Invalid token",
+    });
   }
 };
 

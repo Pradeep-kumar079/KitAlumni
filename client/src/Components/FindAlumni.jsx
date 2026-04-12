@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
-import "./Students.css";
+import "./FindStudent.css";
 
 const FindAlumni = () => {
-  const { batchYear } = useParams();
+  const { admissionyear } = useParams();
   const [alumniList, setAlumniList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState(null);
@@ -13,6 +13,7 @@ const FindAlumni = () => {
 
   const API_BASE =  "https://kitalumni-backend.onrender.com";
   const defaultImg = "uploads/default.jpg";
+  console.log("🔍 Finding alumni for admissionyear:", admissionyear);
 
   useEffect(() => {
     const fetchAlumni = async () => {
@@ -37,7 +38,7 @@ const FindAlumni = () => {
             // Try to find matching batch
             const selectedBatch = res.data.batches.find(
               (b) =>
-                String(b.batchYear).trim() === String(batchYear).trim()
+                String(b.batchYear).trim() === String(admissionyear).trim()
             );
 
             if (selectedBatch && Array.isArray(selectedBatch.alumni)) {
@@ -50,8 +51,8 @@ const FindAlumni = () => {
             const allAlumni = res.data.batches.flatMap(b => b.alumni);
             foundAlumni = allAlumni.filter(
               (a) =>
-                String(a.batchYear).trim() === String(batchYear).trim() ||
-                String(a.admissionyear).trim() === String(batchYear).trim()
+                String(a.batchYear).trim() === String(admissionyear).trim() ||
+                String(a.admissionyear).trim() === String(admissionyear).trim()
             );
           }
 
@@ -65,7 +66,7 @@ const FindAlumni = () => {
     };
 
     fetchAlumni();
-  }, [batchYear]);
+  }, [admissionyear]);
 
   const handleRequest = async (to) => {
     try {
@@ -100,7 +101,7 @@ const FindAlumni = () => {
   if (loading) return <div className="loading">Loading...</div>;
 
   if (!alumniList.length)
-    return <div className="no-batch">No alumni found for batch {batchYear}</div>;
+    return <div className="no-batch">No alumni found for batch {admissionyear}</div>;
 
   // ✅ Group alumni by branch
   const groupedByBranch = alumniList.reduce((acc, a) => {
@@ -111,12 +112,12 @@ const FindAlumni = () => {
 
   return (
     <div className="batch-container">
-      <Navbar />
-      <h2>Alumni in {batchYear}</h2>
+      {/* <Navbar /> */}
+      <h2 id="mainheading">Alumni in {admissionyear}</h2>
 
       {Object.entries(groupedByBranch).map(([branch, list]) => (
         <div key={branch} className="branch-group">
-          <h3>{branch}</h3>
+          <h3>Department of {branch}</h3>
           <div className="table-wrapper">
             <table className="student-table">
               <thead>

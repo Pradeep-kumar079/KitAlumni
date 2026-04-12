@@ -44,7 +44,7 @@ const Gallary = () => {
             <div
               key={item._id}
               className="gallery-card"
-              onClick={() => navigate(`/gallery/${item._id}`)} // Navigate to single item view
+              onClick={() => navigate(`/gallery/${item._id}`)}
               style={{ cursor: "pointer" }}
             >
               {item.image && (

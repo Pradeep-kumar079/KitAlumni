@@ -1,187 +1,213 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { useNavigate } from "react-router-dom";
 import "./AllPosts.css";
+
+// ICONS
+import { AiOutlineLike, AiFillLike } from "react-icons/ai";
+import { FaRegCommentDots } from "react-icons/fa";
+import { FiShare2 } from "react-icons/fi";
 
 const BACKEND_URL = "https://kitalumni-backend.onrender.com";
 
 const AllPosts = () => {
-  // ✅ Universal image rendering helper
-  const renderImage = (path) => {
-    if (!path) return `${BACKEND_URL}/uploads/default.jpg`;
-    if (path.startsWith("http")) return path;
-    return path.startsWith("uploads/")
-      ? `${BACKEND_URL}/${path}`
-      : `${BACKEND_URL}/uploads/${path}`;
-  };
-
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+
   const navigate = useNavigate();
 
+  // ================= IMAGE =================
+  const renderImage = (path) => {
+    if (!path) return null;
+    if (path.startsWith("http")) return path;
+    return `${BACKEND_URL}/uploads/${path}`;
+  };
+
+  // ================= FETCH POSTS =================
   const fetchPosts = async () => {
     try {
-      const res = await axios.get(`${BACKEND_URL}/api/user/allposts`);
-      if (res.data.success && Array.isArray(res.data.posts)) {
-        setPosts(res.data.posts);
-      } else {
-        setPosts([]);
+      const res = await api.get(`/user/allposts?page=${page}&limit=5`);
+
+      if (res.data.success) {
+        if (res.data.posts.length === 0) {
+          setHasMore(false);
+        } else {
+          setPosts((prev) => [...prev, ...res.data.posts]);
+        }
       }
     } catch (err) {
-      console.error("Error fetching posts:", err.response?.data || err);
-      setPosts([]);
-    } finally {
-      setLoading(false);
+      console.error("Fetch error:", err.response?.data || err.message);
     }
   };
 
   useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [page]);
 
-  if (loading) return <div>Loading posts...</div>;
-  if (!posts.length) return <div>No posts available</div>;
-
-  const handlePostClick = (postId) => {
-    navigate(`/post/${postId}`);
-  };
-
-  const handleProfileClick = (userId) => {
-    if (!userId) return;
-    navigate(`/profile/${userId}`);
-  };
-
+  // ================= LIKE =================
   const handleLike = async (postId) => {
     try {
-      const res = await axios.post(`${BACKEND_URL}/api/user/like/${postId}`);
-      if (res.data.success) {
-        setPosts((prevPosts) =>
-          prevPosts.map((post) =>
-            post._id === postId
-              ? { ...post, likes: res.data.updatedLikes }
-              : post
-          )
-        );
-      }
+      const res = await api.post(`/user/like/${postId}`);
+
+      setPosts((prev) =>
+        prev.map((p) =>
+          p._id === postId
+            ? { ...p, likes: res.data.updatedLikes }
+            : p
+        )
+      );
     } catch (err) {
-      console.error("Like error:", err);
+      console.error("Like error:", err.response?.data || err.message);
     }
   };
 
-  const handleComment = async (postId, commentText) => {
-    if (!commentText) return;
+  // ================= COMMENT =================
+  const handleComment = async (postId) => {
+    const text = prompt("Enter your comment:");
+    if (!text) return;
+
     try {
-      const res = await axios.post(`${BACKEND_URL}/api/user/comment/${postId}`, {
-        comment: commentText,
+      const res = await api.post(`/user/comment/${postId}`, {
+        comment: text,
       });
-      if (res.data.success) {
-        setPosts((prevPosts) =>
-          prevPosts.map((post) =>
-            post._id === postId
-              ? { ...post, comments: res.data.updatedComments }
-              : post
-          )
-        );
-      }
+
+      setPosts((prev) =>
+        prev.map((p) =>
+          p._id === postId
+            ? { ...p, comments: res.data.updatedComments }
+            : p
+        )
+      );
     } catch (err) {
-      console.error("Comment error:", err);
+      console.error("Comment error:", err.response?.data || err.message);
     }
   };
 
+  // ================= SHARE =================
   const handleShare = (postId) => {
-    const shareUrl = `${window.location.origin}/post/${postId}`;
-    navigator.clipboard.writeText(shareUrl);
-    alert("Post link copied to clipboard!");
+    const url = `${window.location.origin}/post/${postId}`;
+    navigator.clipboard.writeText(url);
+    alert("🔗 Link copied!");
   };
 
   return (
-    <div className="all-post-container">
-      <div className="posts-container">
+    <div className="feed-wrapper">
+      <div className="feed-container">
+
         {posts.map((post) => {
-          // ✅ Ensure post.user is always safe
           const user = post.user || {};
-          const userImg = renderImage(user.userimg);
-          const username = user.username || "Unknown User";
-          const userId = user._id || null;
+          const profileImg = renderImage(user.userimg);
 
           return (
-            <div key={post._id} className="post-card">
-              {/* Post Header */}
-              <div className="post-header">
-                <div
-                  className="userprof"
-                  onClick={() => handleProfileClick(userId)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <img
-                    src={userImg}
-                    alt={username}
-                    className="post-profile-img"
-                  />
-                </div>
+            <div
+              key={post._id}
+              className="feed-card"
+              onClick={() => navigate(`/post/${post._id}`)}
+            >
 
-                <div
-                  onClick={() => handleProfileClick(userId)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <h4 className="post-username">{username}</h4>
+              {/* HEADER */}
+              <div className="feed-header">
+
+                {/* AVATAR */}
+                {profileImg ? (
+                  <img
+                    src={profileImg}
+                    alt=""
+                    className="feed-avatar"
+                  />
+                ) : (
+                  <div className="feed-avatar fallback-avatar">
+                    {user.username
+                      ? user.username.charAt(0).toUpperCase()
+                      : "U"}
+                  </div>
+                )}
+
+                <div>
+                  <h4>{user.username || "User"}</h4>
                   <small>
-                    {new Date(post.createdAt).toLocaleString() || ""}
+                    {new Date(post.createdAt).toLocaleString()}
                   </small>
                 </div>
               </div>
 
-              {/* Post Content */}
-              <div
-                className="post-content"
-                onClick={() => handlePostClick(post._id)}
-                style={{ cursor: "pointer" }}
-              >
+              {/* CONTENT */}
+              <div className="feed-content">
                 {post.title && <h3>{post.title}</h3>}
+                {post.description && <p>{post.description}</p>}
 
                 {post.postimg && (
                   <img
                     src={renderImage(post.postimg)}
-                    alt="Post"
-                    className="post-img"
+                    alt=""
+                    className="feed-image"
                   />
                 )}
-
-                {post.description && <p>{post.description}</p>}
               </div>
 
-              {/* Post Details */}
-              <div className="post-details">
-                <small>Category: {post.category || "General"}</small>
-                {post.hashtags?.length > 0 && (
-                  <div className="hashtags">
-                    {post.hashtags.map((tag, idx) => (
-                      <span key={idx} className="hashtag">
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                <small>Likes: {post.likes?.length || 0}</small>
-                <small>Comments: {post.comments?.length || 0}</small>
-              </div>
+              {/* ACTIONS */}
+              <div className="feed-actions">
 
-              {/* Post Actions */}
-              <div className="post-actions">
-                <button onClick={() => handleLike(post._id)}> Like</button>
+                {/* LIKE */}
                 <button
-                  onClick={() => {
-                    const commentText = prompt("Enter your comment:");
-                    handleComment(post._id, commentText);
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLike(post._id);
+                  }}
+                  className={post.likes?.length > 0 ? "active-like" : ""}
+                >
+                  {post.likes?.length > 0 ? <AiFillLike /> : <AiOutlineLike />}
+                  <span>{post.likes?.length || 0}</span>
+                </button>
+
+                {/* COMMENT */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleComment(post._id);
                   }}
                 >
-                  Comment
+                  <FaRegCommentDots />
+                  <span>{post.comments?.length || 0}</span>
                 </button>
-                <button onClick={() => handleShare(post._id)}>🔗 Share</button>
+
+                {/* SHARE */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleShare(post._id);
+                  }}
+                >
+                  <FiShare2 />
+                  <span>Share</span>
+                </button>
+
               </div>
+
             </div>
           );
         })}
+
+        {/* LOAD MORE */}
+        {hasMore && (
+          <div style={{ textAlign: "center", marginTop: "20px" }}>
+            <button
+              onClick={() => setPage((prev) => prev + 1)}
+              style={{
+                padding: "10px 20px",
+                borderRadius: "8px",
+                border: "none",
+                background: "#3b82f6",
+                color: "white",
+                cursor: "pointer",
+              }}
+            >
+              Load More
+            </button>
+          </div>
+        )}
+
       </div>
     </div>
   );

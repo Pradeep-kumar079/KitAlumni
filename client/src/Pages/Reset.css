@@ -1,0 +1,22 @@
+/* ================= INPUT GROUP (FOR EYE ICON) ================= */
+.input-group {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px;
+  padding-right: 40px;
+}
+
+/* eye icon */
+.toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 14px;
+  color: #cbd5f5;
+}

@@ -1,28 +1,99 @@
-/* Wrapper for About content */
+/* ===== WRAPPER ===== */
 .about-wrapper {
-  max-width: 800px;
-  margin: 50px auto;
-  padding: 25px 20px;
-  background-color: #f0f4f8;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.7;
-  color: #333;
-  font-size: 16px;
+  max-width: 900px;
+  margin: 100px auto 40px;
+  padding: 30px 25px;
+
+  background: #ffffff;
+  border-radius: 16px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+  font-family: "Inter", "Poppins", sans-serif;
+  color: #334155;
 }
 
-/* Responsive adjustments */
+/* TITLE */
+.about-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 20px;
+}
+
+/* DESC */
+.about-desc {
+  text-align: center;
+  font-size: 15px;
+  margin-bottom: 30px;
+}
+
+/* SECTION */
+.about-section {
+  margin-bottom: 25px;
+}
+
+.about-section h2 {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+/* ===== STACK GRID ===== */
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.stack-grid div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: #f1f5f9;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* ===== FEATURES ===== */
+.feature-list {
+  list-style: none;
+  padding: 0;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 10px;
+}
+
+/* ICON STYLE */
+.about-section svg {
+  color: #3b82f6;
+  font-size: 18px;
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .about-wrapper {
-    padding: 20px;
-    font-size: 15px;
+    margin: 90px 15px;
+    padding: 25px 18px;
+  }
+
+  .about-title {
+    font-size: 24px;
   }
 }
 
 @media (max-width: 480px) {
-  .about-wrapper {
-    padding: 15px;
+  .about-title {
+    font-size: 20px;
+  }
+
+  .about-desc {
     font-size: 14px;
   }
 }

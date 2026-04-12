@@ -1,103 +1,317 @@
-/* * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Poppins", sans-serif;
-  background-color: #f0f4f8;
-  min-height: 100vh;
-} */
-
-/* Wrapper ensures spacing below navbar */
+/* ================= WRAPPER ================= */
 .addpost-wrapper {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 100px; 
+
+  background: #f5f7fb;
+  padding: 100px 20px 40px;
 }
 
-/* Main container */
- .addpost-container {
-  width: 90%;
-  max-width: 550px;
-  background: #fff;
+/* ================= CARD ================= */
+.addpost-container {
+  width: 100%;
+  max-width: 650px;
+
+  background: #ffffff;
   border-radius: 16px;
-  padding: 35px 30px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ================= HEADER ================= */
+.addpost-container h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #1e293b;
+  text-align: center;
+}
+
+/* ================= FORM ================= */
+.post-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ================= INPUTS ================= */
+.post-content input,
+.post-content textarea {
+  width: 100%;
+  padding: 14px 16px;
+
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+
+  font-size: 14px;
+  background: #f8fafc;
+  color: #1e293b;
+
+  transition: all 0.25s ease;
+}
+
+/* Focus */
+.post-content input:focus,
+.post-content textarea:focus {
+  border-color: #3b82f6;
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Textarea */
+.post-content textarea {
+  min-height: 130px;
+  resize: none;
+}
+
+/* ================= FILE UPLOAD ================= */
+.file-label {
+  border: 2px dashed #cbd5e1;
+  padding: 20px;
+  border-radius: 12px;
+
+  text-align: center;
+  cursor: pointer;
+  color: #64748b;
+
   transition: all 0.3s ease;
 }
 
-.addpost-container:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+.file-label:hover {
+  border-color: #3b82f6;
+  color: #3b82f6;
+  background: #f0f7ff;
 }
 
-.addpost-container h2 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 25px;
-} 
+.file-label input {
+  display: none;
+}
 
-/* Form layout */
- .post-content label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 500;
-  color: #333;
+/* ================= IMAGE PREVIEW ================= */
+.preview-img {
+  width: 100%;
+  border-radius: 12px;
+  margin-top: 10px;
+
+  border: 1px solid #e2e8f0;
+}
+
+/* ================= BUTTON ================= */
+.post-content button {
+  margin-top: 10px;
+
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  color: white;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Hover */
+.post-content button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .addpost-wrapper {
+    padding: 90px 15px 30px;
+  }
+
+  .addpost-container {
+    padding: 25px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .addpost-container {
+    padding: 20px;
+  }
+
+  .post-content input,
+  .post-content textarea {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .post-content button {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+/* Icons inside buttons */
+.post-actions button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 14px;
+  color: #64748b;
+
+  transition: 0.2s;
+}
+
+.post-actions button:hover {
+  color: #1e3a8a;
+}
+
+/* Upload icon */
+.file-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+/* ================= LAYOUT ================= */
+.main-layout {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 90px 20px;
+  background: #f1f5f9;
+}
+
+/* ================= FORM ================= */
+.addpost-container {
+  max-width: 450px;
+  width: 100%;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+/* ================= INPUT ================= */
+.post-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .post-content input,
 .post-content textarea {
-  width: 100%;
-  padding: 12px 5px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-  outline: none;
-  transition: all 0.3s ease;
-  resize: none;
-}
-
-.post-content input:focus,
-.post-content textarea:focus {
-  border-color: #4a90e2;
-  background-color: #f8fbff;
-} 
-
-/* File input look */
-.post-content input[type="file"] {
-  border: none;
-  padding: 0;
-  margin-bottom: 15px;
-} 
-
-/* Button style */
- .post-content button {
-  width: 100%;
   padding: 12px;
-  background: #4a90e2;
-  color: #fff;
-  border: none;
   border-radius: 8px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: 0.3s ease;
+  border: 1px solid #e2e8f0;
 }
 
-.post-content button:hover {
-  background: #357ac8;
-} 
+.post-content textarea {
+  min-height: 100px;
+}
 
-/* Responsive */
- @media (max-width: 600px) {
-  .addpost-container {
-    padding: 25px 20px;
-  }
+/* ================= FILE ================= */
+.file-label {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  border: 2px dashed #cbd5e1;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
 
-  .addpost-container h2 {
-    font-size: 20px;
+.file-label input {
+  display: none;
+}
+
+/* ================= PREVIEW ================= */
+.preview-img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* ================= BUTTON ================= */
+.post-content button {
+  padding: 12px;
+  background: #1e3a8a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+
+/* ================= FEED ================= */
+.feed {
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ================= POST ================= */
+.post-card {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.post-header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.post-header img {
+  width: 40px;
+  border-radius: 50%;
+}
+
+.post-text {
+  margin: 10px 0;
+}
+
+.post-image {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* ================= ACTIONS ================= */
+.post-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.post-actions button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* ================= COMMENTS ================= */
+.comment-box input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.comment-list {
+  margin-top: 5px;
+  font-size: 13px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
   }
-} 
+}

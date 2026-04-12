@@ -26,6 +26,9 @@ const UserSchema = new mongoose.Schema(
     dob: { type: Date },
     isOnline: { type: Boolean, default: false },
     connections: [{ type: mongoose.Schema.Types.ObjectId, ref: "UserModel" }],
+
+     resetPasswordToken: { type: String },
+    resetPasswordExpire: { type: Date },
   },
   { timestamps: true }
 );

@@ -39,7 +39,7 @@ const Alumni = () => {
   return (
     <div className="batch-container">
       <Navbar />
-      <h2>Find Alumni By Batch Year :</h2>
+      <h2 id="mainheading">Find Alumni By Batch Year :</h2>
 
       {batches.length === 0 ? (
         <p className="no-batch">No alumni batches found yet.</p>

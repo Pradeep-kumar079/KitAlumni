@@ -528,7 +528,7 @@ const backend =  "https://kitalumni-backend.onrender.com";
                     <h3>{item.title}</h3>
                     <p>{item.description}</p>
                     <div className="gallery-actions">
-                      <button onClick={() => handleEdit(item)}>Edit</button>
+                      <button onClick={() => handleEdit(item)} className="editbtn">Edit</button>
                       <button className="delete-btn" onClick={() => handleDeleteGallery(item._id)}>Delete</button>
                     </div>
                   </div>

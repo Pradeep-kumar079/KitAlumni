@@ -63,6 +63,7 @@ const crypto = require("crypto");
 //       .json({ success: false, message: "Failed to send OTP. Please try again." });
 //   }
 // };
+const brevoApi = process.env.BREVO_API_KEY;
 
 
 const sendOtpController = async (req, res) => {
@@ -85,7 +86,7 @@ const sendOtpController = async (req, res) => {
     );
 
     const client = SibApiV3Sdk.ApiClient.instance;
-    client.authentications["api-key"].apiKey = process.env.BREVO_API_KEY;
+    client.authentications["api-key"].apiKey = brevoApi;
 
     const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
@@ -249,7 +250,7 @@ const LoginController = async (req, res) => {
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: "1d" }
+      { expiresIn: "7d" }
     );
 
     // ✅ Remove password from response
@@ -328,16 +329,35 @@ const PostController = async (req, res) => {
 
 const allPostsController = async (req, res) => {
   try {
+    // ✅ get page & limit from query
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+
+    // ✅ total count (optional but useful)
+    const totalPosts = await PostModel.countDocuments();
+
     const posts = await PostModel.find()
       .populate("user", "username email userimg")
       .populate("likes", "username")
-
       .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)   // 🔥 important
+      .limit(limit)               // 🔥 important
       .exec();
-    res.status(200).json({ success: true, posts });
+
+    res.status(200).json({
+      success: true,
+      posts,
+      currentPage: page,
+      totalPages: Math.ceil(totalPosts / limit),
+      totalPosts,
+    });
+
   } catch (error) {
     console.log("Fetch Posts Error:", error);
-    res.status(500).json({ success: false, message: "Error fetching posts" });
+    res.status(500).json({
+      success: false,
+      message: "Error fetching posts",
+    });
   }
 };
 
