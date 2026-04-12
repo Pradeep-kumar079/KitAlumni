@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Admin.css";
@@ -42,10 +42,55 @@ const backend =  "https://kitalumni-backend.onrender.com";
 
 
   // fetch data for currently selected tab
-  const fetchData = async (tab) => {
+  // const fetchData = useCallback()
+  // async (tab) => {
+  //   try {
+  //     if (tab === "Log out") return handleLogout();
+  //     const res = await axios.get(`${backend}/api/admin/${tab}`);
+  //     if (res.data.success) {
+  //       switch (tab) {
+  //         case "dashboard":
+  //           setDashboard(res.data.data || {});
+  //           break;
+  //         case "users":
+  //           setUsers(res.data.users || []);
+  //           break;
+  //         case "posts":
+  //           setPosts(res.data.posts || []);
+  //           break;
+  //         case "connections":
+  //           setConnections(res.data.connections || []);
+  //           break;
+  //         case "profiles":
+  //           setProfiles(res.data.profiles || []);
+  //           break;
+  //         case "gallery":
+  //           setGallery(res.data.gallery || []);
+  //           break;
+  //         case "sentmessages":
+  //           setSentMessages(res.data.sentMessages || []);
+  //           break;
+  //         default:
+  //           break;
+  //       }
+  //     }
+  //   } catch (err) {
+  //     console.error(`❌ Error fetching ${tab}:`, err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchData(activeTab);
+  // }, [fetchData, activeTab]);
+
+
+
+  const fetchData = useCallback(async (tab) => {
     try {
       if (tab === "Log out") return handleLogout();
+
       const res = await axios.get(`${backend}/api/admin/${tab}`);
+
       if (res.data.success) {
         switch (tab) {
           case "dashboard":
@@ -76,11 +121,12 @@ const backend =  "https://kitalumni-backend.onrender.com";
     } catch (err) {
       console.error(`❌ Error fetching ${tab}:`, err);
     }
-  };
+  }, []); // ✅ dependency array
 
   useEffect(() => {
     fetchData(activeTab);
-  }, [activeTab]);
+  }, [activeTab, fetchData]); // ✅ correct dependencies
+
 
   const handleLogout = () => {
     localStorage.removeItem("token");

@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import axios from "axios";
 import "./Register.css";
 import API from "../api"
 import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
-  const BACKEND_URL = "https://kitalumni-backend.onrender.com";
+  // const BACKEND_URL = "https://kitalumni-backend.onrender.com";
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const [otpVerified, setOtpVerified] = useState(false);
+  // const [otpVerified, setOtpVerified] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -70,7 +69,7 @@ const Register = () => {
       });
       if (res.data.success) {
         alert("OTP verified successfully!");
-        setOtpVerified(true);
+        // setOtpVerified(true);
         setStep(2);
       } else alert(res.data.message || "Invalid OTP.");
     } catch (err) {

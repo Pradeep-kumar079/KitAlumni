@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
 import "./AllPosts.css";
@@ -25,7 +25,7 @@ const AllPosts = () => {
   };
 
   // ================= FETCH POSTS =================
-  const fetchPosts = async () => {
+  const fetchPosts = useCallback(async () => {
     try {
       const res = await api.get(`/user/allposts?page=${page}&limit=5`);
 
@@ -39,11 +39,12 @@ const AllPosts = () => {
     } catch (err) {
       console.error("Fetch error:", err.response?.data || err.message);
     }
-  };
+  }, [page]); // ✅ dependency handled properly
 
+  // ================= EFFECT =================
   useEffect(() => {
     fetchPosts();
-  }, [page]);
+  }, [fetchPosts]); // ✅ stable dependency
 
   // ================= LIKE =================
   const handleLike = async (postId) => {
