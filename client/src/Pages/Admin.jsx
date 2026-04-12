@@ -38,51 +38,15 @@ const Admin = () => {
    
 const backend =  "https://kitalumni-backend.onrender.com";
 
-
+  const handleLogout = useCallback(() => {
+  localStorage.removeItem("token");
+  navigate("/login");
+  window.location.reload();
+  }, [navigate]);
 
  
-  // const fetchData = async (tab) => {
-  //   try {
-  //     if (tab === "Log out") return handleLogout();
-
-  //     const res = await axios.get(`${backend}/api/admin/${tab}`);
-
-  //     if (res.data.success) {
-  //       switch (tab) {
-  //         case "dashboard":
-  //           setDashboard(res.data.data || {});
-  //           break;
-  //         case "users":
-  //           setUsers(res.data.users || []);
-  //           break;
-  //         case "posts":
-  //           setPosts(res.data.posts || []);
-  //           break;
-  //         case "connections":
-  //           setConnections(res.data.connections || []);
-  //           break;
-  //         case "profiles":
-  //           setProfiles(res.data.profiles || []);
-  //           break;
-  //         case "gallery":
-  //           setGallery(res.data.gallery || []);
-  //           break;
-  //         case "sentmessages":
-  //           setSentMessages(res.data.sentMessages || []);
-  //           break;
-  //         default:
-  //           break;
-  //       }
-  //     }
-  //   } catch (err) {
-  //     console.error(`❌ Error fetching ${tab}:`, err);
-  //   }
-  // };
-
-  // // ✅ Correct useEffect
-  // useEffect(() => {
-  //   fetchData(activeTab);
-  // }, [activeTab]);
+  // fetch data for active tab
+   
   const fetchData = useCallback(async (tab) => {
   try {
     if (tab === "Log out") return handleLogout();
@@ -126,11 +90,7 @@ const backend =  "https://kitalumni-backend.onrender.com";
 }, [activeTab, fetchData]); // ✅ include fetchData
 
 
-  const handleLogout = useCallback(() => {
-  localStorage.removeItem("token");
-  navigate("/login");
-  window.location.reload();
-  }, [navigate]);
+
 
   const handleDeleteUser = async (id, e) => {
     e.stopPropagation();
