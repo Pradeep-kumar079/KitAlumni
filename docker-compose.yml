@@ -3,7 +3,7 @@ version: "3.8"
 services:
   frontend:
     build: ./client
-    image: Pradeep079/frontend:latest
+    image: pradeep079/frontend:latest
     ports:
       - "3000:80"
     depends_on:
@@ -11,7 +11,7 @@ services:
 
   backend:
     build: .
-    image: Pradeep079/backend:latest
+    image: pradeep079/backend:latest
     ports:
       - "5000:5000"
     environment:
