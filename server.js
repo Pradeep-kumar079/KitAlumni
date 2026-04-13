@@ -28,11 +28,10 @@ mongoose
 
 /* ================== CORS (FIXED 🔥) ================== */
 const allowedOrigins = [
-  " https://pradeepkumar.site",
-  "http://127.0.0.1:3000",
-  //   "http://localhost:3001",
-  // "http://127.0.0.1:3001",
-  " https://pradeepkumar.site"
+  "https://pradeepkumar.site",
+  "https://www.pradeepkumar.site",
+  "http://pradeepkumar.site",
+  "http://www.pradeepkumar.site"
 ];
 
 app.use(
