@@ -72,7 +72,7 @@ const Account = () => {
 
       if (selectedImage) formData.append("userimg", selectedImage);
 
-      const res = await axios.put(`${BACKEND_URL}/api/account/update`, formData, {
+      const res = await axios.put(`/api/account/update`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -93,7 +93,7 @@ const Account = () => {
   const handleLike = async (postId) => {
     const token = localStorage.getItem("token");
     try {
-      const res = await axios.put(`${BACKEND_URL}/api/posts/like/${postId}`, {}, {
+      const res = await axios.put(`/api/posts/like/${postId}`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.data.success) {
@@ -115,7 +115,7 @@ const Account = () => {
   const handleSavePost = async (postId) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.put(`${BACKEND_URL}/api/posts/update/${postId}`, updatedPost, {
+      const res = await axios.put(`/api/posts/update/${postId}`, updatedPost, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.data.success) {
@@ -132,7 +132,7 @@ const Account = () => {
     if (!window.confirm("Are you sure you want to delete this post?")) return;
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.delete(`${BACKEND_URL}/api/posts/delete/${postId}`, {
+      const res = await axios.delete(`/api/posts/delete/${postId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.data.success) {
@@ -157,8 +157,8 @@ const Account = () => {
               previewImage
                 ? previewImage
                 : user.userimg
-                ? `${BACKEND_URL}/${user.userimg}`
-                : `${BACKEND_URL}/uploads/default.jpg`
+                ? `/${user.userimg}`
+                : `/uploads/default.jpg`
             }
             alt="Profile"
             className="profile-img"
@@ -286,7 +286,7 @@ const Account = () => {
                       {post.postimg && (
                         <div className="post-image-container">
                           <img
-                            src={`${BACKEND_URL}/uploads/${post.postimg}`}
+                            src={`/uploads/${post.postimg}`}
                             alt="Post"
                           />
                         </div>
