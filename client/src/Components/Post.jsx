@@ -4,7 +4,7 @@ import axios from "axios";
 import "./Post.css";
 
 const Post = () => {
-  const BACKEND_URL = "https://kitalumni-backend.onrender.com";
+  const BACKEND_URL = "https://pradeepkumar.site";
 
   const [formData, setFormData] = useState({
     title: "",

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import "./UserDetails.css";
 
-const BACKEND_URL = "https://kitalumni-backend.onrender.com";
+const BACKEND_URL = "https://pradeepkumar.site";
 
 const socket = io(BACKEND_URL, {
   transports: ["websocket"],

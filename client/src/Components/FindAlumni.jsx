@@ -10,7 +10,7 @@ const FindAlumni = () => {
   const [currentUserId, setCurrentUserId] = useState(null);
   const navigate = useNavigate();
 
-  const API_BASE =  "https://kitalumni-backend.onrender.com";
+  const API_BASE =  "https://pradeepkumar.site";
   const defaultImg = "uploads/default.jpg";
   console.log("🔍 Finding alumni for admissionyear:", admissionyear);
 

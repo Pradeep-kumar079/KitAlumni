@@ -7,7 +7,7 @@ const ForgotPass = () => {
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
- const BACKEND_URL = "https://kitalumni-backend.onrender.com";
+ const BACKEND_URL = "https://pradeepkumar.site";
 
 
   const handleSubmit = async (e) => {

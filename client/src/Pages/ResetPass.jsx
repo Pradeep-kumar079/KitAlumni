@@ -4,7 +4,7 @@ import axios from "axios";
 import "./Reset.css";
 
 const ResetPass = () => {
-  const BACKEND_URL = "https://kitalumni-backend.onrender.com";
+  const BACKEND_URL = "https://pradeepkumar.site";
 
   const { token } = useParams();
   const navigate = useNavigate();

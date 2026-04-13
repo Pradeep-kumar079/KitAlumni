@@ -6,7 +6,7 @@ import { FaGraduationCap, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
 const Navbar = () => {
-  const BACKEND_URL = "https://kitalumni-backend.onrender.com";
+  const BACKEND_URL = "https://pradeepkumar.site";
 
   const navigate = useNavigate();
   const [query, setQuery] = useState("");

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://kitalumni-backend.onrender.com/api",
+  baseURL: "https://pradeepkumar.site/api",
 });
 
 // 🔥 FORCE TOKEN ATTACH

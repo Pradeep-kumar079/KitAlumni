@@ -5,7 +5,7 @@ import axios from "axios";
 const AcceptRequest = ({ refreshStudents }) => {
   const { token } = useParams();
   const navigate = useNavigate();
-  const BACKEND_URL = "https://kitalumni-backend.onrender.com";
+  const BACKEND_URL = "https://pradeepkumar.site";
 
   useEffect(() => {
     const acceptConnection = async () => {

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const backendUrl = "https://kitalumni-backend.onrender.com";
+const backendUrl = "https://pradeepkumar.site";
 
 const api = axios.create({
   baseURL: `${backendUrl}/api`,

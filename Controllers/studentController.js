@@ -62,7 +62,7 @@ const sendRequestController = async (req, res) => {
 
     await newRequest.save();
 
-    const backendUrl = "https://kitalumni-backend.onrender.com";
+    const backendUrl = "https://pradeepkumar.site";
     const acceptUrl = `${backendUrl}/api/student/accept-request/${token}`;
     const rejectUrl = `${backendUrl}/api/student/reject-request/${token}`;
 

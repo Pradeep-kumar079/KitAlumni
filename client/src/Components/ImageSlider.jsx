@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./ImageSlider.css";
 
 const images = [
-  "https://kitalumni-backend.onrender.com/uploads/slide1.jpg",
-  "https://kitalumni-backend.onrender.com/uploads/slide2.jpg",
-  "https://kitalumni-backend.onrender.com/uploads/slide3.jpg",
-  "https://kitalumni-backend.onrender.com/uploads/slide4.jpg",
+  "https://pradeepkumar.site/uploads/slide1.jpg",
+  "https://pradeepkumar.site/uploads/slide2.jpg",
+  "https://pradeepkumar.site/uploads/slide3.jpg",
+  "https://pradeepkumar.site/uploads/slide4.jpg",
 ];
 
 const ImageSlider = () => {

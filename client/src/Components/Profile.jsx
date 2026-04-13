@@ -14,7 +14,7 @@ const Profile = () => {
   const [currentUserId, setCurrentUserId] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [isRequestSent, setIsRequestSent] = useState(false);
-  const base_url =  "https://kitalumni-backend.onrender.com";
+  const base_url =  "https://pradeepkumar.site";
 
   useEffect(() => {
     const fetchProfile = async () => {

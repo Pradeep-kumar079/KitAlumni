@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import "./Students.css";
 
-const BACKEND_URL = "https://kitalumni-backend.onrender.com";
+const BACKEND_URL = "https://pradeepkumar.site";
 
 const Alumni = () => {
   const [batches, setBatches] = useState([]);

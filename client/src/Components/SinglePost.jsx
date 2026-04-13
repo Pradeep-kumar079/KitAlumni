@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./SinglePost.css";
 
-const base_url = "https://kitalumni-backend.onrender.com";
+const base_url = "https://pradeepkumar.site";
 
 const SinglePost = () => {
   const { id } = useParams();

@@ -36,7 +36,7 @@ const Admin = () => {
   const [editFile, setEditFile] = useState(null);
 
    
-const backend =  "https://kitalumni-backend.onrender.com";
+const backend =  "https://pradeepkumar.site";
 
   const handleLogout = useCallback(() => {
   localStorage.removeItem("token");

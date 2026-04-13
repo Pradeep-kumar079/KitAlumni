@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import "./Account.css";
 
-const BACKEND_URL =   "https://kitalumni-backend.onrender.com";
+const BACKEND_URL =   "https://pradeepkumar.site";
 
 
 const Account = () => {

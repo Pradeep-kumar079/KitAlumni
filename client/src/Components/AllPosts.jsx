@@ -8,7 +8,7 @@ import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 import { FiShare2 } from "react-icons/fi";
 
-const BACKEND_URL = "https://kitalumni-backend.onrender.com";
+const BACKEND_URL = "https://pradeepkumar.site";
 
 const AllPosts = () => {
   const [posts, setPosts] = useState([]);

@@ -9,7 +9,7 @@ const SingleGallery = () => {
   const [galleryItem, setGalleryItem] = useState(null);
 
   // Deployed backend URL
- const base_url = "https://kitalumni-backend.onrender.com";
+ const base_url = "https://pradeepkumar.site";
 
 
   useEffect(() => {

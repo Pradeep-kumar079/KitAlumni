@@ -8,7 +8,7 @@ const FeedbackForm = () => {
   const token = localStorage.getItem("token");
 
   // Automatically detect whether we're on localhost or deployed
-  const API_BASE =  "https://kitalumni-backend.onrender.com";
+  const API_BASE =  "https://pradeepkumar.site";
 
 
   const handleSubmit = async (e) => {
