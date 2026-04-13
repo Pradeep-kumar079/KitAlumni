@@ -34,28 +34,7 @@ mongoose
 //   "http://www.pradeepkumar.site"
 // ];
 
-// app.use(
-//   cors({
-//     origin: function (origin, callback) {
-//       if (!origin || allowedOrigins.includes(origin)) {
-//         callback(null, true);
-//       } else {
-//         console.warn("❌ Blocked by CORS:", origin);
-//         callback(new Error("Not allowed by CORS"));
-//       }
-//     },
-//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-//     allowedHeaders: ["Content-Type", "Authorization"],
-//     credentials: true,
-//   })
-// );
-app.use(cors({
-  origin: [
-    "https://pradeepkumar.site",
-    "http://localhost:3000"
-  ],
-  credentials: true
-}));
+app.use(cors());
 
 /* ================== IMPORT ROUTES ================== */
 const UserRoutes = require("./Routes/UserRoutes");
