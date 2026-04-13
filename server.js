@@ -49,7 +49,13 @@ mongoose
 //     credentials: true,
 //   })
 // );
-app.use(cors());
+app.use(cors({
+  origin: [
+    "https://pradeepkumar.site",
+    "http://localhost:3000"
+  ],
+  credentials: true
+}));
 
 /* ================== IMPORT ROUTES ================== */
 const UserRoutes = require("./Routes/UserRoutes");
