@@ -17,7 +17,10 @@ if (!fs.existsSync("uploads")) {
 }
 
 /* ================== MIDDLEWARE ================== */
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true }));
+app.use(cors()); // ✅ simple and safe
+
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 /* ================== MONGODB ================== */
@@ -25,16 +28,6 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
-
-/* ================== CORS (FIXED 🔥) ================== */
-// const allowedOrigins = [
-//   "https://pradeepkumar.site",
-//   "https://www.pradeepkumar.site",
-//   "http://pradeepkumar.site",
-//   "http://www.pradeepkumar.site"
-// ];
-
-app.use(cors());
 
 /* ================== IMPORT ROUTES ================== */
 const UserRoutes = require("./Routes/UserRoutes");
@@ -66,9 +59,8 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: allowedOrigins,
+    origin: "*", // ✅ FIXED (no undefined variable)
     methods: ["GET", "POST"],
-    credentials: true,
   },
 });
 
