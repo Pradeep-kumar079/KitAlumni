@@ -6,7 +6,7 @@ import img from "../Assets/travel-back.jpg";
 
 const Login = () => {
   const navigate = useNavigate();
-  const BACKEND_URL = "https://pradeepkumar.site";
+  
 
   const [formData, setFormData] = useState({
     usn: "",
@@ -33,7 +33,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        `${BACKEND_URL}/api/user/login`,
+        `/api/user/login`,
         formData
       );
 

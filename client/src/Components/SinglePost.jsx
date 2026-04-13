@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./SinglePost.css";
 
-const base_url = "https://pradeepkumar.site";
+ 
 
 const SinglePost = () => {
   const { id } = useParams();
@@ -26,14 +26,14 @@ const SinglePost = () => {
   const renderImage = useCallback((img) => {
     if (!img) return "";
     if (img.startsWith("https")) return img;
-    if (img.startsWith("/uploads")) return `${base_url}${img}`;
-    return `${base_url}/uploads/${img}`;
+    if (img.startsWith("/uploads")) return `${img}`;
+    return `/uploads/${img}`;
   }, []);
 
   // ================= FETCH =================
   const fetchPost = useCallback(async () => {
     try {
-      const res = await axios.get(`${base_url}/api/user/post/${id}`);
+      const res = await axios.get(`/api/user/post/${id}`);
       if (res.data.success) {
         setPost(res.data.post);
         setComments(res.data.post.comments || []);
@@ -61,7 +61,7 @@ const SinglePost = () => {
 
       try {
         const res = await axios.post(
-          `${base_url}/api/user/comment/${id}`,
+          `/api/user/comment/${id}`,
           { comment }
         );
 

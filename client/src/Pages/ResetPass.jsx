@@ -4,7 +4,7 @@ import axios from "axios";
 import "./Reset.css";
 
 const ResetPass = () => {
-  const BACKEND_URL = "https://pradeepkumar.site";
+  
 
   const { token } = useParams();
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const ResetPass = () => {
 
     try {
       const res = await axios.post(
-        `${BACKEND_URL}/api/auth/reset-password/${token}`,
+        `/api/auth/reset-password/${token}`,
         { password }
       );
 

@@ -7,7 +7,7 @@ const ForgotPass = () => {
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
- const BACKEND_URL = "https://pradeepkumar.site";
+ 
 
 
   const handleSubmit = async (e) => {
@@ -18,7 +18,7 @@ const ForgotPass = () => {
     try {
       // ✅ Use correct backend URL
       const res = await axios.post(
-        `${BACKEND_URL}/api/auth/forgot-password`,
+        `/api/auth/forgot-password`,
         { email }
       );
 

@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import axios from "axios";
 
-const base_url = "https://pradeepkumar.site";
+
 
 // ✅ Use Render backend URL
-const socket = io(`${base_url}`, {
+const socket = io({
   transports: ["websocket"], // prefer WebSocket, avoid polling
   secure: true,              // ✅ important for Render HTTPS
   withCredentials: true,
@@ -43,7 +43,7 @@ const ChatLayout = ({ userId }) => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get(`${base_url}/api/user/all`, {
+      const res = await axios.get(`/api/user/all`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setUsers(res.data.users);
@@ -78,7 +78,7 @@ const ChatLayout = ({ userId }) => {
             onClick={() => setSelectedUser(u)}
           >
             <img
-              src={u.userimg ? `${base_url}/uploads/${u.userimg}` : "/default.jpg"}
+              src={u.userimg ? `/uploads/${u.userimg}` : "/default.jpg"}
               alt={u.username}
             />
             <span>{u.username}</span>

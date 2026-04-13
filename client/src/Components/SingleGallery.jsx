@@ -9,13 +9,13 @@ const SingleGallery = () => {
   const [galleryItem, setGalleryItem] = useState(null);
 
   // Deployed backend URL
- const base_url = "https://pradeepkumar.site";
+ 
 
 
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const res = await axios.get(`${base_url}/api/user/gallery/${id}`);
+        const res = await axios.get(`/api/user/gallery/${id}`);
         if (res.data.success) setGalleryItem(res.data.item);
       } catch (err) {
         console.error("❌ Single Gallery Fetch Error:", err);
@@ -27,8 +27,8 @@ const SingleGallery = () => {
   const renderImg = (img) => {
     if (!img) return "";
     if (img.startsWith("http")) return img;
-    if (img.startsWith("/uploads")) return `${base_url}${img}`;
-    return `${base_url}/uploads/${img}`;
+    if (img.startsWith("/uploads")) return `${img}`;
+    return `/uploads/${img}`;
   };
 
   if (!galleryItem) return <p>Loading...</p>;

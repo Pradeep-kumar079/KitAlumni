@@ -4,7 +4,7 @@ import "./Chat.css";
 import { Edit, Trash2, X } from "lucide-react";
 import { socket } from "../socket"; // ✅ Import shared socket instance
 
-const BACKEND_URL =  "https://pradeepkumar.site";
+
 
 const Chat = ({ currentUserId, otherUserId }) => {
   const [messages, setMessages] = useState([]);
@@ -25,13 +25,13 @@ const Chat = ({ currentUserId, otherUserId }) => {
         if (!token) return;
 
         // ✅ Fetch receiver details
-        const receiverRes = await axios.get(`${BACKEND_URL}/api/chat/receiver/${otherUserId}`, {
+        const receiverRes = await axios.get(`/api/chat/receiver/${otherUserId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (receiverRes.data.success) setReceiver(receiverRes.data.user);
 
         // ✅ Fetch chat history
-        const chatRes = await axios.get(`${BACKEND_URL}/api/chat/${currentUserId}/${otherUserId}`, {
+        const chatRes = await axios.get(`/api/chat/${currentUserId}/${otherUserId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (chatRes.data.success) setMessages(chatRes.data.chats);
@@ -83,7 +83,7 @@ const Chat = ({ currentUserId, otherUserId }) => {
     setInput("");
 
     try {
-      const res = await axios.post(`${BACKEND_URL}/api/chat/send`, msgData, {
+      const res = await axios.post(`/api/chat/send`, msgData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       socket.emit("send-message", res.data.chat);
@@ -105,7 +105,7 @@ const Chat = ({ currentUserId, otherUserId }) => {
   const handleEditSubmit = async () => {
     try {
       const res = await axios.put(
-        `${BACKEND_URL}/api/chat/edit/${selectedMsgId}`,
+        `/api/chat/edit/${selectedMsgId}`,
         { message: editText, userId: currentUserId },
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
@@ -122,7 +122,7 @@ const Chat = ({ currentUserId, otherUserId }) => {
   // ✅ Delete message
   const handleDelete = async () => {
     try {
-      await axios.delete(`${BACKEND_URL}/api/chat/delete/${selectedMsgId}/${currentUserId}`, {
+      await axios.delete(`/api/chat/delete/${selectedMsgId}/${currentUserId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setMessages((prev) => prev.filter((m) => m._id !== selectedMsgId));
@@ -158,9 +158,9 @@ const Chat = ({ currentUserId, otherUserId }) => {
                     ? receiver.userimg.startsWith("http")
                       ? receiver.userimg
                       : receiver.userimg.startsWith("uploads/")
-                      ? `${BACKEND_URL}/${receiver.userimg}`
-                      : `${BACKEND_URL}/uploads/${receiver.userimg}`
-                    : `${BACKEND_URL}/uploads/default.jpg`
+                      ? `/uploads/${receiver.userimg}`
+                      : `/uploads/${receiver.userimg}`
+                    : `/uploads/default.jpg`
                 }
                 alt={receiver.username}
                 className="chat-header-img"

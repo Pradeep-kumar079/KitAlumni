@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import "./Students.css";
 
-const BACKEND_URL = "https://pradeepkumar.site";
+
 
 const Alumni = () => {
   const [batches, setBatches] = useState([]);
@@ -17,7 +17,7 @@ const Alumni = () => {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        const res = await axios.get(`${BACKEND_URL}/api/alumni/all-alumni`, {
+        const res = await axios.get(`/api/alumni/all-alumni`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

@@ -4,10 +4,10 @@ import API from "../api"
 import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
-  // const BACKEND_URL = "https://pradeepkumar.site";
+   
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  // const [otpVerified, setOtpVerified] = useState(false);
+ 
 
   const [formData, setFormData] = useState({
     email: "",

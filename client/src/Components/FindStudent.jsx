@@ -9,14 +9,14 @@ const FindStudent = () => {
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState(null);
   const navigate = useNavigate();
-  const BACKEND_URL =  "https://pradeepkumar.site";
+  
 
   useEffect(() => {
     const fetchStudents = async () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) return;
-        const res = await axios.get(`${BACKEND_URL}/api/student/all-students`, {
+        const res = await axios.get(`/api/student/all-students`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -42,7 +42,7 @@ const FindStudent = () => {
       const token = localStorage.getItem("token");
       console.log("🎯 Sending request to receiverId:", receiverId);
       const res = await axios.post(
-        `${BACKEND_URL}/api/student/send-request`,
+        `/api/student/send-request`,
         { receiverId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -56,7 +56,7 @@ const FindStudent = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        `${BACKEND_URL}/api/student/disconnect`,
+        `/api/student/disconnect`,
         { targetUserId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -112,7 +112,7 @@ const FindStudent = () => {
                     <tr key={s._id}>
                       <td>
                         <img
-                          src={`${BACKEND_URL}/${s.userimg || "uploads/default.jpg"}`}
+                          src={`/uploads/${s.userimg || "default.jpg"}`}
                           alt={s.username}
                           className="profile-img"
                           onClick={() => navigate(`/profile/${s._id}`)}

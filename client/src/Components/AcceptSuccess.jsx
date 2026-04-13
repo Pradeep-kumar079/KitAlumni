@@ -9,9 +9,9 @@ const AcceptRequest = () => {
     const acceptRequest = async () => {
       try {
         const token = window.location.pathname.split("/").pop();
-        const base_url =   "https://pradeepkumar.site";
+        
 
-        const res = await axios.get(`${base_url}/api/student/accept-request/${token}`);
+        const res = await axios.get(`/api/student/accept-request/${token}`);
         if (res.data.success) {
           setStatus("success");
         } else {

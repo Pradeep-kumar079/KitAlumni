@@ -7,14 +7,14 @@ const ChatPage = () => {
   const [user, setUser] = useState(null);
 
   // ✅ Use Render backend (your actual URL)
-  const backend = "https://pradeepkumar.site";
+  
 
   const fetchCurrentUser = async () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const res = await axios.get(`${backend}/api/account`, {
+      const res = await axios.get(`/api/account`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

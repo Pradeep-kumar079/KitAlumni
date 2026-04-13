@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import "./Account.css";
 
-const BACKEND_URL =   "https://pradeepkumar.site";
+
 
 
 const Account = () => {
@@ -24,12 +24,12 @@ const Account = () => {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        const resUser = await axios.get(`${BACKEND_URL}/api/account`, {
+        const resUser = await axios.get(`/api/account`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (resUser.data.success) setUser(resUser.data.user);
 
-        const resPosts = await axios.get(`${BACKEND_URL}/api/account/posts/me`, {
+        const resPosts = await axios.get(`/api/account/posts/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (resPosts.data.success) setPosts(resPosts.data.posts);

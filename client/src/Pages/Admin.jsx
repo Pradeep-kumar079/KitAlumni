@@ -36,7 +36,7 @@ const Admin = () => {
   const [editFile, setEditFile] = useState(null);
 
    
-const backend =  "https://pradeepkumar.site";
+
 
   const handleLogout = useCallback(() => {
   localStorage.removeItem("token");
@@ -51,7 +51,7 @@ const backend =  "https://pradeepkumar.site";
   try {
     if (tab === "Log out") return handleLogout();
 
-    const res = await axios.get(`${backend}/api/admin/${tab}`);
+    const res = await axios.get(`/api/admin/${tab}`);
 
     if (res.data.success) {
       switch (tab) {
@@ -96,7 +96,7 @@ const backend =  "https://pradeepkumar.site";
     e.stopPropagation();
     if (!window.confirm("Delete this user?")) return;
     try {
-      const res = await axios.delete(`${backend}/api/admin/delete-user/${id}`);
+      const res = await axios.delete(`/api/admin/delete-user/${id}`);
       if (res.data.success) {
         alert("User deleted successfully");
         fetchData("users");
@@ -110,7 +110,7 @@ const backend =  "https://pradeepkumar.site";
     e.stopPropagation();
     if (!window.confirm("Delete this post?")) return;
     try {
-      const res = await axios.delete(`${backend}/api/admin/delete-post/${id}`);
+      const res = await axios.delete(`/api/admin/delete-post/${id}`);
       if (res.data.success) {
         alert("Post deleted successfully");
         fetchData("posts");
@@ -132,7 +132,7 @@ const backend =  "https://pradeepkumar.site";
     formData.append("description", newGallery.description);
     formData.append("image", newGallery.file);
     try {
-      const res = await axios.post(`${backend}/api/admin/gallery`, formData, {
+      const res = await axios.post(`/api/admin/gallery`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       if (res.data.success) {
@@ -161,7 +161,7 @@ const backend =  "https://pradeepkumar.site";
     formData.append("description", editDescription);
     if (editFile) formData.append("image", editFile);
     try {
-      const res = await axios.put(`${backend}/api/admin/gallery/${editItem._id}`, formData, {
+      const res = await axios.put(`/api/admin/gallery/${editItem._id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       if (res.data.success) {
@@ -178,7 +178,7 @@ const backend =  "https://pradeepkumar.site";
   const handleDeleteGallery = async (id) => {
     if (!window.confirm("Delete this gallery item?")) return;
     try {
-      const res = await axios.delete(`${backend}/api/admin/gallery/${id}`);
+      const res = await axios.delete(`/api/admin/gallery/${id}`);
       if (res.data.success) {
         alert("Gallery item deleted");
         fetchData("gallery");
@@ -202,7 +202,7 @@ const backend =  "https://pradeepkumar.site";
         formData.append("selectedEmails", JSON.stringify(selectedUsers));
       if (imageFile) formData.append("image", imageFile);
 
-      const res = await axios.post(`${backend}/api/admin/send-message`, formData, {
+      const res = await axios.post(`/api/admin/send-message`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       if (res.data.success) {
@@ -231,7 +231,7 @@ const backend =  "https://pradeepkumar.site";
       formData.append("description", description);
       formData.append("image", imageFile);
 
-      const res = await axios.post(`${backend}/api/admin/create`, formData, {
+      const res = await axios.post(`/api/admin/create`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

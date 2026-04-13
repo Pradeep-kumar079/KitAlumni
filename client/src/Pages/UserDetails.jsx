@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import "./UserDetails.css";
 
-const BACKEND_URL = "https://pradeepkumar.site";
 
-const socket = io(BACKEND_URL, {
+const socket = io( {
   transports: ["websocket"],
   withCredentials: true,
 });
@@ -23,8 +22,8 @@ const UserDetails = () => {
     if (!path) return null;
     if (path.startsWith("http")) return path;
     return path.startsWith("uploads/")
-      ? `${BACKEND_URL}/${path}`
-      : `${BACKEND_URL}/uploads/${path}`;
+      ? `/${path}`
+      : `/uploads/${path}`;
   }, []);
 
   // ================= FETCH =================
@@ -33,7 +32,7 @@ const UserDetails = () => {
       const token = localStorage.getItem("token");
       if (!token) return navigate("/login");
 
-      const userRes = await axios.get(`${BACKEND_URL}/api/user`, {
+      const userRes = await axios.get(`/api/user`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -46,7 +45,7 @@ const UserDetails = () => {
         );
 
         const connRes = await axios.get(
-          `${BACKEND_URL}/api/user/connections/${u._id}`,
+          `/api/user/connections/${u._id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

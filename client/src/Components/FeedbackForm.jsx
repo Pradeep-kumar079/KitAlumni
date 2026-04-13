@@ -8,14 +8,14 @@ const FeedbackForm = () => {
   const token = localStorage.getItem("token");
 
   // Automatically detect whether we're on localhost or deployed
-  const API_BASE =  "https://pradeepkumar.site";
+  
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        `${API_BASE}/api/user/submit`,
+        `/api/user/submit`,
         { feedback },
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -8,7 +8,7 @@ const Students = () => {
   const [batches, setBatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const base_url = "https://pradeepkumar.site";
+  
 
   useEffect(() => {
     const fetchStudentBatches = async () => {
@@ -16,7 +16,7 @@ const Students = () => {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        const res = await axios.get(`${base_url}/api/student/all-students`, {
+        const res = await axios.get(`/api/student/all-students`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

@@ -5,12 +5,12 @@ import axios from "axios";
 const AcceptRequest = ({ refreshStudents }) => {
   const { token } = useParams();
   const navigate = useNavigate();
-  const BACKEND_URL = "https://pradeepkumar.site";
+  
 
   useEffect(() => {
     const acceptConnection = async () => {
       try {
-        const res = await axios.get(`${BACKEND_URL}/api/student/accept-request/${token}`);
+        const res = await axios.get(`/api/student/accept-request/${token}`);
         if (res.data.success) {
           refreshStudents?.();
           navigate("/student/accept-success");

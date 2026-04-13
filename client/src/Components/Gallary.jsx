@@ -8,12 +8,12 @@ const Gallary = () => {
   const navigate = useNavigate();
 
   // ✅ Use your deployed backend URL
- const base_url = "https://pradeepkumar.site";
+
 
 
   const fetchGallery = async () => {
     try {
-      const res = await axios.get(`${base_url}/api/user/gallery`);
+      const res = await axios.get(`/api/user/gallery`);
       if (res.data.success) setGallery(res.data.gallery);
     } catch (err) {
       console.error("❌ Fetch Gallery Error:", err);
@@ -29,8 +29,8 @@ const Gallary = () => {
   const renderImg = (img) => {
     if (!img) return "";
     if (img.startsWith("http") || img.startsWith("https")) return img;
-    if (img.startsWith("/uploads")) return `${base_url}${img}`;
-    return `${base_url}/uploads/${img}`;
+    if (img.startsWith("/uploads")) return `${img}`;
+    return `/uploads/${img}`;
   };
 
   return (

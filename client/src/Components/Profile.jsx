@@ -14,7 +14,7 @@ const Profile = () => {
   const [currentUserId, setCurrentUserId] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [isRequestSent, setIsRequestSent] = useState(false);
-  const base_url =  "https://pradeepkumar.site";
+  
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -27,7 +27,7 @@ const Profile = () => {
         }
 
         // ✅ Get logged-in user
-        const currentUserRes = await axios.get(`${base_url}/api/user/`, {
+        const currentUserRes = await axios.get(`/api/user/`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (currentUserRes.data.success) {
@@ -35,7 +35,7 @@ const Profile = () => {
         }
 
         // ✅ Fetch target user profile
-        const res = await axios.get(`${base_url}/api/user/profile/${userId}`, {
+        const res = await axios.get(`/api/user/profile/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -68,7 +68,7 @@ const Profile = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        `${base_url}/api/student/send-request`,
+        `/api/student/send-request`,
         { receiverId: userId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -88,7 +88,7 @@ const Profile = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        `${base_url}/api/student/disconnect`,
+        `/api/student/disconnect`,
         { targetUserId: userId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -126,8 +126,8 @@ const Profile = () => {
         <img
           src={
             user.userimg
-              ? `${base_url}/uploads/${user.userimg}`
-              : `${base_url}/uploads/default.jpg`
+              ? `/uploads/${user.userimg}`
+              : `/uploads/default.jpg`
           }
           alt={user.username}
           className="profile-pic"
@@ -188,7 +188,7 @@ const Profile = () => {
                 <p className="post-title">{post.title}</p>
                 {post.postimg && (
                   <img
-                    src={`${base_url}/uploads/${post.postimg}`}
+                    src={`/uploads/${post.postimg}`}
                     alt="post"
                     className="post-image"
                   />

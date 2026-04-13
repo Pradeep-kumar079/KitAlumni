@@ -6,7 +6,7 @@ import { FaGraduationCap, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
 const Navbar = () => {
-  const BACKEND_URL = "https://pradeepkumar.site";
+  
 
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
@@ -24,7 +24,7 @@ const Navbar = () => {
         return;
       }
       try {
-        const res = await axios.get(`${BACKEND_URL}/api/search?q=${query}`);
+        const res = await axios.get(`/api/search?q=${query}`);
         if (res.data.success) {
           const combined = [
             ...(res.data.users || []).map((u) => ({
@@ -47,7 +47,7 @@ const Navbar = () => {
 
     const delay = setTimeout(fetchResults, 400);
     return () => clearTimeout(delay);
-  }, [query, BACKEND_URL]);
+  }, [query]);
 
   const handleSelect = (item) => {
     setQuery("");
@@ -85,7 +85,7 @@ const Navbar = () => {
                       <img
                         src={
                           item.userimg
-                            ? `${BACKEND_URL}/uploads/${item.userimg}`
+                            ? `/uploads/${item.userimg}`
                             : "/uploads/default.jpg"
                         }
                         alt={item.username || "User"}
@@ -107,7 +107,7 @@ const Navbar = () => {
                       <img
                         src={
                           item.postimg
-                            ? `${BACKEND_URL}/uploads/${item.postimg}`
+                            ? `/uploads/${item.postimg}`
                             : "/assets/default-post.png"
                         }
                         alt={item.title || "Post"}

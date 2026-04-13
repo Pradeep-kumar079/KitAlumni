@@ -4,7 +4,7 @@ import axios from "axios";
 import "./Post.css";
 
 const Post = () => {
-  const BACKEND_URL = "https://pradeepkumar.site";
+ 
 
   const [formData, setFormData] = useState({
     title: "",
@@ -40,7 +40,7 @@ const Post = () => {
 
     try {
       const response = await axios.post(
-        `${BACKEND_URL}/api/user/posts`,
+        `/api/user/posts`,
         data,
         {
           headers: {

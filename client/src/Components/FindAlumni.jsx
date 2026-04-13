@@ -10,7 +10,7 @@ const FindAlumni = () => {
   const [currentUserId, setCurrentUserId] = useState(null);
   const navigate = useNavigate();
 
-  const API_BASE =  "https://pradeepkumar.site";
+  
   const defaultImg = "uploads/default.jpg";
   console.log("🔍 Finding alumni for admissionyear:", admissionyear);
 
@@ -25,7 +25,7 @@ const FindAlumni = () => {
         setCurrentUserId(payload.id || payload._id || payload.userId);
 
         // ✅ Fetch all alumni batches
-        const res = await axios.get(`${API_BASE}/api/alumni/all-alumni`, {
+        const res = await axios.get(`/api/alumni/all-alumni`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -71,7 +71,7 @@ const FindAlumni = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        `${API_BASE}/api/alumni/send-request`,
+        `/api/alumni/send-request`,
         { to },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -86,7 +86,7 @@ const FindAlumni = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        `${API_BASE}/api/alumni/disconnect`,
+        `/api/alumni/disconnect`,
         { userId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -139,8 +139,8 @@ const FindAlumni = () => {
                       <img
                         src={
                           alumni.userimg
-                            ? `${API_BASE}/${alumni.userimg}`
-                            : `${API_BASE}/${defaultImg}`
+                            ? `/uploads/${alumni.userimg}`
+                            : `/uploads/${defaultImg}`
                         }
                         alt={alumni.username}
                         className="profile-img"
