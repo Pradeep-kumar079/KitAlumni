@@ -46,21 +46,46 @@ const AllPosts = () => {
   }, [fetchPosts]); // ✅ stable dependency
 
   // ================= LIKE =================
-  const handleLike = async (postId) => {
-    try {
-      const res = await api.post(`/user/like/${postId}`);
+  // const handleLike = async (postId) => {
+  //   try {
+  //     const res = await api.post(`/user/like/${postId}`);
 
-      setPosts((prev) =>
-        prev.map((p) =>
-          p._id === postId
-            ? { ...p, likes: res.data.updatedLikes }
-            : p
-        )
-      );
-    } catch (err) {
-      console.error("Like error:", err.response?.data || err.message);
-    }
-  };
+  //     setPosts((prev) =>
+  //       prev.map((p) =>
+  //         p._id === postId
+  //           ? { ...p, likes: res.data.updatedLikes }
+  //           : p
+  //       )
+  //     );
+  //   } catch (err) {
+  //     console.error("Like error:", err.response?.data || err.message);
+  //   }
+  // };
+  const handleLike = async (postId) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const res = await api.post(
+      `/user/like/${postId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    setPosts((prev) =>
+      prev.map((p) =>
+        p._id === postId
+          ? { ...p, likes: res.data.updatedLikes }
+          : p
+      )
+    );
+  } catch (err) {
+    console.error("Like error:", err.response?.data || err.message);
+  }
+};
 
   // ================= COMMENT =================
   const handleComment = async (postId) => {
@@ -97,7 +122,11 @@ const AllPosts = () => {
 
         {posts.map((post) => {
           const user = post.user || {};
-          const profileImg = renderImage(user.userimg);
+          const profileImg =
+          user.userimg && !user.userimg.includes("default")
+            ? renderImage(user.userimg)
+            : null;
+          console.log("Rendering post:", post._id, "by user:", user.username);
 
           return (
             <div
