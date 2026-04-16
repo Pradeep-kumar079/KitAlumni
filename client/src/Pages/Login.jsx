@@ -23,47 +23,90 @@ const Login = () => {
   };
 
   // Handle login submit
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   if (!formData.usn || !formData.password) {
+  //     alert("Please fill in all fields.");
+  //     return;
+  //   }
+
+  //   try {
+  //     // const res = await axios.post(
+  //     //   `/api/user/login`,
+  //     //   formData
+  //     // );
+  //     const cleanedUSN = formData.usn.trim().toUpperCase();
+
+  //     const res = await axios.post("/api/user/login", {
+  //       usn: cleanedUSN,
+  //       password: formData.password
+  //     });
+
+  //     if (res.data.success) {
+  //       localStorage.setItem("token", res.data.token);
+  //       localStorage.setItem("userId", res.data.user._id);
+  //       localStorage.setItem("role", res.data.user.role);
+
+  //       alert("Login successful!");
+
+  //       const role = res.data.user.role?.toLowerCase();
+  //       if (role === "admin") {
+  //         navigate("/admin");
+  //       } else {
+  //         navigate("/home");
+  //       }
+  //     } else {
+  //       alert(res.data.message || "Login failed.");
+  //     }
+  //   } catch (err) {
+  //     console.error("Login error:", err);
+  //     alert("Error: " + (err.response?.data?.message || err.message));
+  //   }
+  // };
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!formData.usn || !formData.password) {
-      alert("Please fill in all fields.");
-      return;
-    }
+  if (!formData.usn || !formData.password) {
+    alert("Please fill in all fields.");
+    return;
+  }
 
-    try {
-      // const res = await axios.post(
-      //   `/api/user/login`,
-      //   formData
-      // );
-      const cleanedUSN = formData.usn.trim().toUpperCase();
+  try {
+    const cleanedUSN = formData.usn.trim().toUpperCase();
 
-      const res = await axios.post("/api/user/login", {
-        usn: cleanedUSN,
-        password: formData.password
-      });
+    const res = await axios.post("/api/user/login", {
+      usn: cleanedUSN,
+      password: formData.password.trim(),
+    });
 
-      if (res.data.success) {
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("userId", res.data.user._id);
-        localStorage.setItem("role", res.data.user.role);
+    if (res.data.success) {
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("userId", res.data.user._id);
+      localStorage.setItem("role", res.data.user.role);
 
-        alert("Login successful!");
+      alert("Login successful!");
 
-        const role = res.data.user.role?.toLowerCase();
-        if (role === "admin") {
-          navigate("/admin");
-        } else {
-          navigate("/home");
-        }
+      const role = res.data.user.role?.toLowerCase();
+
+      if (role === "admin") {
+        navigate("/admin");
       } else {
-        alert(res.data.message || "Login failed.");
+        navigate("/home");
       }
-    } catch (err) {
-      console.error("Login error:", err);
-      alert("Error: " + (err.response?.data?.message || err.message));
+    } else {
+      alert(res.data.message || "Login failed.");
     }
-  };
+
+  } catch (err) {
+    console.error("Login error:", err);
+
+    alert(
+      err.response?.data?.message ||
+      "Login failed. Please check credentials."
+    );
+  }
+};
 
   return (
     <div className="login-wrapper">
