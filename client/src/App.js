@@ -35,14 +35,14 @@ const App = () => {
     <Router>
       <Routes>
 
-        {/* ROOT */}
+        {/* 🔥 ROOT FIX */}
         <Route path="/" element={<Navigate to={isAuth ? "/home" : "/login"} />} />
 
-        {/* AUTH */}
+        {/* 🔥 AUTH ROUTES */}
         <Route path="/login" element={!isAuth ? <Login /> : <Navigate to="/home" />} />
         <Route path="/register" element={!isAuth ? <Register /> : <Navigate to="/home" />} />
 
-        {/* PROTECTED */}
+        {/* 🔥 PROTECTED ROUTES */}
         <Route path="/home" element={isAuth ? <Home /> : <Navigate to="/login" />} />
         <Route path="/post" element={isAuth ? <Post /> : <Navigate to="/login" />} />
         <Route path="/about" element={isAuth ? <About /> : <Navigate to="/login" />} />
@@ -77,8 +77,13 @@ const App = () => {
         <Route path="/gallery" element={isAuth ? <Gallary /> : <Navigate to="/login" />} />
         <Route path="/gallery/:id" element={isAuth ? <SingleGallery /> : <Navigate to="/login" />} />
 
+        {/* PUBLIC ROUTES */}
         <Route path="/forgot-password" element={<ForgotPass />} />
         <Route path="/auth/reset-password/:token" element={<ResetPass />} />
+
+        {/* ACCEPT ROUTES */}
+        <Route path="/student/accept-success" element={<AcceptSuccess />} />
+        <Route path="/student/accept-failed" element={<AcceptFailed />} />
 
       </Routes>
     </Router>

@@ -29,7 +29,7 @@ const Register = () => {
   if (localStorage.getItem("token")) {
     navigate("/home");
   }
-}, []);
+}, [navigate]);
 
   const [calculatedRole, setCalculatedRole] = useState("student");
 
