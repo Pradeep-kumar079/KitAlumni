@@ -32,10 +32,16 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post(
-        `/api/user/login`,
-        formData
-      );
+      // const res = await axios.post(
+      //   `/api/user/login`,
+      //   formData
+      // );
+      const cleanedUSN = formData.usn.trim().toUpperCase();
+
+      const res = await axios.post("/api/user/login", {
+        usn: cleanedUSN,
+        password: formData.password
+      });
 
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
