@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import "./Register.css";
 import API from "../api"
 import { useNavigate, Link } from "react-router-dom";
@@ -23,6 +23,13 @@ const Register = () => {
     dob: "",
     termsAccepted: false,
   });
+   
+
+  useEffect(() => {
+  if (localStorage.getItem("token")) {
+    navigate("/home");
+  }
+}, []);
 
   const [calculatedRole, setCalculatedRole] = useState("student");
 

@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+
 import Register from "./Pages/Register";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
@@ -24,49 +25,60 @@ import SingleGallery from "./Components/SingleGallery";
 import ForgotPass from "./Pages/ForgotPass";
 import ResetPass from "./Pages/ResetPass";
 
-
 const App = () => {
   const [refreshFlag, setRefreshFlag] = React.useState(false);
   const refreshStudents = () => setRefreshFlag((prev) => !prev);
 
+  const isAuth = localStorage.getItem("token");
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Register />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/post" element={<Post />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/students" element={<Students />} />
+
+        {/* ROOT */}
+        <Route path="/" element={<Navigate to={isAuth ? "/home" : "/login"} />} />
+
+        {/* AUTH */}
+        <Route path="/login" element={!isAuth ? <Login /> : <Navigate to="/home" />} />
+        <Route path="/register" element={!isAuth ? <Register /> : <Navigate to="/home" />} />
+
+        {/* PROTECTED */}
+        <Route path="/home" element={isAuth ? <Home /> : <Navigate to="/login" />} />
+        <Route path="/post" element={isAuth ? <Post /> : <Navigate to="/login" />} />
+        <Route path="/about" element={isAuth ? <About /> : <Navigate to="/login" />} />
+        <Route path="/students" element={isAuth ? <Students /> : <Navigate to="/login" />} />
+
         <Route
           path="/findstudent/:admissionyear"
-          element={<FindStudent key={refreshFlag} />}
+          element={isAuth ? <FindStudent key={refreshFlag} /> : <Navigate to="/login" />}
         />
-        <Route path="/alumni" element={<Alumni />} />
+
+        <Route path="/alumni" element={isAuth ? <Alumni /> : <Navigate to="/login" />} />
+
         <Route
           path="/findalumni/:admissionyear"
-          element={<FindAlumni key={refreshFlag} />}
+          element={isAuth ? <FindAlumni key={refreshFlag} /> : <Navigate to="/login" />}
         />
+
         <Route
           path="/student/accept-request/:token"
           element={<AcceptRequest refreshStudents={refreshStudents} />}
         />
-        <Route path="/account" element={<Account />} />
-        <Route path="/post/:id" element={<SinglePost />} />
-        <Route path="/profile/:userId" element={<Profile />} />
-        <Route path="/chat/:otherUserId" element={<ChatWrapper />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/user/:id" element={<UserDetails />} />
-        <Route path="/chat" element={<ChatPage />} />
 
-        <Route path="/student/accept-success" element={<AcceptSuccess />} />
-        <Route path="/student/accept-failed" element={<AcceptFailed />} />
-        
-        <Route path="/gallery" element={<Gallary />} />
-        <Route path="/gallery/:id" element={<SingleGallery />} />
-         <Route path="/forgot-password" element={<ForgotPass />} />
-        <Route path="auth/reset-password/:token" element={<ResetPass />} />
+        <Route path="/account" element={isAuth ? <Account /> : <Navigate to="/login" />} />
+        <Route path="/post/:id" element={isAuth ? <SinglePost /> : <Navigate to="/login" />} />
+        <Route path="/profile/:userId" element={isAuth ? <Profile /> : <Navigate to="/login" />} />
+        <Route path="/chat/:otherUserId" element={isAuth ? <ChatWrapper /> : <Navigate to="/login" />} />
+        <Route path="/chat" element={isAuth ? <ChatPage /> : <Navigate to="/login" />} />
+
+        <Route path="/admin" element={isAuth ? <Admin /> : <Navigate to="/login" />} />
+        <Route path="/user/:id" element={isAuth ? <UserDetails /> : <Navigate to="/login" />} />
+
+        <Route path="/gallery" element={isAuth ? <Gallary /> : <Navigate to="/login" />} />
+        <Route path="/gallery/:id" element={isAuth ? <SingleGallery /> : <Navigate to="/login" />} />
+
+        <Route path="/forgot-password" element={<ForgotPass />} />
+        <Route path="/auth/reset-password/:token" element={<ResetPass />} />
 
       </Routes>
     </Router>

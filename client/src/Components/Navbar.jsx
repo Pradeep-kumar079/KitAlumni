@@ -12,9 +12,11 @@ const Navbar = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
 
-  const Logout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
+ const Logout = () => {
+  localStorage.clear(); // 🔥 remove everything
+
+    window.location.href = "/login"; 
+    
   };
 
   useEffect(() => {
