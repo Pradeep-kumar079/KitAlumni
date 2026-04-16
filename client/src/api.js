@@ -1,9 +1,7 @@
 import axios from "axios";
 
-const backendUrl = "https://pradeepkumar.site";
-
 const api = axios.create({
-  baseURL: `${backendUrl}/api`,
+  baseURL: "/api",
   withCredentials: true,
 });
 
