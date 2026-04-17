@@ -110,6 +110,8 @@ const Login = () => {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
+  localStorage.clear();
+
   if (!formData.usn || !formData.password) {
     alert("Please fill in all fields.");
     return;
