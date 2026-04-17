@@ -149,9 +149,10 @@ exports.sendRequestController = async (req, res) => {
           },
         });
 
-        const acceptLink = `${BASE_URL}/api/alumni/accept-request/${token}`;
-        const rejectLink = `${BASE_URL}/api/alumni/reject-request/${token}`;
+        const frontendUrl = process.env.FRONTEND_URL;
 
+        const acceptLink = `${frontendUrl}/student/accept-request/${token}`;
+        const rejectLink = `${frontendUrl}/student/accept-request/${token}?action=reject`;
         const mailOptions = {
           from: process.env.EMAIL_USER,
           to: receiver.email,
