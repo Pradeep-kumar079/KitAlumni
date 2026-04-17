@@ -401,7 +401,9 @@ const LoginController = async (req, res) => {
   try {
     let { usn, password } = req.body;
 
+    // ✅ sanitize input
     const cleanedUSN = usn?.trim().toUpperCase();
+    const cleanedPassword = password?.trim(); // 🔥 IMPORTANT FIX
 
     const user = await UserModel.findOne({ usn: cleanedUSN });
 
@@ -409,7 +411,8 @@ const LoginController = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    // ✅ use cleaned password
+    const isMatch = await bcrypt.compare(cleanedPassword, user.password);
 
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
@@ -431,6 +434,7 @@ const LoginController = async (req, res) => {
     });
 
   } catch (err) {
+    console.error("Login error:", err); // ✅ add log
     res.status(500).json({ message: "Server error" });
   }
 };
