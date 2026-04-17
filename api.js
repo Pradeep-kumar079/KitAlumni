@@ -5,19 +5,16 @@ const api = axios.create({
 });
 
 // 🔥 FORCE TOKEN ATTACH
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
 
-    console.log("🚀 TOKEN ATTACHED:", token); // DEBUG
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  } else {
+    delete config.headers.Authorization; // 🔥 VERY IMPORTANT
+  }
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+  return config;
+});
 
 export default api;

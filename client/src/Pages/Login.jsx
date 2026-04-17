@@ -118,7 +118,7 @@ const handleSubmit = async (e) => {
   }
 
   try {
-    const res = await axios.post("/api/user/login", {
+    const res = await axios.post("/user/login", {
       usn: formData.usn.trim().toUpperCase(),
       password: formData.password.trim(),
     });
