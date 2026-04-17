@@ -64,7 +64,50 @@ const Login = () => {
   //     alert("Error: " + (err.response?.data?.message || err.message));
   //   }
   // };
-  const handleSubmit = async (e) => {
+//   const handleSubmit = async (e) => {
+//   e.preventDefault();
+
+//   if (!formData.usn || !formData.password) {
+//     alert("Please fill in all fields.");
+//     return;
+//   }
+
+//   try {
+//     const cleanedUSN = formData.usn.trim().toUpperCase();
+
+//     const res = await axios.post("/api/user/login", {
+//       usn: cleanedUSN,
+//       password: formData.password.trim(),
+//     });
+
+//     if (res.data.success) {
+//       localStorage.setItem("token", res.data.token);
+//       localStorage.setItem("userId", res.data.user._id);
+//       localStorage.setItem("role", res.data.user.role);
+
+//       alert("Login successful!");
+
+//       const role = res.data.user.role?.toLowerCase();
+
+//       if (role === "admin") {
+//         navigate("/admin");
+//       } else {
+//         navigate("/home");
+//       }
+//     } else {
+//       alert(res.data.message || "Login failed.");
+//     }
+
+//   } catch (err) {
+//     console.error("Login error:", err);
+
+//     alert(
+//       err.response?.data?.message ||
+//       "Login failed. Please check credentials."
+//     );
+//   }
+// };
+const handleSubmit = async (e) => {
   e.preventDefault();
 
   if (!formData.usn || !formData.password) {
@@ -73,10 +116,8 @@ const Login = () => {
   }
 
   try {
-    const cleanedUSN = formData.usn.trim().toUpperCase();
-
     const res = await axios.post("/api/user/login", {
-      usn: cleanedUSN,
+      usn: formData.usn.trim().toUpperCase(),
       password: formData.password.trim(),
     });
 
@@ -89,18 +130,19 @@ const Login = () => {
 
       const role = res.data.user.role?.toLowerCase();
 
+      // ✅ ROLE BASED REDIRECT (RESTORED)
       if (role === "admin") {
-        navigate("/admin");
+        window.location.href = "/admin";
       } else {
-        navigate("/home");
+        window.location.href = "/home";
       }
+
     } else {
       alert(res.data.message || "Login failed.");
     }
 
   } catch (err) {
     console.error("Login error:", err);
-
     alert(
       err.response?.data?.message ||
       "Login failed. Please check credentials."

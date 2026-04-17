@@ -29,7 +29,9 @@ const App = () => {
   const [refreshFlag, setRefreshFlag] = React.useState(false);
   const refreshStudents = () => setRefreshFlag((prev) => !prev);
 
-  const isAuth = localStorage.getItem("token");
+  // const isAuth = localStorage.getItem("token");
+  const isAuth = !!localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
   return (
     <Router>
@@ -71,7 +73,14 @@ const App = () => {
         <Route path="/chat/:otherUserId" element={isAuth ? <ChatWrapper /> : <Navigate to="/login" />} />
         <Route path="/chat" element={isAuth ? <ChatPage /> : <Navigate to="/login" />} />
 
-        <Route path="/admin" element={isAuth ? <Admin /> : <Navigate to="/login" />} />
+        <Route 
+          path="/admin" 
+          element={
+            isAuth && role === "admin"
+              ? <Admin />
+              : <Navigate to="/home" />
+          } 
+        />        
         <Route path="/user/:id" element={isAuth ? <UserDetails /> : <Navigate to="/login" />} />
 
         <Route path="/gallery" element={isAuth ? <Gallary /> : <Navigate to="/login" />} />
