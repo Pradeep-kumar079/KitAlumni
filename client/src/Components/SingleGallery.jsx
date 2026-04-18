@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import API from "api";
+import API from "../api";
 import "./Gallery.css";
 
 const SingleGallery = () => {

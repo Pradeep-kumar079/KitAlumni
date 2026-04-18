@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
-import API from "api";
+import API from "../api";
 import "./Post.css";
 
 const Post = () => {

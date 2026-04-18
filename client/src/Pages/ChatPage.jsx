@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import ChatLayout from "../Components/ChatLayout";
-import API from "api";
+import API from "../api";
 
 const ChatPage = () => {
   const [user, setUser] = useState(null);

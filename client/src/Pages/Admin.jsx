@@ -1,6 +1,6 @@
 import React, { useState, useEffect , useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "api";
+import API from "../api";
 import "./Admin.css";
 
 const Admin = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import API from "api";
+import API from "../api";
 import "./SinglePost.css";
 
  

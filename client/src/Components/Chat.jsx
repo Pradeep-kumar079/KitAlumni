@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import API from "api";
+import API from "../api";
 import "./Chat.css";
 import { Edit, Trash2, X } from "lucide-react";
 import { socket } from "../socket"; // ✅ Import shared socket instance

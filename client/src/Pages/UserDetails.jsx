@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import API from "api";
+import API from "../api";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import "./UserDetails.css";
