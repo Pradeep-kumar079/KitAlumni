@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import axios from "axios";
+import API from "../api";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import "./UserDetails.css";
@@ -32,7 +32,7 @@ const UserDetails = () => {
       const token = localStorage.getItem("token");
       if (!token) return navigate("/login");
 
-      const userRes = await axios.get(`/api/user`, {
+      const userRes = await API.get(`/api/user`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -44,7 +44,7 @@ const UserDetails = () => {
           JSON.stringify(prev) !== JSON.stringify(u) ? u : prev
         );
 
-        const connRes = await axios.get(
+        const connRes = await API.get(
           `/api/user/connections/${u._id}`,
           {
             headers: { Authorization: `Bearer ${token}` },

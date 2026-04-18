@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import API from "../api";
 import "./FindStudent.css";
 
 const FindAlumni = () => {
@@ -22,7 +22,7 @@ const FindAlumni = () => {
         const payload = JSON.parse(atob(token.split(".")[1]));
         setCurrentUserId(payload.id || payload._id || payload.userId);
 
-        const res = await axios.get(`/api/alumni/all-alumni`, {
+        const res = await API.get(`/api/alumni/all-alumni`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -66,7 +66,7 @@ const FindAlumni = () => {
     try {
       const token = localStorage.getItem("token");
 
-      await axios.post(
+      await API.post(
         `/api/alumni/send-request`,
         { to },
         { headers: { Authorization: `Bearer ${token}` } }
@@ -99,7 +99,7 @@ const FindAlumni = () => {
     try {
       const token = localStorage.getItem("token");
 
-      await axios.post(
+      await API.post(
         `/api/alumni/disconnect`,
         { userId },
         { headers: { Authorization: `Bearer ${token}` } }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
-import axios from "axios";
+import API from "../api";
 import "./Post.css";
 
 const Post = () => {
@@ -39,7 +39,7 @@ const Post = () => {
     if (formData.postimg) data.append("postimg", formData.postimg);
 
     try {
-      const response = await axios.post(
+      const response = await API.post(
         `/api/user/posts`,
         data,
         {

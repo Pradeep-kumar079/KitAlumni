@@ -1,6 +1,6 @@
-import axios from "axios";
+import API from "../api";
 
-const api = axios.create({
+const api = API.create({
   baseURL: "https://pradeepkumar.site/api",
 });
 

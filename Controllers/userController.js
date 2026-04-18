@@ -8,7 +8,7 @@ const nodemailer = require("nodemailer");
 const SibApiV3Sdk = require("sib-api-v3-sdk");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const axios = require("axios");
+const API = require("API");
 const crypto = require("crypto");
 // ==================== SEND OTP ==================== //
 
@@ -570,7 +570,7 @@ const FetchComments = async (req, res) => {
     const PERSPECTIVE_API_KEY = process.env.PERSPECTIVE_API_KEY;
     let toxicity = 0;
     try {
-      const analyzeRes = await axios.post(
+      const analyzeRes = await API.post(
         `https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key=${PERSPECTIVE_API_KEY}`,
         { comment: { text: comment }, languages: ["en"], requestedAttributes: { TOXICITY: {} } }
       );

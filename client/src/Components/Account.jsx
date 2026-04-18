@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../api";
 import Navbar from "./Navbar";
 import "./Account.css";
 
@@ -24,12 +24,12 @@ const Account = () => {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        const resUser = await axios.get(`/api/account`, {
+        const resUser = await API.get(`/api/account`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (resUser.data.success) setUser(resUser.data.user);
 
-        const resPosts = await axios.get(`/api/account/posts/me`, {
+        const resPosts = await API.get(`/api/account/posts/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (resPosts.data.success) setPosts(resPosts.data.posts);
@@ -72,7 +72,7 @@ const Account = () => {
 
       if (selectedImage) formData.append("userimg", selectedImage);
 
-      const res = await axios.put(`/api/account/update`, formData, {
+      const res = await API.put(`/api/account/update`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -93,7 +93,7 @@ const Account = () => {
   const handleLike = async (postId) => {
     const token = localStorage.getItem("token");
     try {
-      const res = await axios.put(`/api/posts/like/${postId}`, {}, {
+      const res = await API.put(`/api/posts/like/${postId}`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.data.success) {
@@ -115,7 +115,7 @@ const Account = () => {
   const handleSavePost = async (postId) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.put(`/api/posts/update/${postId}`, updatedPost, {
+      const res = await API.put(`/api/posts/update/${postId}`, updatedPost, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.data.success) {
@@ -132,7 +132,7 @@ const Account = () => {
     if (!window.confirm("Are you sure you want to delete this post?")) return;
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.delete(`/api/posts/delete/${postId}`, {
+      const res = await API.delete(`/api/posts/delete/${postId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.data.success) {

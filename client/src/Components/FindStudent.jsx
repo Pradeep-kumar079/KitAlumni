@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import API from "../api";
 import "./FindStudent.css";
 
 const FindStudent = () => {
@@ -16,7 +16,7 @@ const FindStudent = () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) return;
-        const res = await axios.get(`/api/student/all-students`, {
+        const res = await API.get(`/api/student/all-students`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -41,7 +41,7 @@ const FindStudent = () => {
     try {
       const token = localStorage.getItem("token");
       console.log("🎯 Sending request to receiverId:", receiverId);
-      const res = await axios.post(
+      const res = await API.post(
         `/api/student/send-request`,
         { receiverId },
         { headers: { Authorization: `Bearer ${token}` } }
@@ -55,7 +55,7 @@ const FindStudent = () => {
   const handleDisconnect = async (targetUserId) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.post(
+      const res = await API.post(
         `/api/student/disconnect`,
         { targetUserId },
         { headers: { Authorization: `Bearer ${token}` } }

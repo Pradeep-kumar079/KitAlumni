@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import ChatLayout from "../Components/ChatLayout";
-import axios from "axios";
+import API from "../api";
 
 const ChatPage = () => {
   const [user, setUser] = useState(null);
@@ -14,7 +14,7 @@ const ChatPage = () => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const res = await axios.get(`/api/account`, {
+      const res = await API.get(`/api/account`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

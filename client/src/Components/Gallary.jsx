@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import API from "../api";
 import "./Gallery.css";
 
 const Gallary = () => {
@@ -13,7 +13,7 @@ const Gallary = () => {
 
   const fetchGallery = async () => {
     try {
-      const res = await axios.get(`/api/user/gallery`);
+      const res = await API.get(`/api/user/gallery`);
       if (res.data.success) setGallery(res.data.gallery);
     } catch (err) {
       console.error("❌ Fetch Gallery Error:", err);

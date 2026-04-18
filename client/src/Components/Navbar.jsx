@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import API from "../api";
 import "./Navbar.css";
 import { FaGraduationCap, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
@@ -26,7 +26,7 @@ const Navbar = () => {
         return;
       }
       try {
-        const res = await axios.get(`/api/search?q=${query}`);
+        const res = await API.get(`/api/search?q=${query}`);
         if (res.data.success) {
           const combined = [
             ...(res.data.users || []).map((u) => ({

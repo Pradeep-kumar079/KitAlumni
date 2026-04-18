@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import API from "../api";
 import "./FeedbackForm.css";
 
 const FeedbackForm = () => {
@@ -14,7 +14,7 @@ const FeedbackForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
+      const res = await API.post(
         `/api/user/submit`,
         { feedback },
         { headers: { Authorization: `Bearer ${token}` } }

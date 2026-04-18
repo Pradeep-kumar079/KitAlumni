@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../api";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import "./Students.css";
@@ -16,7 +16,7 @@ const Students = () => {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        const res = await axios.get(`/api/student/all-students`, {
+        const res = await API.get(`/api/student/all-students`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

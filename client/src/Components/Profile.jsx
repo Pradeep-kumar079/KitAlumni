@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../api";
 import Navbar from "./Navbar";
 import "./Profile.css";
 import { useParams, useNavigate } from "react-router-dom";
@@ -27,7 +27,7 @@ const Profile = () => {
         }
 
         // ✅ Get logged-in user
-        const currentUserRes = await axios.get(`/api/user/`, {
+        const currentUserRes = await API.get(`/api/user/`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (currentUserRes.data.success) {
@@ -35,7 +35,7 @@ const Profile = () => {
         }
 
         // ✅ Fetch target user profile
-        const res = await axios.get(`/api/user/profile/${userId}`, {
+        const res = await API.get(`/api/user/profile/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -67,7 +67,7 @@ const Profile = () => {
   const handleSendRequest = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.post(
+      const res = await API.post(
         `/api/student/send-request`,
         { receiverId: userId },
         { headers: { Authorization: `Bearer ${token}` } }
@@ -87,7 +87,7 @@ const Profile = () => {
   const handleDisconnect = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.post(
+      const res = await API.post(
         `/api/student/disconnect`,
         { targetUserId: userId },
         { headers: { Authorization: `Bearer ${token}` } }

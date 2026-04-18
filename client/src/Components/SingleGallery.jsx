@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import API from "../api";
 import "./Gallery.css";
 
 const SingleGallery = () => {
@@ -15,7 +15,7 @@ const SingleGallery = () => {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const res = await axios.get(`/api/user/gallery/${id}`);
+        const res = await API.get(`/api/user/gallery/${id}`);
         if (res.data.success) setGalleryItem(res.data.item);
       } catch (err) {
         console.error("❌ Single Gallery Fetch Error:", err);

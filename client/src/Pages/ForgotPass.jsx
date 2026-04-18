@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import API from "../api";
 import "./ForgotPass.css";
 
 const ForgotPass = () => {
@@ -17,7 +17,7 @@ const ForgotPass = () => {
 
     try {
       // ✅ Use correct backend URL
-      const res = await axios.post(
+      const res = await API.post(
         `/api/auth/forgot-password`,
         { email }
       );

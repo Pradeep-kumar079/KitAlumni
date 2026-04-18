@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import API from "../api";
 
 const AcceptRequest = ({ refreshStudents }) => {
   const { token } = useParams();
@@ -10,7 +10,7 @@ const AcceptRequest = ({ refreshStudents }) => {
   useEffect(() => {
     const acceptConnection = async () => {
       try {
-        const res = await axios.get(`/api/student/accept-request/${token}`);
+        const res = await API.get(`/api/student/accept-request/${token}`);
         if (res.data.success) {
           refreshStudents?.();
           navigate("/student/accept-success");

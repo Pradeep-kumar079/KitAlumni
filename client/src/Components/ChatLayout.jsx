@@ -1,7 +1,7 @@
 // src/Components/ChatLayout.jsx
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
-import axios from "axios";
+import API from "../api";
 
 
 
@@ -43,7 +43,7 @@ const ChatLayout = ({ userId }) => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get(`/api/user/all`, {
+      const res = await API.get(`/api/user/all`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setUsers(res.data.users);

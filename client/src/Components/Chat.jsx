@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../api";
 import "./Chat.css";
 import { Edit, Trash2, X } from "lucide-react";
 import { socket } from "../socket"; // ✅ Import shared socket instance
@@ -25,13 +25,13 @@ const Chat = ({ currentUserId, otherUserId }) => {
         if (!token) return;
 
         // ✅ Fetch receiver details
-        const receiverRes = await axios.get(`/api/chat/receiver/${otherUserId}`, {
+        const receiverRes = await API.get(`/api/chat/receiver/${otherUserId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (receiverRes.data.success) setReceiver(receiverRes.data.user);
 
         // ✅ Fetch chat history
-        const chatRes = await axios.get(`/api/chat/${currentUserId}/${otherUserId}`, {
+        const chatRes = await API.get(`/api/chat/${currentUserId}/${otherUserId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (chatRes.data.success) setMessages(chatRes.data.chats);
@@ -83,7 +83,7 @@ const Chat = ({ currentUserId, otherUserId }) => {
     setInput("");
 
     try {
-      const res = await axios.post(`/api/chat/send`, msgData, {
+      const res = await API.post(`/api/chat/send`, msgData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       socket.emit("send-message", res.data.chat);
@@ -104,7 +104,7 @@ const Chat = ({ currentUserId, otherUserId }) => {
   // ✅ Submit edit
   const handleEditSubmit = async () => {
     try {
-      const res = await axios.put(
+      const res = await API.put(
         `/api/chat/edit/${selectedMsgId}`,
         { message: editText, userId: currentUserId },
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
@@ -122,7 +122,7 @@ const Chat = ({ currentUserId, otherUserId }) => {
   // ✅ Delete message
   const handleDelete = async () => {
     try {
-      await axios.delete(`/api/chat/delete/${selectedMsgId}/${currentUserId}`, {
+      await API.delete(`/api/chat/delete/${selectedMsgId}/${currentUserId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setMessages((prev) => prev.filter((m) => m._id !== selectedMsgId));

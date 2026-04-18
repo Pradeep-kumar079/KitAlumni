@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import API from "../api";
 import "./SinglePost.css";
 
  
@@ -18,7 +18,7 @@ const SinglePost = () => {
     const token = localStorage.getItem("token");
     if (token) {
       setUser(token);
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      API.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     }
   }, []);
 
@@ -33,7 +33,7 @@ const SinglePost = () => {
   // ================= FETCH =================
   const fetchPost = useCallback(async () => {
     try {
-      const res = await axios.get(`/api/user/post/${id}`);
+      const res = await API.get(`/api/user/post/${id}`);
       if (res.data.success) {
         setPost(res.data.post);
         setComments(res.data.post.comments || []);
@@ -60,7 +60,7 @@ const SinglePost = () => {
       if (!comment.trim()) return;
 
       try {
-        const res = await axios.post(
+        const res = await API.post(
           `/api/user/comment/${id}`,
           { comment }
         );
