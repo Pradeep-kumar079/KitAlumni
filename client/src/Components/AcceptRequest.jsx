@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import API from "../api";
+import API from "api";
 
 const AcceptRequest = ({ refreshStudents }) => {
   const { token } = useParams();

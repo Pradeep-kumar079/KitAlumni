@@ -1,7 +1,7 @@
 // src/Components/ChatLayout.jsx
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
-import API from "../api";
+import API from "api";
 
 
 
