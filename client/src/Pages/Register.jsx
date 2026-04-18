@@ -55,7 +55,7 @@ const Register = () => {
   const handleSendOtp = async () => {
     if (!formData.email) return alert("Please enter an email first.");
     try {
-      const res = await API.post(`/user/send-otp`, { email: formData.email });
+      const res = await API.post(`/api/user/send-otp`, { email: formData.email });
 
       if (res.data.success) {
         alert("✅ OTP sent successfully to your email!");
