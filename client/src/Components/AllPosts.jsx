@@ -26,7 +26,7 @@ const AllPosts = () => {
    // ================= FETCH POSTS =================
   const fetchPosts = useCallback(async () => {
     try {
-      const res = await api.get(`/user/allposts?page=${page}&limit=5`);
+      const res = await API.get(`/user/allposts?page=${page}&limit=5`);
 
       if (res.data.success) {
         if (res.data.posts.length === 0) {
@@ -65,7 +65,7 @@ const AllPosts = () => {
   try {
     const token = localStorage.getItem("token");
 
-    const res = await api.post(
+    const res = await API.post(
       `/user/like/${postId}`,
       {},
       {
@@ -93,7 +93,7 @@ const AllPosts = () => {
     if (!text) return;
 
     try {
-      const res = await api.post(`/user/comment/${postId}`, {
+      const res = await API.post(`/user/comment/${postId}`, {
         comment: text,
       });
 
