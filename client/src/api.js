@@ -1,6 +1,6 @@
-import API from "../api";
+import axios from "axios";
 
-const api = API.create({
+const api = axios.create({
   baseURL: "/api",
   withCredentials: true,
 });
