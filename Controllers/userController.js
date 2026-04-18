@@ -8,7 +8,7 @@ const nodemailer = require("nodemailer");
 const SibApiV3Sdk = require("sib-api-v3-sdk");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const API = require("API");
+ import API from "../api";
 const crypto = require("crypto");
 // ==================== SEND OTP ==================== //
 
