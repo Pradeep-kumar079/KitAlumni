@@ -57,7 +57,7 @@ app.get("/api", (req, res) => {
 /* ================== SERVE REACT BUILD ================== */
 app.use(express.static(path.join(__dirname, "client/build")));
 
-app.get(/^\/(?!api).*/, (req, res) => {
+app.get(/^\/(?!api|static).*/, (req, res) => {
   res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
