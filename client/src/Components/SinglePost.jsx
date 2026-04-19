@@ -33,7 +33,7 @@ const SinglePost = () => {
   // ================= FETCH =================
   const fetchPost = useCallback(async () => {
     try {
-      const res = await API.get(`/api/user/post/${id}`);
+      const res = await API.get(`/user/post/${id}`);
       if (res.data.success) {
         setPost(res.data.post);
         setComments(res.data.post.comments || []);
@@ -61,7 +61,7 @@ const SinglePost = () => {
 
       try {
         const res = await API.post(
-          `/api/user/comment/${id}`,
+          `/user/comment/${id}`,
           { comment }
         );
 
