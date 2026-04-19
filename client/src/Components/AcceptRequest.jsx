@@ -1,34 +1,46 @@
-import React, { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import API from "../api";
 
-const AcceptRequest = ({ refreshStudents }) => {
+const AcceptRequest = () => {
   const { token } = useParams();
-  const navigate = useNavigate();
-  
+  const [status, setStatus] = useState("loading");
 
   useEffect(() => {
-    const acceptConnection = async () => {
+    const acceptRequest = async () => {
       try {
         const res = await API.get(`/student/accept-request/${token}`);
+
         if (res.data.success) {
-          refreshStudents?.();
-          navigate("/student/accept-success");
+          setStatus("success");
         } else {
-          navigate("/student/accept-failed");
+          setStatus("error");
         }
       } catch (err) {
-        console.error("❌ Error accepting connection:", err);
-        navigate("/student/accept-failed");
+        console.error("Accept request error:", err);
+        setStatus("error");
       }
     };
-    acceptConnection();
-  }, [token, navigate, refreshStudents]);
+
+    acceptRequest();
+  }, [token]);
 
   return (
     <div style={{ textAlign: "center", marginTop: "100px" }}>
-      <h2>Processing your request...</h2>
-      <p>Please wait while we connect you both.</p>
+      {status === "loading" && <h2>⏳ Processing request...</h2>}
+
+      {status === "success" && (
+        <>
+          <h2 style={{ color: "green" }}>✅ Connection Accepted!</h2>
+          <p>You are now connected 🎉</p>
+        </>
+      )}
+
+      {status === "error" && (
+        <>
+          <h2 style={{ color: "red" }}>❌ Invalid or Expired Link</h2>
+        </>
+      )}
     </div>
   );
 };
