@@ -32,7 +32,7 @@ const UserDetails = () => {
       const token = localStorage.getItem("token");
       if (!token) return navigate("/login");
 
-      const userRes = await API.get(`/api/user`, {
+      const userRes = await API.get(`/user`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -45,7 +45,7 @@ const UserDetails = () => {
         );
 
         const connRes = await API.get(
-          `/api/user/connections/${u._id}`,
+          `/user/connections/${u._id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
