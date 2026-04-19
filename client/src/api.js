@@ -1,8 +1,18 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: "/api",
-  withCredentials: true,
+const API = axios.create({
+  baseURL: "https://pradeepkumar.site/api",
 });
 
-export default api;
+// 🔥 Attach token
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
+
+export default API;
