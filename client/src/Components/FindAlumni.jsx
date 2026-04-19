@@ -22,7 +22,7 @@ const FindAlumni = () => {
         const payload = JSON.parse(atob(token.split(".")[1]));
         setCurrentUserId(payload.id || payload._id || payload.userId);
 
-        const res = await API.get(`/api/alumni/all-alumni`, {
+        const res = await API.get(`/alumni/all-alumni`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -67,7 +67,7 @@ const FindAlumni = () => {
       const token = localStorage.getItem("token");
 
       await API.post(
-        `/api/alumni/send-request`,
+        `/alumni/send-request`,
         { to },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -100,7 +100,7 @@ const FindAlumni = () => {
       const token = localStorage.getItem("token");
 
       await API.post(
-        `/api/alumni/disconnect`,
+        `/alumni/disconnect`,
         { userId },
         { headers: { Authorization: `Bearer ${token}` } }
       );

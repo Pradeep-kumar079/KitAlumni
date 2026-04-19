@@ -16,7 +16,7 @@ const Students = () => {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        const res = await API.get(`/api/student/all-students`, {
+        const res = await API.get(`/student/all-students`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

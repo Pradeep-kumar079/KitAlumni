@@ -16,7 +16,7 @@ const FindStudent = () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) return;
-        const res = await API.get(`/api/student/all-students`, {
+        const res = await API.get(`/student/all-students`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -42,7 +42,7 @@ const FindStudent = () => {
       const token = localStorage.getItem("token");
       console.log("🎯 Sending request to receiverId:", receiverId);
       const res = await API.post(
-        `/api/student/send-request`,
+        `/student/send-request`,
         { receiverId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -56,7 +56,7 @@ const FindStudent = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await API.post(
-        `/api/student/disconnect`,
+        `/student/disconnect`,
         { targetUserId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
