@@ -13,7 +13,7 @@ const Gallary = () => {
 
   const fetchGallery = async () => {
     try {
-      const res = await API.get(`/api/user/gallery`);
+      const res = await API.get(`/user/gallery`);
       if (res.data.success) setGallery(res.data.gallery);
     } catch (err) {
       console.error("❌ Fetch Gallery Error:", err);
