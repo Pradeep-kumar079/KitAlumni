@@ -18,7 +18,7 @@ const ForgotPass = () => {
     try {
       // ✅ Use correct backend URL
       const res = await API.post(
-        `/api/auth/forgot-password`,
+        `/auth/forgot-password`,
         { email }
       );
 
