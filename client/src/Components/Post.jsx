@@ -40,7 +40,7 @@ const Post = () => {
 
     try {
       const response = await API.post(
-        `/api/user/posts`,
+        `/user/posts`,
         data,
         {
           headers: {
