@@ -58,7 +58,7 @@ app.get("/api", (req, res) => {
 app.use(express.static(path.join(__dirname, "client/build")));
 
 app.get(/^\/(?!api).*/, (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
 /* ================== SOCKET ================== */
