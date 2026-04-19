@@ -51,7 +51,7 @@ const Admin = () => {
   try {
     if (tab === "Log out") return handleLogout();
 
-    const res = await API.get(`/api/admin/${tab}`);
+    const res = await API.get(`/admin/${tab}`);
 
     if (res.data.success) {
       switch (tab) {
@@ -96,7 +96,7 @@ const Admin = () => {
     e.stopPropagation();
     if (!window.confirm("Delete this user?")) return;
     try {
-      const res = await API.delete(`/api/admin/delete-user/${id}`);
+      const res = await API.delete(`/admin/delete-user/${id}`);
       if (res.data.success) {
         alert("User deleted successfully");
         fetchData("users");
@@ -110,7 +110,7 @@ const Admin = () => {
     e.stopPropagation();
     if (!window.confirm("Delete this post?")) return;
     try {
-      const res = await API.delete(`/api/admin/delete-post/${id}`);
+      const res = await API.delete(`/admin/delete-post/${id}`);
       if (res.data.success) {
         alert("Post deleted successfully");
         fetchData("posts");
@@ -132,7 +132,7 @@ const Admin = () => {
     formData.append("description", newGallery.description);
     formData.append("image", newGallery.file);
     try {
-      const res = await API.post(`/api/admin/gallery`, formData, {
+      const res = await API.post(`/admin/gallery`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       if (res.data.success) {
@@ -161,7 +161,7 @@ const Admin = () => {
     formData.append("description", editDescription);
     if (editFile) formData.append("image", editFile);
     try {
-      const res = await API.put(`/api/admin/gallery/${editItem._id}`, formData, {
+      const res = await API.put(`/admin/gallery/${editItem._id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       if (res.data.success) {
@@ -178,7 +178,7 @@ const Admin = () => {
   const handleDeleteGallery = async (id) => {
     if (!window.confirm("Delete this gallery item?")) return;
     try {
-      const res = await API.delete(`/api/admin/gallery/${id}`);
+      const res = await API.delete(`/admin/gallery/${id}`);
       if (res.data.success) {
         alert("Gallery item deleted");
         fetchData("gallery");
@@ -231,7 +231,7 @@ const Admin = () => {
       formData.append("description", description);
       formData.append("image", imageFile);
 
-      const res = await API.post(`/api/admin/create`, formData, {
+      const res = await API.post(`/admin/create`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

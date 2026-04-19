@@ -27,7 +27,7 @@ const Profile = () => {
         }
 
         // ✅ Get logged-in user
-        const currentUserRes = await API.get(`/api/user/`, {
+        const currentUserRes = await API.get(`/user/`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (currentUserRes.data.success) {
@@ -35,7 +35,7 @@ const Profile = () => {
         }
 
         // ✅ Fetch target user profile
-        const res = await API.get(`/api/user/profile/${userId}`, {
+        const res = await API.get(`/user/profile/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -68,7 +68,7 @@ const Profile = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await API.post(
-        `/api/student/send-request`,
+        `/student/send-request`,
         { receiverId: userId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -88,7 +88,7 @@ const Profile = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await API.post(
-        `/api/student/disconnect`,
+        `/student/disconnect`,
         { targetUserId: userId },
         { headers: { Authorization: `Bearer ${token}` } }
       );

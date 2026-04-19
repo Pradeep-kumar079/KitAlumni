@@ -7,7 +7,7 @@ import API from "../api";
 
 // ✅ Use Render backend URL
 const socket = io({
-  transports: ["websocket"], // prefer WebSocket, avoid polling
+  transports: ["/","websocket"], // prefer WebSocket, avoid polling
   secure: true,              // ✅ important for Render HTTPS
   withCredentials: true,
   reconnection: true,
@@ -43,7 +43,7 @@ const ChatLayout = ({ userId }) => {
 
   const fetchUsers = async () => {
     try {
-      const res = await API.get(`/api/user/all`, {
+      const res = await API.get(`/user/all`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setUsers(res.data.users);

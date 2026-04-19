@@ -10,7 +10,7 @@ const AcceptRequest = ({ refreshStudents }) => {
   useEffect(() => {
     const acceptConnection = async () => {
       try {
-        const res = await API.get(`/api/student/accept-request/${token}`);
+        const res = await API.get(`/student/accept-request/${token}`);
         if (res.data.success) {
           refreshStudents?.();
           navigate("/student/accept-success");

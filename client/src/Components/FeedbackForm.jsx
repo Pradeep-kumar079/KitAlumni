@@ -15,7 +15,7 @@ const FeedbackForm = () => {
     e.preventDefault();
     try {
       const res = await API.post(
-        `/api/user/submit`,
+        `/user/submit`,
         { feedback },
         { headers: { Authorization: `Bearer ${token}` } }
       );

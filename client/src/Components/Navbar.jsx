@@ -26,7 +26,7 @@ const Navbar = () => {
         return;
       }
       try {
-        const res = await API.get(`/api/search?q=${query}`);
+        const res = await API.get(`/search?q=${query}`);
         if (res.data.success) {
           const combined = [
             ...(res.data.users || []).map((u) => ({

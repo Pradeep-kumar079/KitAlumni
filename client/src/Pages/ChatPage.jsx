@@ -14,7 +14,7 @@ const ChatPage = () => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const res = await API.get(`/api/account`, {
+      const res = await API.get(`/account`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
