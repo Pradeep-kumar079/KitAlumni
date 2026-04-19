@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 18
 
-      # 3. Install backend deps
+      # 3. Install backend dependencies
       - name: Install Backend Dependencies
         run: npm install
 
@@ -35,15 +35,15 @@ jobs:
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      # 6. Build Docker images
+      # 6. Build Docker images (NO CACHE 🔥)
       - name: Build Docker Images
-        run: docker compose build
+        run: docker compose build --no-cache
 
       # 7. Push Docker images
       - name: Push Images
         run: docker compose push
 
-      # 8. Deploy to EC2
+      # 8. Deploy to EC2 (FULL FIX 🔥)
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -53,11 +53,15 @@ jobs:
           script: |
             echo "🚀 Deploying latest version..."
 
-            docker pull pradeep079/frontend:latest
+            cd ~/KitAlumni
 
-            docker stop app || true
-            docker rm app || true
+            # Pull latest images
+            docker-compose pull
 
-            docker run -d -p 3000:80 --name app pradeep079/frontend:latest
+            # Stop old containers
+            docker-compose down
+
+            # Start new containers
+            docker-compose up -d
 
             echo "✅ Deployment complete"
