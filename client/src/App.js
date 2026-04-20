@@ -27,7 +27,7 @@ import ResetPass from "./Pages/ResetPass";
 // import Alumnisuccess from "./Components/Alumnisuccess";
 
 const App = () => {
-  const [refreshFlag, setRefreshFlag] = React.useState(false);
+  // const [refreshFlag, setRefreshFlag] = React.useState(false);
   // const refreshStudents = () => setRefreshFlag((prev) => !prev);
 
   // const isAuth = localStorage.getItem("token");
@@ -53,14 +53,14 @@ const App = () => {
 
         <Route
           path="/findstudent/:admissionyear"
-          element={isAuth ? <FindStudent key={refreshFlag} /> : <Navigate to="/login" />}
+          element={isAuth ? <FindStudent  /> : <Navigate to="/login" />}
         />
 
         <Route path="/alumni" element={isAuth ? <Alumni /> : <Navigate to="/login" />} />
 
         <Route
           path="/findalumni/:admissionyear"
-          element={isAuth ? <FindAlumni key={refreshFlag} /> : <Navigate to="/login" />}
+          element={isAuth ? <FindAlumni /> : <Navigate to="/login" />}
         />
 
         {/* <Route
