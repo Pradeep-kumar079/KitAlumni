@@ -79,8 +79,8 @@ const App = () => {
             isAuth && role === "admin"
               ? <Admin />
               : <Navigate to="/home" />
-          } 
-        />        
+          }
+        />
         <Route path="/user/:id" element={isAuth ? <UserDetails /> : <Navigate to="/login" />} />
 
         <Route path="/gallery" element={isAuth ? <Gallary /> : <Navigate to="/login" />} />

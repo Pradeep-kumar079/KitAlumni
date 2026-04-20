@@ -57,7 +57,16 @@ app.get("/api", (req, res) => {
 /* ================== SERVE REACT BUILD ================== */
 app.use(express.static(path.join(__dirname, "client/build")));
 
-app.get(/^\/(?!api|static).*/, (req, res) => {
+// ✅ Only fallback for NON-FILE routes
+app.get("*", (req, res) => {
+  if (
+    req.path.startsWith("/api") ||   // backend
+    req.path.startsWith("/uploads") || // images
+    req.path.includes(".")           // any file (.js, .css, .png, .json, etc)
+  ) {
+    return res.status(404).end();
+  }
+
   res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
@@ -66,7 +75,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "*", // ✅ FIXED (no undefined variable)
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
