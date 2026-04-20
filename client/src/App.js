@@ -24,7 +24,7 @@ import Gallary from "./Components/Gallary";
 import SingleGallery from "./Components/SingleGallery";
 import ForgotPass from "./Pages/ForgotPass";
 import ResetPass from "./Pages/ResetPass";
-import Alumnisuccess from "./Components/Alumnisuccess";
+// import Alumnisuccess from "./Components/Alumnisuccess";
 
 const App = () => {
   const [refreshFlag, setRefreshFlag] = React.useState(false);
@@ -63,7 +63,7 @@ const App = () => {
           element={isAuth ? <FindAlumni key={refreshFlag} /> : <Navigate to="/login" />}
         />
 
-        <Route
+        {/* <Route
           path="/student/accept-request/:token"
           element={<AcceptRequest refreshStudents={refreshStudents} />}
         />
@@ -71,7 +71,7 @@ const App = () => {
         <Route
           path="/alumni/accept-request/:token"
           element={<AcceptRequest refreshStudents={refreshStudents} />}
-        />
+        /> */}
 
         <Route path="/account" element={isAuth ? <Account /> : <Navigate to="/login" />} />
         <Route path="/post/:id" element={isAuth ? <SinglePost /> : <Navigate to="/login" />} />
@@ -79,8 +79,8 @@ const App = () => {
         <Route path="/chat/:otherUserId" element={isAuth ? <ChatWrapper /> : <Navigate to="/login" />} />
         <Route path="/chat" element={isAuth ? <ChatPage /> : <Navigate to="/login" />} />
 
-        <Route 
-          path="/admin" 
+        <Route
+          path="/admin"
           element={
             isAuth && role === "admin"
               ? <Admin />
@@ -107,7 +107,7 @@ const App = () => {
         <Route path="/student/accept-failed" element={<AcceptFailed />} />
 
         {/* ALUMNI ACCEPT ROUTES */}
-        <Route path="/alumni/accept-success" element={<Alumnisuccess />} />
+        <Route path="/alumni/accept-success" element={<AcceptSuccess />} />
         <Route path="/alumni/accept-failed" element={<AcceptFailed />} />
         
 

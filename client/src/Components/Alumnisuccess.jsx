@@ -1,35 +1,12 @@
-import React, { useEffect, useState } from "react";
-import API from "../api";
+import React from "react";
 import "./AcceptRequest.css";
 
-const Alumnisuccess = () => {
-  const [status, setStatus] = useState("loading");
-
-  useEffect(() => {
-    const acceptRequest = async () => {
-      try {
-        const token = window.location.pathname.split("/").pop();
-        
-
-        const res = await API.get(`/alumni/accept-request/${token}`);
-        if (res.data.success) {
-          setStatus("success");
-        } else {
-          setStatus("error");
-        }
-      } catch (err) {
-        console.error("Accept request error:", err);
-        setStatus("error");
-      }
-    };
-    acceptRequest();
-  }, []);
+const AcceptRequest = () => {
+  
 
   return (
     <div className="accept-page">
-      {status === "loading" && <p className="loading">Connecting...</p>}
-
-      {status === "success" && (
+   
         <div className="accept-card success">
           <h2>✅ Connection Accepted!</h2>
           <p>You and the sender are now connected.</p>
@@ -37,19 +14,9 @@ const Alumnisuccess = () => {
             Go to Alumni Portal
           </a>
         </div>
-      )}
-
-      {status === "error" && (
-        <div className="accept-card error">
-          <h2>❌ Link Expired or Invalid</h2>
-          <p>This connection request may have already been used or is invalid.</p>
-          <a href="https://pradeepkumar.site" className="back-btn">
-            Go Back
-          </a>
-        </div>
-      )}
+    
     </div>
   );
 };
 
-export default Alumnisuccess;
+export default AcceptRequest;
