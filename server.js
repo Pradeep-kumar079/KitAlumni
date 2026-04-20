@@ -58,15 +58,7 @@ app.get("/api", (req, res) => {
 app.use(express.static(path.join(__dirname, "client/build")));
 
 // ✅ Only fallback for NON-FILE routes
-app.get("/*", (req, res) => {
-  if (
-    req.path.startsWith("/api") ||
-    req.path.startsWith("/uploads") ||
-    req.path.includes(".")
-  ) {
-    return res.status(404).end();
-  }
-
+app.get(/^(?!\/api|\/uploads).*/, (req, res) => {
   res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
