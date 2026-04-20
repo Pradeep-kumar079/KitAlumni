@@ -55,16 +55,19 @@ jobs:
 
             cd ~/KitAlumni
 
+            # 🔥pull latest code (important)
+            git pull
+
+            # 🔥 Stop old containers
+            docker-compose down
+
             # 🔥 Clean old unused stuff
             docker system prune -af
 
             # 🔥 Pull latest images
             docker-compose pull
 
-            # 🔥 Stop old containers
-            docker-compose down
-
             # 🔥 FORCE new containers (VERY IMPORTANT)
-            docker-compose up -d --force-recreate --build
+            docker-compose up -d
 
             echo "✅ Deployment complete"

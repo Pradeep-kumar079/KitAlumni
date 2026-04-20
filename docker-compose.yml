@@ -19,15 +19,15 @@ services:
     #   - .env
     environment:
       - PORT=5000
-      # - MONGO_URI=mongodb+srv://pradeep:Travel123@e-commerce.05vrejg.mongodb.net/Alumni-app?retryWrites=true&w=majority
+      - MONGO_URI=mongodb+srv://pradeep:Travel123@e-commerce.05vrejg.mongodb.net/Alumni-app?retryWrites=true&w=majority
       - NODE_ENV=production
-      # - JWT_SECRET=mysecret123
-      # - NODE_ENV=production
-      # - SENDER_EMAIL=pradeepk9348@gmail.com
-      # - BREVO_EMAIL=pradeepk9348@gmail.com
-      # - BREVO_SMTP_KEY=${BREVO_SMTP_KEY}
-      # - BREVO_API_KEY=${BREVO_API_KEY}
-      # - PERSPECTIVE_API_KEY=${PERSPECTIVE_API_KEY}
+      - JWT_SECRET=mysecret123
+      - NODE_ENV=production
+      - SENDER_EMAIL=pradeepk9348@gmail.com
+      - BREVO_EMAIL=pradeepk9348@gmail.com
+      - BREVO_SMTP_KEY=${BREVO_SMTP_KEY}
+      - BREVO_API_KEY=${BREVO_API_KEY}
+      - PERSPECTIVE_API_KEY=${PERSPECTIVE_API_KEY}
     depends_on:
       - mongo
 
