@@ -67,8 +67,8 @@ const sendRequestController = async (req, res) => {
     // const rejectUrl = `${backendUrl}/api/student/reject-request/${token}`;
     const frontendUrl = process.env.FRONTEND_URL;
 
-    const acceptUrl = `${frontendUrl}/api/student/accept-request/${token}`;
-    const rejectUrl = `${frontendUrl}/api/student/accept-request/${token}?action=reject`;
+    const acceptUrl = `https://pradeepkumar.site/api/student/accept-request/${token}`;
+    const rejectUrl = `https://pradeepkumar.site/api/student/reject-request/${token}`;
 
     // ✉️ Send email
     const transporter = nodemailer.createTransport({
@@ -127,14 +127,11 @@ const acceptRequestController = async (req, res) => {
     // ✅ Update request status
     request.status = "connected";
     await request.save();
-    res.json({ success: true, message: "Connection accepted" });
+    return res.redirect(
+      "https://pradeepkumar.site/student/accept-success"
+    );
 
-    // res.send(`
-    //   <html><body style="text-align:center;font-family:sans-serif;margin-top:100px;">
-    //   <h2>✅ Connection Accepted!</h2>
-    //   <p>You and ${sender.username} are now connected.</p>
-    //   </body></html>
-    // `);
+     
   } catch (error) {
     console.error("❌ Accept Request Error:", error);
     res.status(500).send("Invalid or expired link.");
@@ -157,12 +154,9 @@ const rejectRequestController = async (req, res) => {
     const { senderId } = decoded;
     const sender = await UserModel.findById(senderId);
 
-    res.send(`
-      <html><body style="text-align:center;font-family:sans-serif;margin-top:100px;">
-      <h2>❌ Connection Request Rejected</h2>
-      <p>You have rejected the request from ${sender?.username || "the user"}.</p>
-      </body></html>
-    `);
+    return res.redirect(
+      "https://pradeepkumar.site/student/accept-failed"
+    );
   } catch (error) {
     console.error("❌ Reject Request Error:", error);
     res.status(500).send("Invalid or expired link.");

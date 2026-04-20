@@ -24,6 +24,7 @@ import Gallary from "./Components/Gallary";
 import SingleGallery from "./Components/SingleGallery";
 import ForgotPass from "./Pages/ForgotPass";
 import ResetPass from "./Pages/ResetPass";
+import Alumnisuccess from "./Components/Alumnisuccess";
 
 const App = () => {
   const [refreshFlag, setRefreshFlag] = React.useState(false);
@@ -67,6 +68,11 @@ const App = () => {
           element={<AcceptRequest refreshStudents={refreshStudents} />}
         />
 
+        <Route
+          path="/alumni/accept-request/:token"
+          element={<AcceptRequest refreshStudents={refreshStudents} />}
+        />
+
         <Route path="/account" element={isAuth ? <Account /> : <Navigate to="/login" />} />
         <Route path="/post/:id" element={isAuth ? <SinglePost /> : <Navigate to="/login" />} />
         <Route path="/profile/:userId" element={isAuth ? <Profile /> : <Navigate to="/login" />} />
@@ -90,13 +96,25 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPass />} />
         <Route path="/auth/reset-password/:token" element={<ResetPass />} />
 
+        
+        {/* <Route path="/student/accept-success" element={<AcceptSuccess />} />
+        <Route path="/student/accept-failed" element={<AcceptFailed />} /> */}
+
+        {/* Student accept routes
+
         {/* ACCEPT ROUTES */}
         <Route path="/student/accept-success" element={<AcceptSuccess />} />
         <Route path="/student/accept-failed" element={<AcceptFailed />} />
 
+        {/* ALUMNI ACCEPT ROUTES */}
+        <Route path="/alumni/accept-success" element={<Alumnisuccess />} />
+        <Route path="/alumni/accept-failed" element={<AcceptFailed />} />
+        
+
       </Routes>
     </Router>
   );
+  
 };
 
 export default App;

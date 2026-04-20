@@ -213,7 +213,9 @@ exports.acceptRequestController = async (req, res) => {
       $addToSet: { connections: request.from._id },
     });
 
-    res.json({ success: true, message: "Connection accepted successfully" });
+    return res.redirect(
+      "https://pradeepkumar.site/alumni/accept-success"
+    );
   } catch (error) {
     console.error("❌ acceptRequestController Error:", error);
     res.status(500).json({ success: false, message: "Server error" });
@@ -235,7 +237,9 @@ exports.rejectRequestController = async (req, res) => {
     request.status = "rejected";
     await request.save();
 
-    res.json({ success: true, message: "Connection request rejected" });
+    return res.redirect(
+      "https://pradeepkumar.site/student/accept-failed"
+    );
   } catch (error) {
     console.error("❌ rejectRequestController Error:", error);
     res.status(500).json({ success: false, message: "Server error" });
