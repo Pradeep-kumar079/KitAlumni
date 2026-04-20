@@ -58,11 +58,11 @@ app.get("/api", (req, res) => {
 app.use(express.static(path.join(__dirname, "client/build")));
 
 // ✅ Only fallback for NON-FILE routes
-app.get("*", (req, res) => {
+app.get("/*", (req, res) => {
   if (
-    req.path.startsWith("/api") ||   // backend
-    req.path.startsWith("/uploads") || // images
-    req.path.includes(".")           // any file (.js, .css, .png, .json, etc)
+    req.path.startsWith("/api") ||
+    req.path.startsWith("/uploads") ||
+    req.path.includes(".")
   ) {
     return res.status(404).end();
   }
