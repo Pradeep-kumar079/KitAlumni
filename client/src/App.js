@@ -28,7 +28,7 @@ import ResetPass from "./Pages/ResetPass";
 
 const App = () => {
   const [refreshFlag, setRefreshFlag] = React.useState(false);
-  const refreshStudents = () => setRefreshFlag((prev) => !prev);
+  // const refreshStudents = () => setRefreshFlag((prev) => !prev);
 
   // const isAuth = localStorage.getItem("token");
   const isAuth = !!localStorage.getItem("token");
