@@ -67,8 +67,8 @@ const sendRequestController = async (req, res) => {
     // const rejectUrl = `${backendUrl}/api/student/reject-request/${token}`;
     const frontendUrl = process.env.FRONTEND_URL;
 
-    const acceptUrl = `${frontendUrl}/student/accept-request/${token}`;
-    const rejectUrl = `${frontendUrl}/student/accept-request/${token}?action=reject`;
+    const acceptUrl = `${frontendUrl}/api/student/accept-request/${token}`;
+    const rejectUrl = `${frontendUrl}/api/student/accept-request/${token}?action=reject`;
 
     // ✉️ Send email
     const transporter = nodemailer.createTransport({

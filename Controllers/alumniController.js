@@ -151,8 +151,8 @@ exports.sendRequestController = async (req, res) => {
 
         const frontendUrl = process.env.FRONTEND_URL;
 
-        const acceptLink = `${frontendUrl}/alumni/accept-request/${token}`;
-        const rejectLink = `${frontendUrl}/alumni/accept-request/${token}?action=reject`;
+        const acceptLink = `${frontendUrl}/api/alumni/accept-request/${token}`;
+        const rejectLink = `${frontendUrl}/api/alumni/accept-request/${token}?action=reject`;
         const mailOptions = {
           from: process.env.EMAIL_USER,
           to: receiver.email,
