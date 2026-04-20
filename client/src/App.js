@@ -9,7 +9,7 @@ import About from "./Components/About";
 import Students from "./Components/Students";
 import FindStudent from "./Components/FindStudent";
 import Account from "./Components/Account";
-import AcceptRequest from "./Components/AcceptRequest";
+// import AcceptRequest from "./Components/AcceptRequest";
 import SinglePost from "./Components/SinglePost";
 import Profile from "./Components/Profile";
 import Alumni from "./Components/Alumni";
