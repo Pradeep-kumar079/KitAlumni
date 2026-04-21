@@ -1,46 +1,235 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@700&display=swap");
+
+/* ===== PAGE ===== */
 .accept-page {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f5f6fa;
-  font-family: "Poppins", sans-serif;
+  background: #f2efe9;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(99,153,34,0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(94,129,172,0.06) 0%, transparent 50%);
+  font-family: "DM Sans", sans-serif;
+  padding: 24px 16px;
 }
 
+/* ===== CARD ===== */
 .accept-card {
-  background: #fff;
-  padding: 2.5rem;
-  border-radius: 16px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  padding: 40px 36px;
+  border-radius: 20px;
+  border: 0.5px solid rgba(0, 0, 0, 0.07);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.04),
+    0 16px 48px rgba(0, 0, 0, 0.08);
   text-align: center;
-  width: 90%;
+  width: 100%;
   max-width: 420px;
+  animation: cardIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.accept-card.success h2 {
-  color: #2ecc71;
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.accept-card.error h2 {
-  color: #e74c3c;
+/* ===== ICON RING ===== */
+.accept-icon-ring {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 22px;
 }
 
-.loading {
-  font-size: 1.2rem;
-  color: #555;
+.accept-icon-ring svg {
+  width: 32px;
+  height: 32px;
 }
 
-.back-btn {
-  display: inline-block;
-  margin-top: 1rem;
-  background: #3498db;
-  color: white;
+.success-ring {
+  background: #EAF3DE;
+}
+
+.error-ring {
+  background: #FCEBEB;
+}
+
+/* ===== HEADING ===== */
+.accept-card h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1c2b3a;
+  margin-bottom: 8px;
+}
+
+.accept-card p {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+
+.accept-card p strong {
+  color: #1c2b3a;
+  font-weight: 600;
+}
+
+/* ===== AVATARS ===== */
+.accept-avatars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.accept-av {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+.av-blue {
+  background: #B5D4F4;
+  color: #0C447C;
+}
+
+.av-green {
+  background: #C0DD97;
+  color: #27500A;
+  margin-left: -14px;
+}
+
+.accept-link-line {
+  width: 28px;
+  height: 2px;
+  background: #1c2b3a;
+  border-radius: 2px;
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+/* ===== NAMES ===== */
+.accept-names {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 20px;
+}
+
+.accept-name-item {
+  font-size: 0.78rem;
+  color: #6b7280;
+  text-align: center;
+}
+
+.accept-name-item strong {
+  display: block;
+  font-size: 0.85rem;
+  color: #1c2b3a;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+/* ===== CHIPS ===== */
+.accept-chips {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.accept-chip {
+  background: #f2efe9;
+  color: #374151;
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 0.5px solid rgba(0, 0, 0, 0.08);
+}
+
+/* ===== CTA BUTTON ===== */
+.accept-portal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1c2b3a;
+  color: #ffffff;
   text-decoration: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  transition: 0.3s ease;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: "DM Sans", sans-serif;
+  transition: background 0.15s, transform 0.12s;
+  letter-spacing: 0.01em;
 }
 
-.back-btn:hover {
-  background: #2980b9;
+.accept-portal-btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.accept-portal-btn:hover {
+  background: #2d4a63;
+}
+
+.accept-portal-btn:active {
+  transform: scale(0.98);
+}
+
+/* ===== ERROR STATE (used in AcceptFailed) ===== */
+.accept-card.error h2 {
+  color: #1c2b3a;
+}
+
+.accept-home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f2efe9;
+  color: #1c2b3a;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  padding: 11px 22px;
+  border-radius: 11px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: "DM Sans", sans-serif;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.accept-home-btn:hover {
+  background: #e5e0d8;
+}
+
+.accept-home-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+  .accept-card {
+    padding: 28px 22px;
+  }
+
+  .accept-names {
+    gap: 20px;
+  }
 }
