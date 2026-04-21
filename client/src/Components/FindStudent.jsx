@@ -9,7 +9,6 @@ const FindStudent = () => {
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState(null);
   const navigate = useNavigate();
-  
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -19,7 +18,6 @@ const FindStudent = () => {
         const res = await API.get(`/student/all-students`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-
         if (res.data.success && Array.isArray(res.data.students)) {
           const filtered = res.data.students.filter(
             (s) => s.admissionyear?.toString() === admissionyear
@@ -40,7 +38,6 @@ const FindStudent = () => {
   const handleRequest = async (receiverId) => {
     try {
       const token = localStorage.getItem("token");
-      console.log("🎯 Sending request to receiverId:", receiverId);
       const res = await API.post(
         `/student/send-request`,
         { receiverId },
@@ -65,7 +62,10 @@ const FindStudent = () => {
         setStudents((prev) =>
           prev.map((s) =>
             s._id === targetUserId
-              ? { ...s, connections: s.connections.filter((id) => id !== currentUserId) }
+              ? {
+                  ...s,
+                  connections: s.connections.filter((id) => id !== currentUserId),
+                }
               : s
           )
         );
@@ -75,8 +75,9 @@ const FindStudent = () => {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (!students.length) return <div>No students found for {admissionyear}</div>;
+  if (loading) return <div className="loading">Loading students…</div>;
+  if (!students.length)
+    return <div className="no-batch">No students found for batch {admissionyear}</div>;
 
   const grouped = students.reduce((acc, s) => {
     if (!acc[s.branch]) acc[s.branch] = [];
@@ -86,10 +87,12 @@ const FindStudent = () => {
 
   return (
     <div className="batch-container">
-      <h2 id="mainheading">Students in {admissionyear}</h2>
+      <h2 id="mainheading">Students — Batch {admissionyear}</h2>
+
       {Object.entries(grouped).map(([branch, list]) => (
         <div key={branch} className="branch-group">
-          <h3 >Department of :{branch}</h3>
+          <h3>Department of {branch}</h3>
+
           <div className="table-wrapper">
             <table className="student-table">
               <thead>
@@ -105,11 +108,19 @@ const FindStudent = () => {
                   <th>Status</th>
                 </tr>
               </thead>
+
               <tbody>
                 {list.map((s) => {
                   const isConnected = s.connections?.includes(currentUserId);
+                  const isSelf = currentUserId === s._id;
+
+                  const statusLabel = isConnected
+                    ? "connected"
+                    : "none";
+
                   return (
                     <tr key={s._id}>
+                      {/* Profile Image */}
                       <td>
                         <img
                           src={`/uploads/${s.userimg || "default.jpg"}`}
@@ -118,41 +129,66 @@ const FindStudent = () => {
                           onClick={() => navigate(`/profile/${s._id}`)}
                         />
                       </td>
+
+                      {/* Name */}
                       <td
-                        style={{ cursor: "pointer", color: "#2563eb" }}
+                        className="name-cell"
                         onClick={() => navigate(`/profile/${s._id}`)}
                       >
                         {s.username}
                       </td>
-                      <td>{s.role}</td>
+
+                      {/* Role */}
+                      <td>
+                        <span className="role-badge">{s.role}</span>
+                      </td>
+
                       <td>{s.admissionyear}</td>
                       <td>{s.usn}</td>
                       <td>{s.email}</td>
-                      <td>{s.connections?.length || 0}</td>
+
+                      {/* Connections count */}
                       <td>
-                        {currentUserId === s._id ? (
-                          "Myself"
+                        <span className="conn-count">
+                          {s.connections?.length || 0}
+                        </span>
+                      </td>
+
+                      {/* Action */}
+                      <td>
+                        {isSelf ? (
+                          <span className="status-badge none">Myself</span>
                         ) : isConnected ? (
-                          <>
+                          <div className="action-wrap">
                             <button
-                              style={{ backgroundColor: "#ef4444", color: "#fff" }}
+                              className="disconnect-btn"
                               onClick={() => handleDisconnect(s._id)}
                             >
                               Disconnect
                             </button>
-                            &nbsp;
                             <button
-                              style={{ backgroundColor: "#3b82f6", color: "#fff" }}
+                              className="btn-message"
                               onClick={() => navigate(`/chat/${s._id}`)}
                             >
                               Message
                             </button>
-                          </>
+                          </div>
                         ) : (
-                          <button onClick={() => handleRequest(s._id)}>Connect</button>
+                          <button
+                            className="btn-connect"
+                            onClick={() => handleRequest(s._id)}
+                          >
+                            Connect
+                          </button>
                         )}
                       </td>
-                      <td>{isConnected ? "Connected" : "Not connected"}</td>
+
+                      {/* Status */}
+                      <td>
+                        <span className={`status-badge ${statusLabel}`}>
+                          {isConnected ? "Connected" : "Not Connected"}
+                        </span>
+                      </td>
                     </tr>
                   );
                 })}

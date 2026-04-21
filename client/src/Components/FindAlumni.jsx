@@ -10,7 +10,7 @@ const FindAlumni = () => {
   const [currentUserId, setCurrentUserId] = useState(null);
   const navigate = useNavigate();
 
-  const defaultImg = "default.jpg"; // ✅ FIXED
+  const defaultImg = "default.jpg";
 
   useEffect(() => {
     const fetchAlumni = async () => {
@@ -18,7 +18,6 @@ const FindAlumni = () => {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        // ✅ Decode token
         const payload = JSON.parse(atob(token.split(".")[1]));
         setCurrentUserId(payload.id || payload._id || payload.userId);
 
@@ -34,7 +33,6 @@ const FindAlumni = () => {
               (b) =>
                 String(b.batchYear).trim() === String(admissionyear).trim()
             );
-
             if (selectedBatch && Array.isArray(selectedBatch.alumni)) {
               foundAlumni = selectedBatch.alumni;
             }
@@ -57,22 +55,17 @@ const FindAlumni = () => {
         setLoading(false);
       }
     };
-
     fetchAlumni();
   }, [admissionyear]);
 
-  // ================= SEND REQUEST =================
   const handleRequest = async (to) => {
     try {
       const token = localStorage.getItem("token");
-
       await API.post(
         `/alumni/send-request`,
         { to },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
-      // ✅ UPDATE UI (IMPORTANT)
       setAlumniList((prev) =>
         prev.map((a) =>
           a._id === to
@@ -86,26 +79,20 @@ const FindAlumni = () => {
             : a
         )
       );
-
       alert("✅ Connection request sent!");
     } catch (err) {
-      console.error("❌ Request error:", err.response?.data || err);
       alert(err.response?.data?.message || "Failed to send request.");
     }
   };
 
-  // ================= DISCONNECT =================
   const handleDisconnect = async (userId) => {
     try {
       const token = localStorage.getItem("token");
-
       await API.post(
         `/alumni/disconnect`,
         { userId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
-      // ✅ UPDATE UI
       setAlumniList((prev) =>
         prev.map((a) =>
           a._id === userId
@@ -118,16 +105,13 @@ const FindAlumni = () => {
             : a
         )
       );
-
       alert("❎ Disconnected successfully!");
     } catch (err) {
-      console.error("❌ Disconnect error:", err.response?.data || err);
       alert("Failed to disconnect.");
     }
   };
 
-  if (loading) return <div className="loading">Loading...</div>;
-
+  if (loading) return <div className="loading">Loading alumni…</div>;
   if (!alumniList.length)
     return (
       <div className="no-batch">
@@ -135,7 +119,6 @@ const FindAlumni = () => {
       </div>
     );
 
-  // ================= GROUP BY BRANCH =================
   const groupedByBranch = alumniList.reduce((acc, a) => {
     if (!acc[a.branch]) acc[a.branch] = [];
     acc[a.branch].push(a);
@@ -144,7 +127,7 @@ const FindAlumni = () => {
 
   return (
     <div className="batch-container">
-      <h2 id="mainheading">Alumni in {admissionyear}</h2>
+      <h2 id="mainheading">Alumni — Batch {admissionyear}</h2>
 
       {Object.entries(groupedByBranch).map(([branch, list]) => (
         <div key={branch} className="branch-group">
@@ -167,67 +150,105 @@ const FindAlumni = () => {
               </thead>
 
               <tbody>
-                {list.map((alumni) => (
-                  <tr key={alumni._id}>
-                    {/* PROFILE IMAGE */}
-                    <td>
-                      <img
-                        src={
-                          alumni.userimg &&
-                          !alumni.userimg.includes("default")
-                            ? `/uploads/${alumni.userimg}`
-                            : `/uploads/${defaultImg}`
-                        }
-                        alt={alumni.username}
-                        className="profile-img"
+                {list.map((alumni) => {
+                  const isConnected = alumni.connections?.includes(currentUserId);
+                  const isPending  = alumni.receivedRequests?.includes(currentUserId);
+                  const isRequested = alumni.sentRequests?.includes(currentUserId);
+                  const isSelf = currentUserId === alumni._id;
+
+                  const statusLabel = isConnected
+                    ? "connected"
+                    : isPending
+                    ? "pending"
+                    : isRequested
+                    ? "requested"
+                    : "none";
+
+                  const statusText = isConnected
+                    ? "Connected"
+                    : isPending
+                    ? "Pending"
+                    : isRequested
+                    ? "Requested"
+                    : "Not Connected";
+
+                  return (
+                    <tr key={alumni._id}>
+                      {/* Profile Image */}
+                      <td>
+                        <img
+                          src={
+                            alumni.userimg && !alumni.userimg.includes("default")
+                              ? `/uploads/${alumni.userimg}`
+                              : `/uploads/${defaultImg}`
+                          }
+                          alt={alumni.username}
+                          className="profile-img"
+                          onClick={() => navigate(`/profile/${alumni._id}`)}
+                        />
+                      </td>
+
+                      {/* Name */}
+                      <td
+                        className="name-cell"
                         onClick={() => navigate(`/profile/${alumni._id}`)}
-                      />
-                    </td>
+                      >
+                        {alumni.username}
+                      </td>
 
-                    <td>{alumni.username}</td>
-                    <td>{alumni.role}</td>
-                    <td>{alumni.batchYear}</td>
-                    <td>{alumni.usn}</td>
-                    <td>{alumni.email}</td>
-                    <td>{alumni.connections?.length || 0}</td>
+                      {/* Role */}
+                      <td>
+                        <span className="role-badge">{alumni.role}</span>
+                      </td>
 
-                    {/* ACTION */}
-                    <td>
-                      {currentUserId === alumni._id ? (
-                        "Myself"
-                      ) : alumni.connections?.includes(currentUserId) ? (
-                        <>
-                          <button disabled>Connected</button>
+                      <td>{alumni.batchYear}</td>
+                      <td>{alumni.usn}</td>
+                      <td>{alumni.email}</td>
+
+                      {/* Connections */}
+                      <td>
+                        <span className="conn-count">
+                          {alumni.connections?.length || 0}
+                        </span>
+                      </td>
+
+                      {/* Action */}
+                      <td>
+                        {isSelf ? (
+                          <span className="status-badge none">Myself</span>
+                        ) : isConnected ? (
+                          <div className="action-wrap">
+                            <button disabled>Connected</button>
+                            <button
+                              className="disconnect-btn"
+                              onClick={() => handleDisconnect(alumni._id)}
+                            >
+                              Disconnect
+                            </button>
+                          </div>
+                        ) : isPending ? (
+                          <button disabled>Pending…</button>
+                        ) : isRequested ? (
+                          <button disabled>Requested</button>
+                        ) : (
                           <button
-                            onClick={() => handleDisconnect(alumni._id)}
-                            className="disconnect-btn"
+                            className="btn-connect"
+                            onClick={() => handleRequest(alumni._id)}
                           >
-                            Disconnect
+                            Connect
                           </button>
-                        </>
-                      ) : alumni.receivedRequests?.includes(currentUserId) ? (
-                        <button disabled>Pending</button>
-                      ) : alumni.sentRequests?.includes(currentUserId) ? (
-                        <button disabled>Requested</button>
-                      ) : (
-                        <button onClick={() => handleRequest(alumni._id)}>
-                          Connect
-                        </button>
-                      )}
-                    </td>
+                        )}
+                      </td>
 
-                    {/* STATUS */}
-                    <td>
-                      {alumni.connections?.includes(currentUserId)
-                        ? "Connected"
-                        : alumni.receivedRequests?.includes(currentUserId)
-                        ? "Pending"
-                        : alumni.sentRequests?.includes(currentUserId)
-                        ? "Requested"
-                        : "Not Connected"}
-                    </td>
-                  </tr>
-                ))}
+                      {/* Status */}
+                      <td>
+                        <span className={`status-badge ${statusLabel}`}>
+                          {statusText}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
