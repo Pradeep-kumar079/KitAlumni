@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Register.css";
 import API from "../api";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 const STEP_META = [
   { label: "Email Verification", desc: "Verify your email" },
