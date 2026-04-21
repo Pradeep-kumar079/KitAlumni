@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import "./UserDetails.css";
 
-
 const socket = io("/", {
   transports: ["websocket"],
   withCredentials: true,
@@ -14,19 +13,14 @@ const UserDetails = () => {
   const [user, setUser] = useState(null);
   const [connections, setConnections] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const navigate = useNavigate();
 
-  // ================= IMAGE HELPER =================
   const renderImage = useCallback((path) => {
     if (!path) return null;
     if (path.startsWith("http")) return path;
-    return path.startsWith("uploads/")
-      ? `/${path}`
-      : `/uploads/${path}`;
+    return path.startsWith("uploads/") ? `/${path}` : `/uploads/${path}`;
   }, []);
 
-  // ================= FETCH =================
   const fetchData = useCallback(async () => {
     try {
       const token = localStorage.getItem("token");
@@ -38,18 +32,13 @@ const UserDetails = () => {
 
       if (userRes.data.success) {
         const u = userRes.data.user;
-
-        // ✅ prevent unnecessary user re-render
         setUser((prev) =>
           JSON.stringify(prev) !== JSON.stringify(u) ? u : prev
         );
 
-        const connRes = await API.get(
-          `/user/connections/${u._id}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const connRes = await API.get(`/user/connections/${u._id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
         if (connRes.data.success) {
           setConnections((prev) =>
@@ -71,13 +60,10 @@ const UserDetails = () => {
   useEffect(() => {
     fetchData();
 
-    // ================= SOCKET =================
     socket.on("userStatusUpdate", ({ userId, isOnline }) => {
       setConnections((prev) =>
         prev.map((c) =>
-          c._id === userId && c.isOnline !== isOnline
-            ? { ...c, isOnline }
-            : c
+          c._id === userId && c.isOnline !== isOnline ? { ...c, isOnline } : c
         )
       );
     });
@@ -85,11 +71,14 @@ const UserDetails = () => {
     return () => socket.off("userStatusUpdate");
   }, [fetchData]);
 
-  // ================= MEMO CONNECTION LIST =================
+  const onlineCount = useMemo(
+    () => connections.filter((c) => c.isOnline).length,
+    [connections]
+  );
+
   const connectionList = useMemo(() => {
     return connections.map((conn) => {
       const img = renderImage(conn.userimg);
-
       return (
         <div
           key={conn._id}
@@ -104,38 +93,33 @@ const UserDetails = () => {
                 {conn.username?.charAt(0).toUpperCase()}
               </div>
             )}
-
-            <span
-              className={`ud-status-dot ${
-                conn.isOnline ? "online" : "offline"
-              }`}
-            ></span>
+            <span className={`ud-status-dot ${conn.isOnline ? "online" : "offline"}`} />
           </div>
 
           <div className="ud-connection-info">
             <h4>{conn.username}</h4>
             <p>{conn.usn}</p>
           </div>
+
+          {conn.isOnline && (
+            <span className="ud-online-label">Online</span>
+          )}
         </div>
       );
     });
   }, [connections, navigate, renderImage]);
 
-  // ================= UI =================
-  if (loading) return <div className="ud-loading">Loading...</div>;
-  if (!user) return <div className="ud-empty">No user found</div>;
+  if (loading) return <div className="ud-loading">Loading profile…</div>;
+  if (!user)   return <div className="ud-empty">No user data found</div>;
+
+  const profileSrc = renderImage(user.userimg);
 
   return (
     <div className="ud-container">
-
-      {/* USER */}
+      {/* ── User Card ── */}
       <div className="ud-card-user">
-        {user.userimg ? (
-          <img
-            src={renderImage(user.userimg)}
-            alt=""
-            className="ud-user-img"
-          />
+        {profileSrc ? (
+          <img src={profileSrc} alt="" className="ud-user-img" />
         ) : (
           <div className="ud-user-img ud-fallback">
             {user.username?.charAt(0).toUpperCase()}
@@ -144,18 +128,31 @@ const UserDetails = () => {
 
         <h2 className="ud-user-name">{user.username}</h2>
         <p className="ud-user-email">{user.email}</p>
-        <p className="ud-user-usn">USN: {user.usn}</p>
-        <p className="ud-user-role">Role: {user.role}</p>
+
+        <div className="ud-user-meta">
+          <span className="ud-meta-pill">{user.usn}</span>
+          <span className="ud-meta-pill role">{user.role}</span>
+        </div>
       </div>
 
-      {/* CONNECTIONS */}
+      {/* ── Connections ── */}
       <div className="ud-connections-box">
-        <h3 className="ud-connections-title">Connections</h3>
+        <div className="ud-connections-header">
+          <h3 className="ud-connections-title">
+            Connections
+          </h3>
+          {connections.length > 0 && (
+            <span className="ud-conn-count">
+              {onlineCount} online · {connections.length} total
+            </span>
+          )}
+        </div>
+
         <div className="ud-connections-grid">
           {connectionList.length > 0 ? (
             connectionList
           ) : (
-            <p className="ud-empty">No connections found</p>
+            <p className="ud-empty">No connections yet</p>
           )}
         </div>
       </div>

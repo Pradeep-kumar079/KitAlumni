@@ -3,13 +3,9 @@ import { useNavigate } from "react-router-dom";
 import API from "../api";
 import "./Gallery.css";
 
-const Gallary = () => {
+const Gallery = () => {
   const [gallery, setGallery] = useState([]);
   const navigate = useNavigate();
-
-  // ✅ Use your deployed backend URL
-
-
 
   const fetchGallery = async () => {
     try {
@@ -29,31 +25,44 @@ const Gallary = () => {
   const renderImg = (img) => {
     if (!img) return "";
     if (img.startsWith("http") || img.startsWith("https")) return img;
-    if (img.startsWith("/uploads")) return `${img}`;
+    if (img.startsWith("/uploads")) return img;
     return `/uploads/${img}`;
   };
 
   return (
     <div className="gallery-page">
-      <h2>🎉 College Announcements & Gallery</h2>
+      <div className="gallery-page-header">
+        <h2>
+          <span className="emoji">🎉</span>
+          College Announcements &amp; Gallery
+        </h2>
+        <p className="gallery-subtitle">
+          Stay updated with the latest news, events, and memories
+        </p>
+      </div>
+
       <div className="gallery-grid">
         {gallery.length === 0 ? (
-          <p>No announcements yet.</p>
+          <p className="gallery-empty">No announcements yet. Check back soon!</p>
         ) : (
           gallery.map((item) => (
             <div
               key={item._id}
               className="gallery-card"
               onClick={() => navigate(`/gallery/${item._id}`)}
-              style={{ cursor: "pointer" }}
             >
-              {item.image && (
-                <img
-                  src={renderImg(item.image)}
-                  alt={item.title}
-                  className="gallery-image"
-                />
+              {item.image ? (
+                <div className="gallery-image-wrap">
+                  <img
+                    src={renderImg(item.image)}
+                    alt={item.title}
+                    className="gallery-image"
+                  />
+                </div>
+              ) : (
+                <div className="gallery-no-image">📢</div>
               )}
+
               <div className="gallery-info">
                 <h4>{item.title}</h4>
                 <p>{item.description}</p>
@@ -67,4 +76,4 @@ const Gallary = () => {
   );
 };
 
-export default Gallary;
+export default Gallery;

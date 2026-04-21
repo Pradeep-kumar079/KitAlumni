@@ -1,193 +1,346 @@
-/* ===== MAIN ===== */
+/* ============================================================
+   ALUMNI CONNECT — UserDetails (Sidebar Panel)
+   Aesthetic: Refined slate · warm green status · editorial
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --navy:        #0d1b2a;
+  --slate:       #1c2e45;
+  --blue:        #2563eb;
+  --blue-soft:   #dbeafe;
+  --green:       #22c55e;
+  --green-glow:  rgba(34,197,94,.25);
+  --surface:     #ffffff;
+  --surface-2:   #f8fafc;
+  --bg:          #eef2f7;
+  --border:      #e2e8f0;
+  --border-dark: #c8d6e8;
+  --text-primary:#0d1b2a;
+  --text-mid:    #334155;
+  --text-soft:   #64748b;
+  --radius-sm:   8px;
+  --radius-md:   14px;
+  --radius-lg:   20px;
+  --shadow-sm:   0 1px 4px rgba(13,27,42,.05);
+  --shadow-md:   0 4px 20px rgba(13,27,42,.09);
+  --transition:  0.22s cubic-bezier(.4,0,.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ================= CONTAINER ================= */
 .ud-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   width: 100%;
-  padding: 20px;
-  background: #f1f5f9;
+  padding: 20px 16px 32px;
+  background: var(--bg);
+  font-family: 'Outfit', sans-serif;
+  min-height: 100%;
 }
 
-/* ===== USER CARD ===== */
+/* ================= USER CARD ================= */
 .ud-card-user {
-  width: 100%;
-  background: white;
-  border-radius: 20px;
-  padding: 25px 20px;
-
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  padding: 28px 20px 22px;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow var(--transition);
+  animation: fadeUp .35s ease both;
+}
 
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
-  transition: 0.3s ease;
+/* Subtle top stripe */
+.ud-card-user::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue), #22c55e);
 }
 
 .ud-card-user:hover {
-  transform: translateY(-4px);
+  box-shadow: var(--shadow-md), 0 0 0 1px var(--border-dark);
 }
 
-/* USER IMAGE */
+/* Avatar */
 .ud-user-img {
-  width: 110px;
-  height: 110px;
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
   object-fit: cover;
-  margin-left: 50%;
-  transform: translateX(-50%);
-
-  margin-bottom: 12px;
-
-  border: 4px solid #22c55e;
-  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
-
+  margin: 0 auto 14px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 3px solid var(--surface);
+  outline: 3px solid var(--green);
+  box-shadow: 0 0 0 5px var(--green-glow);
+  transition: outline-color var(--transition), box-shadow var(--transition);
 }
 
-/* FALLBACK */
+.ud-user-img:hover {
+  outline-color: var(--blue);
+  box-shadow: 0 0 0 5px rgba(37,99,235,.15);
+}
+
+/* Fallback initial */
 .ud-fallback {
-  background: linear-gradient(135deg, #3b82f6, #1e3a8a);
-  color: white;
-  font-size: 28px;
-  font-weight: bold;
+  background: linear-gradient(135deg, var(--slate), var(--blue));
+  color: #fff;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -.02em;
 }
 
-/* TEXT */
+/* User text */
 .ud-user-name {
-  font-size: 1.5rem;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+  letter-spacing: -.01em;
+}
+
+.ud-user-email {
+  font-size: 13px;
+  color: var(--blue);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+/* Info pills row */
+.ud-user-meta {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.ud-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 11.5px;
   font-weight: 600;
-  color: #0f172a;
-  margin-bottom: 5px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-mid);
+  letter-spacing: .02em;
 }
 
-.ud-user-email,
-.ud-user-usn,
-.ud-user-role {
-  color: #64748b;
-  font-size: 0.95rem;
-  margin: 3px 0;
+.ud-meta-pill.role {
+  background: var(--blue-soft);
+  border-color: #93c5fd;
+  color: var(--blue);
 }
 
-/* ===== CONNECTIONS ===== */
+/* Keep old class names working */
+.ud-user-usn, .ud-user-role {
+  display: none; /* replaced by pills */
+}
+
+/* ================= CONNECTIONS BOX ================= */
 .ud-connections-box {
-  background: white;
-  border-radius: 20px;
-  padding: 18px;
-
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: 18px 16px;
+  animation: fadeUp .4s ease both;
+  animation-delay: .08s;
 }
 
-/* TITLE */
+.ud-connections-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
 .ud-connections-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 15px;
-  color: #0f172a;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -.01em;
 }
 
-/* ===== LIST STYLE (BETTER UX THAN GRID HERE) ===== */
+.ud-conn-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 3px 10px;
+  color: var(--text-soft);
+}
+
+.ud-conn-count::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+/* ================= CONNECTION GRID ================= */
 .ud-connections-grid {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
-/* CARD */
+/* ================= CONNECTION CARD ================= */
 .ud-connection-card {
   display: flex;
   align-items: center;
-  gap: 12px;
-
-  background: #f8fafc;
-  border-radius: 12px;
+  gap: 11px;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
   padding: 10px 12px;
-
   cursor: pointer;
-  transition: 0.25s ease;
-  border: 1px solid #e2e8f0;
+  border: 1px solid transparent;
+  transition: all var(--transition);
 }
 
 .ud-connection-card:hover {
-  background: #eef2ff;
-  transform: translateX(4px);
+  background: var(--blue-soft);
+  border-color: #93c5fd;
+  transform: translateX(3px);
 }
 
-/* AVATAR */
+/* Avatar wrapper */
 .ud-connection-avatar {
   position: relative;
+  flex-shrink: 0;
 }
 
 .ud-connection-img {
-  width: 48px;
-  height: 48px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   object-fit: cover;
-
+  border: 2px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, var(--slate), var(--blue));
 }
 
-/* STATUS */
+/* Status dot */
 .ud-status-dot {
   position: absolute;
-  bottom: 2px;
-  right: 2px;
-
+  bottom: 1px;
+  right: 1px;
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  border: 2px solid #fff;
+  border: 2px solid var(--surface);
+  transition: background var(--transition);
 }
 
-.ud-status-dot.online {
-  background-color: #22c55e;
-}
+.ud-status-dot.online  { background: var(--green); box-shadow: 0 0 0 2px var(--green-glow); }
+.ud-status-dot.offline { background: #cbd5e1; }
 
-.ud-status-dot.offline {
-  background-color: #cbd5e1;
-}
+/* Info */
+.ud-connection-info { min-width: 0; }
 
-/* INFO */
 .ud-connection-info h4 {
-  font-size: 0.95rem;
-  color: #0f172a;
-  margin: 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
 }
 
 .ud-connection-info p {
-  font-size: 0.8rem;
-  color: #2b333f;
-  margin: 2px 0;
+  font-size: 11.5px;
+  color: var(--text-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* STATES */
-.ud-loading,
+/* Online label */
+.ud-online-label {
+  margin-left: auto;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--green);
+  background: #dcfce7;
+  border-radius: 99px;
+  padding: 2px 8px;
+  flex-shrink: 0;
+}
+
+/* ================= STATES ================= */
+.ud-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 50vh;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+.ud-loading::before {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid var(--border);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: spin .75s linear infinite;
+  flex-shrink: 0;
+}
+
 .ud-empty {
   text-align: center;
-  color: #64748b;
-  padding: 20px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13.5px;
+  color: var(--text-soft);
+  padding: 24px 0 8px;
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .ud-container {
-    padding: 15px;
-  }
+/* ================= ANIMATIONS ================= */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-  .ud-user-img {
-    width: 95px;
-    height: 95px;
-  }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .ud-container { padding: 16px 12px 28px; }
+  .ud-user-img { width: 84px; height: 84px; font-size: 22px; }
+  .ud-user-name { font-size: 16px; }
+  .ud-connection-img { width: 38px; height: 38px; }
 }
 
 @media (max-width: 480px) {
-  .ud-user-img {
-    width: 80px;
-    height: 80px;
-  }
-
-  .ud-user-name {
-    font-size: 1.2rem;
-  }
+  .ud-container { padding: 12px 10px 24px; gap: 12px; }
+  .ud-user-img { width: 72px; height: 72px; font-size: 20px; }
+  .ud-user-name { font-size: 15px; }
+  .ud-card-user { padding: 22px 14px 18px; }
+  .ud-connections-box { padding: 14px 12px; }
 }

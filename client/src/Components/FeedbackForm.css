@@ -1,60 +1,192 @@
+/* ============================================================
+   ALUMNI CONNECT — Feedback Form
+   Aesthetic: Centered card · clean editorial
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --navy:        #0d1b2a;
+  --blue:        #2563eb;
+  --blue-soft:   #dbeafe;
+  --green:       #10b981;
+  --green-soft:  #d1fae5;
+  --red:         #ef4444;
+  --red-soft:    #fee2e2;
+  --surface:     #ffffff;
+  --surface-2:   #f8fafc;
+  --bg:          #eef2f7;
+  --border:      #e2e8f0;
+  --border-dark: #c8d6e8;
+  --text-primary:#0d1b2a;
+  --text-mid:    #334155;
+  --text-soft:   #64748b;
+  --radius-md:   14px;
+  --radius-lg:   20px;
+  --shadow-md:   0 4px 20px rgba(13,27,42,.09);
+  --transition:  0.22s cubic-bezier(.4,0,.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ================= PAGE ================= */
+.feedback-page {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+/* ================= CARD ================= */
 .feedback-form-container {
-  background: #fff;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  width: 800px;
-  margin: 40px auto;
-  text-align: center;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  padding: 36px 36px 32px;
+  width: 100%;
+  max-width: 580px;
+  animation: fadeUp .35s ease both;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Top accent stripe */
+.feedback-form-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue), #22c55e);
+}
+
+/* ================= HEADER ================= */
 .feedback-form-container h2 {
-  font-size: 1.4rem;
-  color: #333;
-  margin-bottom: 16px;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -.02em;
+  margin-bottom: 6px;
 }
 
+.feedback-form-subtitle {
+  font-size: 13.5px;
+  color: var(--text-soft);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+/* ================= FORM ================= */
+.feedback-form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Textarea */
 .feedback-form-container textarea {
-  width: 95%;
-  height: 120px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 10px;
-  resize: none;
+  width: 100%;
+  min-height: 130px;
+  padding: 13px 15px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14.5px;
+  color: var(--text-primary);
+  background: var(--surface-2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  resize: vertical;
   outline: none;
-  font-size: 0.95rem;
-  transition: border-color 0.3s;
+  line-height: 1.6;
+  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+}
+
+.feedback-form-container textarea::placeholder {
+  color: var(--text-soft);
+  font-style: italic;
 }
 
 .feedback-form-container textarea:focus {
-  border-color: #4a90e2;
+  border-color: var(--blue);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(37,99,235,.1);
 }
 
-.feedback-form-container button {
-  margin-top: 14px;
-  padding: 10px 20px;
+/* Submit button */
+.feedback-form-container button[type="submit"],
+.feedback-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px 20px;
+  border-radius: var(--radius-md);
   border: none;
-  border-radius: 10px;
-  background: #4a90e2;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
   color: #fff;
-  font-size: 1rem;
+  background: var(--blue);
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all var(--transition);
+  letter-spacing: -.01em;
+  box-shadow: 0 2px 10px rgba(37,99,235,.25);
 }
 
-.feedback-form-container button:hover {
-  background: #357ae8;
+.feedback-form-container button[type="submit"]:hover,
+.feedback-submit-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(37,99,235,.32);
 }
 
+.feedback-form-container button[type="submit"]:active {
+  transform: scale(.98);
+}
+
+/* ================= MESSAGE ================= */
 .feedback-message {
-  margin-top: 12px;
-  font-size: 0.95rem;
-  color: #4a90e2;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 13.5px;
+  font-weight: 600;
+  margin-top: 4px;
+  border: 1px solid;
 }
 
-@media (max-width: 600px) {
-  .feedback-form-container {
-    width: 90%;
-    padding: 16px;
-  }
+.feedback-message.success {
+  background: var(--green-soft);
+  color: #065f46;
+  border-color: #6ee7b7;
+}
+
+.feedback-message.error {
+  background: var(--red-soft);
+  color: #991b1b;
+  border-color: #fca5a5;
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 640px) {
+  .feedback-page { padding: 28px 14px; align-items: flex-start; }
+  .feedback-form-container { padding: 28px 20px 24px; border-radius: var(--radius-md); }
+  .feedback-form-container h2 { font-size: 18px; }
+}
+
+@media (max-width: 420px) {
+  .feedback-page { padding: 20px 10px; }
+  .feedback-form-container { padding: 22px 16px 20px; }
+  .feedback-form-container textarea { min-height: 110px; font-size: 14px; }
 }
