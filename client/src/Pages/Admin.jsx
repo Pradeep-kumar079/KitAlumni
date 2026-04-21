@@ -202,7 +202,7 @@ const Admin = () => {
         formData.append("selectedEmails", JSON.stringify(selectedUsers));
       if (imageFile) formData.append("image", imageFile);
 
-      const res = await API.post(`/api/admin/send-message`, formData, {
+      const res = await API.post(`/admin/send-message`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       if (res.data.success) {
