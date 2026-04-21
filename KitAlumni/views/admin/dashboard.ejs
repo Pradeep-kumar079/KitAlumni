@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Sidebar</title>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      background-color: #1e1e2f;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding-top: 20px;
+      position: fixed;
+      left: 0;
+      top: 0;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+
+    .sidebar a {
+      padding: 15px 25px;
+      text-decoration: none;
+      color: #ccc;
+      display: flex;
+      align-items: center;
+      transition: background 0.3s;
+    }
+
+    .sidebar a i {
+      margin-right: 10px;
+    }
+
+    .sidebar a:hover {
+      background-color: #353548;
+      color: #fff;
+    }
+
+    .sidebar a.active {
+      background-color: #4e4e6a;
+      color: #fff;
+    }
+
+    .content {
+      margin-left: 250px;
+      padding: 20px;
+      width: 100%;
+    }
+    .stats-container {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+    }
+  
+    .stat-box {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 100%;
+      margin: 20px auto;
+      text-align: center;
+    }
+  
+    .stat-title {
+      font-size: 14px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+  
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #4CAF50;
+
+    }.uploadedevents {
+     
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 100px;
+      width: 100%;
+      height: 500px;
+      overflow: auto;
+      background-color: #ccc;
+      border-radius: 3px;
+      padding-top: 302px;
+
+    }
+    .uploadedevents h2{
+      margin-top: 10px;
+    }
+    .evts{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      width: 100%;
+      box-sizing: border-box;
+     
+    }
+    
+    .event-card {
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      padding: 16px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 350px;
+    }
+    
+    .event-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+    
+    .event-card h3 {
+      font-size: 1.2rem;
+      color: #333;
+      margin-bottom: 12px;
+      text-align: center;
+      word-wrap: break-word;
+    }
+    
+    .event-card img,
+    .event-card video {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .admin-profile-card {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      margin: 20px auto;
+      text-align: center;
+    }
+    
+    .admin-img {
+      width: 100px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+    
+    .card-buttons {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    
+    /* Shared button styles */
+    .card-buttons .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+    
+    /* Edit button styling */
+    .card-buttons .edit-btn {
+      background-color: #17a2b8; /* Bootstrap info color */
+    }
+    
+    .card-buttons .edit-btn:hover {
+      background-color: #138496;
+    }
+    
+    /* Delete button styling */
+    .card-buttons .delete-btn {
+      background-color: #dc3545; /* Bootstrap danger color */
+    }
+    
+    .card-buttons .delete-btn:hover {
+      background-color: #c82333;
+    }
+    
+    /* Make sure form button inherits same styling */
+    .card-buttons form {
+      margin: 0;
+    }
+    .tit{
+      height: 30px;
+      overflow: hidden;
+      margin: auto;
+      margin-bottom: 10px;
+    }
+    .desc{
+      height: 50px;
+      overflow: hidden;
+    }
+    .internshps{
+      padding-top: -300px;
+    }
+    .plcmentinfo{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .plcmentinfo p{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .two{
+      display: flex;
+      flex-direction: column;
+    }
+    #associationmembers{
+      overflow-y: hidden;
+      overflow-x: auto;
+    }
+    #associationmembers h2{
+      margin-top: -300px;
+    }
+    #membercards{
+      height: auto;
+      width: 350px;
+    
+    }
+    #members h2{
+      margin-top: -200px;
+    }
+    #membercards img{
+      height: 150px;
+      width: 150px;
+    }
+    @media (max-width: 768px) {
+      .event-card h3 {
+        font-size: 1rem;
+      }
+    
+      .event-card img,
+      .event-card video {
+        max-height: 180px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .uploadedevents {
+        grid-template-columns: 1fr;
+        padding: 10px;
+      }
+    
+      .event-card {
+        padding: 12px;
+      
+      }
+      .event-card ul{
+        list-style: none;
+        text-decoration: none;
+        
+      }
+    
+      .event-card img,
+      .event-card video {
+        max-height: 160px;
+      }
+       
+        .card-buttons {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      
+        .card-buttons .btn {
+          width: 100%;
+        }
+      }
+      ul{
+        text-decoration: none;
+      }
+      ul li{
+        list-style: none;
+      }
+      .viewbtn{
+        display: inline-block;
+        text-decoration: none;
+        background-color: #dc3545;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        border: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+      .viewbtn a{
+        text-decoration: none;
+        color: white;
+      }
+      .viewbtn:hover {
+        background-color: #c82333;
+        transform: scale(1.05);
+      }
+      
+      .viewbtn:active {
+        background-color: #bd2130;
+        transform: scale(0.98);
+      }
+      
+    
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="/admin/dashboard" class="active"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+    <a href="/event"><i data-lucide="calendar"></i> Events</a>
+    <a href="/placement"><i data-lucide="briefcase"></i> Placements</a>
+    <!-- <a href="/internships"><i data-lucide="clipboard-list"></i> Internships</a> -->
+    <a href="/admin/users"><i data-lucide="users"></i> Manage Users</a>
+    <a href="/add-member"><i data-lucide="user-round-plus"></i>Add members</a>
+    <a href="/admin/posts"><i data-lucide="file-text"></i> Manage Posts</a>
+    <a href="/admin/reports"><i data-lucide="flag"></i> Reports</a>
+  
+    <a href="#" onclick="document.getElementById('logout-form').submit();">
+      <i data-lucide="log-out"></i> Logout
+    </a>
+    
+    <form id="logout-form" action="/logout" method="POST" style="display: none;"></form>
+    
+    
+  </div>
+
+  <div class="content">
+    <h1>Welcome, Admin</h1>
+  
+  
+    <div class="stats-container">
+      <div class="stat-box">
+        <div class="stat-title">Total Registered Users</div>
+        <div class="stat-value"><%= totalUsers %></div>
+      </div>
+    
+      <div class="stat-box">
+        <div class="stat-title">Active Users (last 24 hrs)</div>
+        <div class="stat-value"><%= activeUsers %></div>
+      </div>
+      <div class="adminprofile">
+        <div class="admin-profile-card">
+          <h2>Admin Profile</h2>
+          <div class="admin-info">
+            <img src=" /upload/<%= currentuser.profileimg || '/upload/defaultimg.jpeg' %>"   class="admin-img">
+            <p><strong>Name:</strong> <%= currentuser.username %></p>
+            <p><strong>Email:</strong> <%= currentuser.email %></p>
+            <p><strong>Role:</strong> <%= currentuser.role %></p>
+          </div>
+          <button class="viewbtn"><a href="/profile/<%= currentuser._id  %>" >view profile</a></button>
+        </div>
+        
+
+      </div>
+    </div>
+     <div class="uploadedevents">
+      <h2>Uploaded events</h2>
+      <div class="evts">
+     
+      <% if (allevents && allevents.length > 0) { %>
+        <% allevents.forEach(event => { %>
+          <div class="event-card">
+           <div class="tit">
+            <h4><%= event.title %></h4>
+           </div>
+    
+            <% if (event.postimg) { %>
+              <img src="/upload/<%= event.postimg %>" alt="event image" />
+            <% } else if (event.videopost) { %>
+              <video controls src="/upload/<%= event.videopost %>"></video>
+            <% } %>
+           <div class="desc"> <p><%= event.description %></p></div>
+    
+            <!-- Buttons go here INSIDE each event card -->
+            <div class="card-buttons">
+              <a href="/admin/edit-event/<%= event._id %>" class="btn edit-btn">Edit</a>
+              <form action="/admin/delete-event/<%= event._id %>" method="POST" style="display:inline;">
+                <button type="submit" class="btn delete-btn">Delete</button>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p>No events uploaded yet.</p>
+      <% } %>
+         
+    </div>
+  </div>
+<div class="two">
+  
+  <div class="uploadedevents" id="associationmembers">
+    <h2>Uploaded Placement and Internship Information</h2>
+    <div class="evts">
+      <% if (placement && placement.length > 0) { %>
+        <% placement.forEach(item => { %>
+          <div class="event-card">
+           <div class="plcmentinfo">
+            <h3><%= item.company %></h3>
+            <p><strong>Role:</strong> <%= item.role %></p>
+            <p><strong>Package:</strong> <%= item.package %> LPA</p>
+            <% if (item.placedStudents && item.placedStudents.length > 0) { %>
+              <p><strong>Placed Students:</strong></p>
+              <ul>
+                <% item.placedStudents.forEach(student => { %>
+                  <li>
+                    <% if (student.name) { %><strong>Name:</strong> <%= student.name %><% } %>
+                    <% if (student.rollNo) { %> | <strong>Roll No:</strong> <%= student.rollNo %><% } %>
+                    <% if (student.branch) { %> | <strong>Branch:</strong> <%= student.branch %><% } %>
+                  </li>
+                <% }); %>
+              </ul>
+            <% } %>
+            
+           </div>
+            
+  
+            <!-- Action Buttons -->
+            <div class="card-buttons">
+              <a href="/admin/edit-event/<%= item._id %>" class="btn edit-btn">Edit</a>
+              <form action="/admin/delete-event/<%= item._id %>" method="POST" style="display:inline;">
+                <button type="submit" class="btn delete-btn">Delete</button>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p>No placement uploaded yet.</p>
+      <% } %>
+    </div>
+
+
+
+    </div>
+
+  </div>
+  <div class="members">
+  
+    <div class="uploadedevents" id="members">
+      <h2>Alumni Association members</h2>
+      <div class="evts">
+     
+      <% if (members && members.length > 0) { %>
+        <% members.forEach(member => { %>
+          <div class="event-card" id="membercards">
+           <div class="tit">
+            
+           </div>
+    
+            <% if (member.postimg) { %>
+              <img src="/upload/<%= member.profileimg %>"  />
+            <% } else { %>
+              <img  src="/upload/defaultimg.jpeg">
+            <% } %>
+            <h4><%= member.name %></h4>
+            <p><%=  member.role%></p>
+           <div class="desc"> <p><%= member.about %></p></div>
+    
+            <!-- Buttons go here INSIDE each event card -->
+            <div class="card-buttons">
+              <a href="/add-member/<%= member._id %>/edit" class="btn edit-btn">Edit</a>
+              <form action="/add-member/<%= member._id %>/delete" method="POST" style="display:inline;">
+                <button type="submit" class="btn delete-btn">Delete</button>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p>No events uploaded yet.</p>
+      <% } %>
+         
+    </div>
+  </div>
+
+</div>
+ 
+  
+
+  <script>
+    lucide.createIcons();
+  </script>
+
+</body>
+</html>

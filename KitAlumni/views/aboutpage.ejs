@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="navbar.css">
+  <style>
+ 
+   .about-section {
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+    color: #333;
+    margin-top: 100px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .about-section .container {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .about-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #0056b3;
+  }
+  
+  .about-section p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .about-section h2 {
+      font-size: 1.7rem;
+    }
+  
+    .about-section p {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .about-section {
+      padding: 30px 15px;
+    }
+  
+    .about-section h2 {
+      font-size: 1.5rem;
+    }
+  
+    .about-section p {
+      font-size: 0.95rem;
+    }
+  }
+  
+  .members-section {
+    padding: 50px 20px;
+    background-color: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .members-section h2 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+    color: #333;
+  }
+  
+  .member-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    justify-content: center;
+    align-items: stretch;
+  }
+  
+  .member-card {
+    background-color: #f1f1f1;
+    padding: 25px 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+  }
+  
+  .member-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .member-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+   object-fit: contain;
+  }
+  
+  .member-card h3 {
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+    color: #0056b3;
+  }
+  
+  .member-card p {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+
+  </style>
+</head>
+<body>
+ <div class="nav">
+  <%- include('include/navbar') %>
+ </div>
+ 
+
+ <section class="about-section">
+   <div class="container">
+     <h2>About Us</h2>
+     <p>
+       The KIT Alumni Association is a vibrant network of past students, united by shared memories, achievements, and a commitment to staying connected. Our mission is to build a bridge between the past and the present—fostering lifelong relationships, promoting professional growth, and celebrating the ongoing success of our alumni community.
+     </p>
+     <p>
+       This portal serves as a central hub for alumni to reconnect with peers, stay informed about campus news and events, explore career and mentorship opportunities, and contribute to the growth of future generations at KIT. Whether you’re a recent graduate or a long-time member, this space is yours to network, share, and grow together.
+     </p>
+     <p>
+       Join us in keeping the KIT spirit alive—because once a KITian, always a KITian!
+     </p>
+   </div>
+ </section>
+
+ <section class="members-section">
+  <div class="container">
+    <h2>Alumni Association Members</h2>
+    <div class="member-cards">
+      <div class="member-cards">
+        <% for (let member of members) { %>
+          <div class="member-card">
+            <img src="/upload/<%= member.profileimg %>" alt="Profile Image">
+            <h3><%= member.username %></h3>
+            <p><%= member.about %></p>
+          </div>
+        <% } %>
+      </div>
+      
+
+    </div>
+  </div>
+</section>
+
+
+</body>
+</html>

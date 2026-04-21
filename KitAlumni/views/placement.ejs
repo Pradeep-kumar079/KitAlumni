@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Placement Gallery</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #D3CCE3;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #E9E4F0, #D3CCE3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color:   rgb(4, 139, 216) ;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+    }
+
+    .item {
+      width: 320px;
+      background-color: white;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .item h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: #333;
+      text-align: center;
+    }
+
+    .item img, .item video {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .item p {
+      margin: 0;
+      color: #555;
+      font-size: 14px;
+      text-align: center;
+    }
+    a{
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Placement and Internship Updates</h2>
+  <div class="gallery">
+    <% placements.forEach(placement => { %>
+      <div class="item">
+        <a href="/placement/<%= placement._id %>  %>">
+        <% if (placement.video) { %>
+          <video controls src="/upload/<%= placement.video %>"></video>
+        <% } else if (placement.image) { %>
+          <img src="/upload/<%= placement.image %>" alt="Placement Media">
+        <% } else { %>
+          <div class="no-media">No media available</div>
+        <% } %>
+  
+        <div class="event-info">
+          <h3>Company:<%= placement.title || placement.company || 'Company Name' %></h3>
+          <p>Date:<%= new Date(placement.createdAt || placement.date).toDateString() %></p>
+          <p>Desription:<%= placement.description || placement.role || 'No description available' %></p>
+        </div>
+      </a>
+      </div>
+    <% }) %>
+  </div>
+  
+
+</body>
+</html>
