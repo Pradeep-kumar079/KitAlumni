@@ -4,7 +4,7 @@ import AllPosts from "../Components/AllPosts";
 import ImageSlider from "../Components/ImageSlider";
 import Footer from "../Components/Footer";
 import UserDetails from "./UserDetails";
-import FeedbackForm from "../Components/FeedbackForm";
+// import FeedbackForm from "../Components/FeedbackForm";
 import Gallery from "../Components/Gallary"
 import "./Home.css";
 
@@ -27,8 +27,8 @@ const Home = () => {
         </div>
       </div>
       <Gallery />
-
-      <FeedbackForm />
+{/* 
+      <FeedbackForm /> */}
 
       <Footer />
     </div>
