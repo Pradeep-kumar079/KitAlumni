@@ -7,6 +7,7 @@ import { useParams, useNavigate } from "react-router-dom";
 const Profile = () => {
   const { userId } = useParams();
   const navigate = useNavigate();
+
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,19 +15,17 @@ const Profile = () => {
   const [currentUserId, setCurrentUserId] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [isRequestSent, setIsRequestSent] = useState(false);
-  
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) {
-          setError("Unauthorized. Please log in again.");
+          setError("Unauthorized. Please log in.");
           setLoading(false);
           return;
         }
 
-        // ✅ Get logged-in user
         const currentUserRes = await API.get(`/user/`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -34,7 +33,6 @@ const Profile = () => {
           setCurrentUserId(currentUserRes.data.user._id);
         }
 
-        // ✅ Fetch target user profile
         const res = await API.get(`/user/profile/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -43,17 +41,15 @@ const Profile = () => {
           const profileUser = res.data.user;
           setUser(profileUser);
           setPosts(res.data.posts || []);
-
-          // ✅ Check connection status
-          const isAlreadyConnected = profileUser.connections?.includes(
+          const connected = profileUser.connections?.includes(
             currentUserRes.data.user._id
           );
-          setIsConnected(isAlreadyConnected);
+          setIsConnected(connected);
         } else {
           setError("User not found");
         }
       } catch (err) {
-        console.error("❌ Error fetching profile:", err.response || err.message);
+        console.error("Error fetching profile:", err.response || err.message);
         setError("Failed to load profile.");
       } finally {
         setLoading(false);
@@ -63,7 +59,6 @@ const Profile = () => {
     fetchProfile();
   }, [userId]);
 
-  // ✅ Send connection request
   const handleSendRequest = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -74,7 +69,6 @@ const Profile = () => {
       );
       if (res.data.success) {
         setIsRequestSent(true);
-        alert("Connection request sent!");
       } else {
         alert(res.data.message);
       }
@@ -83,7 +77,6 @@ const Profile = () => {
     }
   };
 
-  // ✅ Disconnect
   const handleDisconnect = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -94,7 +87,6 @@ const Profile = () => {
       );
       if (res.data.success) {
         setIsConnected(false);
-        alert("Disconnected successfully");
       } else {
         alert(res.data.message);
       }
@@ -103,106 +95,173 @@ const Profile = () => {
     }
   };
 
-  // ✅ Message (only if connected)
   const handleMessage = () => {
     if (!isConnected) {
-      alert("⚠️ You must be connected to chat!");
+      alert("You must be connected to message this person.");
       return;
     }
-
-    // Navigate to chat route
     navigate(`/chat/${userId}`);
   };
 
-  if (loading) return <div className="loading">Loading...</div>;
-  if (error) return <div className="error">{error}</div>;
-  if (!user) return <div className="no-data">No user data found.</div>;
+  if (loading)
+    return (
+      <>
+        <Navbar />
+        <div className="profile-state">Loading profile…</div>
+      </>
+    );
+
+  if (error)
+    return (
+      <>
+        <Navbar />
+        <div className="profile-state error">{error}</div>
+      </>
+    );
+
+  if (!user)
+    return (
+      <>
+        <Navbar />
+        <div className="profile-state">No user data found.</div>
+      </>
+    );
+
+  const avatarSrc = user.userimg
+    ? `/uploads/${user.userimg}`
+    : `/uploads/default.jpg`;
 
   return (
-    <div className="profile-container">
+    <>
       <Navbar />
+      <div className="profile-page">
+        <div className="profile-inner">
 
-      <div className="profile-header">
-        <img
-          src={
-            user.userimg
-              ? `/uploads/${user.userimg}`
-              : `/uploads/default.jpg`
-          }
-          alt={user.username}
-          className="profile-pic"
-        />
+          {/* ── HERO CARD ── */}
+          <div className="profile-hero">
+            <div className="profile-cover" />
 
-        <div className="profile-info">
-          <h2>{user.username}</h2>
-          <p>
-            <strong>Email:</strong> {user.email}
-          </p>
-          <p>
-            <strong>Branch:</strong> {user.branch || "N/A"}
-          </p>
-          <p>
-            <strong>Admission Year:</strong> {user.admissionyear || "N/A"}
-          </p>
-          <p>
-            <strong>Role:</strong> {user.role || "User"}
-          </p>
-          <p>
-            <strong>Connections:</strong> {user.connections?.length || 0}
-          </p>
+            <img
+              src={avatarSrc}
+              alt={user.username}
+              className="profile-pic"
+            />
 
-          {/* ✅ Buttons Section (no design change) */}
-          {currentUserId !== userId && (
-            <div className="profile-actions">
-              {isConnected ? (
-                <>
-                  <button className="btn-disconnect" onClick={handleDisconnect}>
-                    Disconnect
-                  </button>
-                  <button className="btn-message" onClick={handleMessage}>
-                    Message
-                  </button>
-                </>
-              ) : isRequestSent ? (
-                <button className="btn-pending" disabled>
-                  Request Sent
-                </button>
-              ) : (
-                <button className="btn-connect" onClick={handleSendRequest}>
-                  Connect
-                </button>
+            <div className="profile-body">
+              <h1 className="profile-name">{user.username}</h1>
+
+              <div className="profile-role-badge">
+                {user.role === "alumni" ? "🎓 Alumni" : "🎒 Student"}
+              </div>
+
+              {/* Meta pills */}
+              <div className="profile-meta">
+                <div className="meta-pill">
+                  <span className="pill-icon">✉️</span>
+                  <span className="pill-label">Email</span>
+                  {user.email}
+                </div>
+                <div className="meta-pill">
+                  <span className="pill-icon">📚</span>
+                  <span className="pill-label">Branch</span>
+                  {user.branch || "N/A"}
+                </div>
+                <div className="meta-pill">
+                  <span className="pill-icon">🗓️</span>
+                  <span className="pill-label">Batch</span>
+                  {user.admissionyear || "N/A"}
+                </div>
+              </div>
+
+              {/* Stats */}
+              <div className="profile-stats">
+                <div className="stat-item">
+                  <div className="stat-num">{user.connections?.length || 0}</div>
+                  <div className="stat-lbl">Connections</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-num">{posts.length}</div>
+                  <div className="stat-lbl">Posts</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-num">
+                    {user.admissionyear
+                      ? new Date().getFullYear() - parseInt(user.admissionyear)
+                      : "—"}
+                  </div>
+                  <div className="stat-lbl">Yrs Active</div>
+                </div>
+              </div>
+
+              {/* Action buttons */}
+              {currentUserId !== userId && (
+                <div className="profile-actions">
+                  {isConnected ? (
+                    <>
+                      <button className="btn-disconnect" onClick={handleDisconnect}>
+                        ✕ Disconnect
+                      </button>
+                      <button className="btn-message" onClick={handleMessage}>
+                        💬 Message
+                      </button>
+                    </>
+                  ) : isRequestSent ? (
+                    <button className="btn-pending" disabled>
+                      ⏳ Request Sent
+                    </button>
+                  ) : (
+                    <button className="btn-connect" onClick={handleSendRequest}>
+                      + Connect
+                    </button>
+                  )}
+                </div>
               )}
             </div>
-          )}
+          </div>
+
+          {/* ── POSTS SECTION ── */}
+          <div className="profile-posts-section">
+            <div className="posts-section-header">
+              <h2 className="posts-section-title">{user.username}'s Posts</h2>
+              {posts.length > 0 && (
+                <span className="posts-count-badge">{posts.length}</span>
+              )}
+            </div>
+
+            {posts.length === 0 ? (
+              <div className="posts-empty">
+                <div className="posts-empty-icon">📭</div>
+                <p>No posts yet.</p>
+              </div>
+            ) : (
+              <div className="post-list">
+                {posts.map((post) => (
+                  <div key={post._id} className="post-card">
+                    {post.postimg && (
+                      <img
+                        src={`/uploads/${post.postimg}`}
+                        alt={post.title}
+                        className="post-image"
+                      />
+                    )}
+                    <div className="post-body">
+                      <p className="post-title">{post.title}</p>
+                      <p className="post-desc">{post.description}</p>
+                      <span className="post-date">
+                        🕐 {new Date(post.createdAt).toLocaleDateString("en-IN", {
+                          day: "numeric", month: "short", year: "numeric",
+                        })}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
         </div>
       </div>
-
-      <div className="profile-posts">
-        <h3>{user.username}'s Posts</h3>
-        {posts.length === 0 ? (
-          <p>No posts available.</p>
-        ) : (
-          <div className="post-list">
-            {posts.map((post) => (
-              <div key={post._id} className="post-card">
-                <p className="post-title">{post.title}</p>
-                {post.postimg && (
-                  <img
-                    src={`/uploads/${post.postimg}`}
-                    alt="post"
-                    className="post-image"
-                  />
-                )}
-                <p className="post-desc">{post.description}</p>
-                <span className="post-date">
-                  {new Date(post.createdAt).toLocaleString()}
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
+    </>
   );
 };
 
