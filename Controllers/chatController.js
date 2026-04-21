@@ -1,14 +1,22 @@
 const ChatModel = require("../Models/ChatModel");
 const UserModel = require("../Models/UserModel");
+const mongoose = require("mongoose");
 
-// ✅ Get receiver details
+// ✅ Get receiver
 const GetReceiverController = async (req, res) => {
   try {
     const { receiverId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(receiverId)) {
+      return res.status(400).json({ success: false, message: "Invalid receiver ID" });
+    }
+
     const receiver = await UserModel.findById(receiverId).select("-password");
+
     if (!receiver) {
       return res.status(404).json({ success: false, message: "Receiver not found" });
     }
+
     res.status(200).json({ success: true, user: receiver });
   } catch (error) {
     console.error("GetReceiverController error:", error);
@@ -16,12 +24,13 @@ const GetReceiverController = async (req, res) => {
   }
 };
 
-// ✅ Send a chat message
+// ✅ Send message
 const ChatPostController = async (req, res) => {
   try {
     const { fromUserId, toUserId, message } = req.body;
+
     if (!fromUserId || !toUserId || !message) {
-      return res.status(400).json({ success: false, message: "Missing required fields" });
+      return res.status(400).json({ success: false, message: "Missing fields" });
     }
 
     const newChat = await ChatModel.create({
@@ -37,7 +46,7 @@ const ChatPostController = async (req, res) => {
   }
 };
 
-// ✅ Get all chats between two users (consistent sender field)
+// ✅ Get chats
 const GetChatController = async (req, res) => {
   try {
     const { senderId, receiverId } = req.params;
@@ -49,33 +58,44 @@ const GetChatController = async (req, res) => {
       ],
     }).sort({ createdAt: 1 });
 
-    // Normalize sender field before sending
-    const normalizedChats = chats.map((chat) => ({
-      ...chat.toObject(),
-      sender: chat.sender.toString(),
+    const normalized = chats.map((c) => ({
+      ...c.toObject(),
+      sender: c.sender.toString(),
     }));
 
-    res.status(200).json({ success: true, chats: normalizedChats });
+    res.status(200).json({ success: true, chats: normalized });
   } catch (err) {
-    console.error("Error fetching chats:", err);
+    console.error("GetChatController error:", err);
     res.status(500).json({ success: false, message: "Error fetching chats" });
   }
 };
 
-// ✅ Edit message
+// ✅ Edit message (FIXED)
 const EditChatController = async (req, res) => {
   try {
     const { chatId } = req.params;
     const { message, userId } = req.body;
 
-    const chat = await ChatModel.findById(chatId);
-    if (!chat) return res.status(404).json({ success: false, message: "Chat not found" });
+    // 🔥 Prevent crash
+    if (!mongoose.Types.ObjectId.isValid(chatId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid chat ID",
+      });
+    }
 
-    if (chat.sender.toString() !== userId)
+    const chat = await ChatModel.findById(chatId);
+    if (!chat) {
+      return res.status(404).json({ success: false, message: "Chat not found" });
+    }
+
+    if (chat.sender.toString() !== userId) {
       return res.status(403).json({ success: false, message: "Not allowed" });
+    }
 
     chat.message = message;
     await chat.save();
+
     res.status(200).json({ success: true, chat });
   } catch (error) {
     console.error("EditChatController error:", error);
@@ -88,14 +108,25 @@ const DeleteChatController = async (req, res) => {
   try {
     const { chatId, userId } = req.params;
 
-    const chat = await ChatModel.findById(chatId);
-    if (!chat) return res.status(404).json({ success: false, message: "Chat not found" });
+    if (!mongoose.Types.ObjectId.isValid(chatId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid chat ID",
+      });
+    }
 
-    if (chat.sender.toString() !== userId)
+    const chat = await ChatModel.findById(chatId);
+    if (!chat) {
+      return res.status(404).json({ success: false, message: "Chat not found" });
+    }
+
+    if (chat.sender.toString() !== userId) {
       return res.status(403).json({ success: false, message: "Not allowed" });
+    }
 
     await chat.deleteOne();
-    res.status(200).json({ success: true, message: "Chat deleted successfully" });
+
+    res.status(200).json({ success: true });
   } catch (error) {
     console.error("DeleteChatController error:", error);
     res.status(500).json({ success: false, message: "Failed to delete message" });

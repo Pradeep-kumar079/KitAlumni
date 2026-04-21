@@ -68,56 +68,66 @@ const Chat = ({ currentUserId, otherUserId }) => {
   }, [currentUserId, otherUserId]);
 
   // ✅ Send Message
-  const sendMessage = async () => {
-    if (!input.trim()) return;
+ const sendMessage = async () => {
+  if (!input.trim()) return;
 
-    const tempId = Date.now().toString();
-    const msgData = {
-      fromUserId: currentUserId,
-      toUserId: otherUserId,
-      message: input,
-    };
-
-    // Temporary show message before backend confirm
-    setMessages((prev) => [...prev, { ...msgData, _id: tempId, sender: currentUserId }]);
-    setInput("");
-
-    try {
-      const res = await API.post(`/chat/send`, msgData, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
-      socket.emit("send-message", res.data.chat);
-    } catch (err) {
-      console.error("❌ Send message error:", err);
-    }
+  const msgData = {
+    fromUserId: currentUserId,
+    toUserId: otherUserId,
+    message: input,
   };
+
+  setInput("");
+
+  try {
+    const res = await API.post(`/chat/send`, msgData, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+
+    // ✅ Use DB message only
+    setMessages((prev) => [...prev, res.data.chat]);
+
+    socket.emit("send-message", res.data.chat);
+  } catch (err) {
+    console.error("❌ Send message error:", err);
+  }
+};
 
   // ✅ Start edit mode
-  const handleEditStart = () => {
-    const msg = messages.find((m) => m._id === selectedMsgId);
-    if (msg) {
-      setEditText(msg.message);
-      setEditMode(true);
-    }
-  };
+ const handleEditStart = () => {
+  if (!selectedMsgId || selectedMsgId.length !== 24) {
+    alert("⚠️ Message not saved yet");
+    return;
+  }
+
+  const msg = messages.find((m) => m._id === selectedMsgId);
+  if (msg) {
+    setEditText(msg.message);
+    setEditMode(true);
+  }
+};
 
   // ✅ Submit edit
-  const handleEditSubmit = async () => {
-    try {
-      const res = await API.put(
-        `/chat/edit/${selectedMsgId}`,
-        { message: editText, userId: currentUserId },
-        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
-      );
-      setMessages((prev) => prev.map((m) => (m._id === selectedMsgId ? res.data.chat : m)));
-      socket.emit("edit-message", res.data.chat);
-      setEditMode(false);
-      setSelectedMsgId(null);
-      setEditText("");
-    } catch (err) {
-      console.error("❌ Edit message error:", err);
-    }
-  };
+ const handleEditSubmit = async () => {
+  try {
+    const res = await API.put(
+      `/chat/edit/${selectedMsgId}`,
+      { message: editText, userId: currentUserId },
+      { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+    );
+
+    setMessages((prev) =>
+      prev.map((m) => (m._id === selectedMsgId ? res.data.chat : m))
+    );
+
+    socket.emit("edit-message", res.data.chat);
+
+    setEditMode(false);
+    setSelectedMsgId(null);
+  } catch (err) {
+    console.error("❌ Edit message error:", err);
+  }
+};
 
   // ✅ Delete message
   const handleDelete = async () => {
